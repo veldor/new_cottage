@@ -44,14 +44,14 @@ use yii\widgets\Breadcrumbs;
                 ['label' => 'Управление', 'url' => ['/management/index'], 'options' => ['class' => 'visible-lg']],
                 ['label' => 'С', 'url' => ['/count/index'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Статистика']],
                 ['label' => 'В', 'url' => ['/search/search'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Выборки']],
-                ['label' => 'З', 'url' => ['/filling'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Заполнение']],
+                ['label' => 'З', 'url' => ['/filling'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Действия']],
                 ['label' => 'Т', 'url' => ['/tariffs/index'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Тарифы']],
-                ['label' => Html::tag('span', '', ['class'=>'glyphicon glyphicon-cog']), 'url' => ['/management/index'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Управление']],
+                Yii::$app->user->can('manage') ? ['label' => Html::tag('span', '', ['class'=>'glyphicon glyphicon-cog']), 'url' => ['/management/index'], 'options' => ['class' => 'hidden-lg hidden-xs', 'title' => 'Управление']] : '',
                 ['label' => 'Статистика', 'url' => ['/count/index'], 'options' => ['class' => 'visible-xs']],
                 ['label' => 'Выборки', 'url' => ['/search/search'], 'options' => ['class' => 'visible-xs']],
-                ['label' => 'Заполнение', 'url' => ['/filling/power'], 'options' => ['class' => 'visible-xs']],
+                ['label' => 'Действия', 'url' => ['/filling/power'], 'options' => ['class' => 'visible-xs']],
                 ['label' => 'Тарифы', 'url' => ['/tariffs/index'], 'options' => ['class' => 'visible-xs']],
-                ['label' => 'Управление', 'url' => ['/management/index'], 'options' => ['class' => 'visible-xs']],
+                Yii::$app->user->can('manage') ? ['label' => 'Управление', 'url' => ['/management/index'], 'options' => ['class' => 'visible-xs']] : '',
             ],
         ]);
     } catch (Exception $e) {

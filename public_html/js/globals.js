@@ -356,6 +356,13 @@ $(function () {
         let url = $(this).attr('data-action');
         sendAjax('get', url, simpleModalHandler);
     });
+// инициализирую активаторы
+    let postActivators = $('.post-activator');
+    postActivators.on('click.doAction', function (e) {
+        e.preventDefault();
+        let url = $(this).attr('data-action');
+        sendAjax('post', url, simpleAnswerHandler);
+    });
     let printPageActivator = $('#printPageActivator');
     printPageActivator.on('click.print', function () {
         window.print();

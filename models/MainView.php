@@ -31,9 +31,5 @@ class MainView extends Model
                 $this->cottagesInfo[] = CottageInfo::fillCottageInfo($cottage);
             }
         }
-        else{
-            echo 'Участки не зарегистрированы';
-            die;
-        }
     }
 }

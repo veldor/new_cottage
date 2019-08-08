@@ -5458,3 +5458,135 @@ post is
 	 notify => 0
 
 
+Surprise 1565256646
+url /management/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565257197
+url /management/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565257213
+url /management/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565257217
+url /management/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565257379
+url /management/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565257907
+url /db/erase
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565258697
+url /management/db-erase
+message SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`cottages`.`emails`, CONSTRAINT `foreign_mail_contact` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`))
+The SQL being executed was: DELETE FROM `cottages` WHERE `id`=1
+code 23000
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'DELETE FROM `co...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('DELETE FROM `co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(401): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(761): yii\db\ActiveRecord::deleteAll(Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(720): yii\db\ActiveRecord->deleteInternal()
+#5 Z:\sites\new_cottage\models\ManagementHandler.php(25): yii\db\ActiveRecord->delete()
+#6 Z:\sites\new_cottage\controllers\ManagementController.php(40): app\models\ManagementHandler::eraseDb()
+#7 [internal function]: app\controllers\ManagementController->actionDbErase()
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-erase', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-e...', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+
+
+
+Surprise 1565281031
+url /management/db-erase
+message SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`cottages`.`emails`, CONSTRAINT `foreign_mail_contact` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`))
+The SQL being executed was: DELETE FROM `contacts`
+code 23000
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'DELETE FROM `co...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('DELETE FROM `co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(401): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\models\ManagementHandler.php(38): yii\db\ActiveRecord::deleteAll()
+#4 Z:\sites\new_cottage\controllers\ManagementController.php(40): app\models\ManagementHandler::eraseDb()
+#5 [internal function]: app\controllers\ManagementController->actionDbErase()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-erase', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-e...', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#12 {main}
+
+
+
+Surprise 1565283120
+url /management/db-fill
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+

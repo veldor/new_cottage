@@ -91,5 +91,10 @@ $this->title = 'Список участков';
             echo "<div class='col-lg-1 col-md-2 col-sm-3 col-xs-4 text-center margened inlined cottage-container'  data-container='body' data-toggle='popover' data-content='$popoverContent'><a href='/cottage/show/$cottageNumber' class='cottage-button btn $color'>{$cottageNumber}$additionalBlock</a></div>";
         }
     }
+    else{
+        echo '<div class="jumbotron">
+            <h1>Участки пока не зарегистрированы</h1>
+</div>';
+    }
     ?>
 </div>
