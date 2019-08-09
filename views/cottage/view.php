@@ -4,8 +4,8 @@
 
 use app\assets\CottageShowAsset;
 use app\models\CottageInfo;
-use app\models\database\CottagesHandler;
 use app\models\database\ContactsHandler;
+use app\models\database\CottagesHandler;
 use app\models\database\DataMembershipHandler;
 use app\models\database\DataPowerHandler;
 use app\models\database\DataTargetHandler;
@@ -35,7 +35,8 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
     <li><a href="#fines" data-toggle="tab">Пени</a></li>
 </ul>
 
-<h1 class="text-center">Участок <?= $info->cottageInfo->cottageInfo->cottage_number ?> (#<?=$info->cottageInfo->cottageInfo->id?>)</h1>
+<h1 class="text-center">Участок <?= $info->cottageInfo->cottageInfo->cottage_number ?>
+    (#<?= $info->cottageInfo->cottageInfo->id ?>)</h1>
 <div class="input-group margened col-sm-2 col-lg-offset-5"><label for="goToCottageInput"></label><input type="text"
                                                                                                         id="goToCottageInput"
                                                                                                         class="form-control"
@@ -114,16 +115,15 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                 </tr>";
             // пени
             $finesSumm = 0;
-            if(!empty($info->finesData)){
+            if (!empty($info->finesData)) {
                 $finesSumm = 0;
                 foreach ($info->finesData as $fine) {
-                    if($fine->is_enabled){
+                    if ($fine->is_enabled) {
                         $finesSumm += $fine->summ - $fine->payed_summ;
                     }
                 }
                 $text = "<a id='finesLink' href='#fines' class='btn btn-danger emulate-tab'>Задолженность " . CashHandler::toRubles($finesSumm) . "</a>";
-            }
-            else{
+            } else {
                 $text = "<a href='#fines' class='btn btn-success emulate-tab'>Задолженностей нет</a>";
             }
             echo "<tr>
@@ -151,7 +151,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                     $text = '<b class="text-info">Дополнительный с отдельным владельцем</b>';
                 } else {
                     $mainCottageNumber = CottagesHandler::getNumberById($info->cottageInfo->cottageInfo->main_cottage_id);
-                    $text = '<b class="text-info">Дополнительный к участку <a href="/cottage/show/' . $info->cottageInfo->cottageInfo->main_cottage_id . '">' . $mainCottageNumber . '</a></b>';
+                    $text = '<b class="text-info">Дополнительный к участку <a href="/cottage/show/' . $mainCottageNumber . '">' . $mainCottageNumber . '</a></b>';
                 }
             } else {
                 $additionalCottage = CottagesHandler::getAdditionalCottage($info->cottageInfo->cottageInfo->id);
@@ -214,7 +214,6 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
     </div>
     <div class="tab-pane" id="power">
         <?php
-        if(!empty($info->powerCounters)){
             echo "<table class='table table-hover table-striped table-condensed'>
                         <caption>Счётчики электрэнергии</caption>
                         <tr>
@@ -224,6 +223,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                             <th>Действия</th>
                         </tr>
                     ";
+        if (!empty($info->powerCounters)) {
             // покажу список счётчиков с возможностью управления
             foreach ($info->powerCounters as $counter) {
                 $activity = $counter->is_active ? "<span class='text-success'>Да</span>" : "<span class='text-warning'>Нет</span>";
@@ -238,10 +238,10 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                             </td>
                        </tr>";
             }
+            }
             echo "</table>";
 
             echo "<div class='text-center'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='counter/add' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-plus'></span> Добавить счётчик</span></a></div>";
-        }
         if (!empty($info->powerData)) {
             echo "<table class='table table-hover table-striped table-condensed'>
                         <caption>Показания</caption>
@@ -270,8 +270,8 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                                     <div class='btn-group'>
                                       <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>Действия   <span class='caret'></span></button>
                                       <ul class='dropdown-menu' role='menu'>
-                                        <li><a class='control-element' data-type='custom-edit' data-action='power/change' data-id='{$item->id}' href='#'>Изменить данные</a></li>
-                                        <li><a class='activator' data-type='edit-data' data-action='/power/delete/{$item->id}' href='#'>Удалить данные</a></li>
+                                        <li><a class='activator' data-action='/power/change/$item->id' href='#'>Изменить данные</a></li>
+                                        <li><a class='post-activator' data-type='edit-data' data-action='/power/delete/{$item->id}' href='#'>Удалить данные</a></li>
                                       </ul>
                                     </div>
                                 </td>
@@ -429,7 +429,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
                 $bill = $billInfo->bill;
 
-                $textColor = $item->is_partial_payed ? 'color-info' : $item->is_full_payed ? 'text-success' : 'text-warning';
+                $textColor = $bill->is_partial_payed ? 'color-info' : $bill->is_full_payed ? 'text-success' : 'text-warning';
 
                 echo "
                         <tr>
@@ -479,11 +479,11 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
     </div>
     <div class="tab-pane" id="fines">
         <?php
-        if(!empty($info->finesData)){
+        if (!empty($info->finesData)) {
             echo "<table class='table table-condensed table-hover'><tr><th>Тип</th><th>Период</th><th>Начислено</th><th>Оплачено</th><th>Дней</th><th>В день</th></tr>";
             $period = null;
             foreach ($info->finesData as $item) {
-                switch ($item->pay_type){
+                switch ($item->pay_type) {
                     case 'power':
                         $type = 'Электроэнергия';
                         $period = DataPowerHandler::findOne(['id' => $item->period_id])->month;
@@ -497,32 +497,28 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                         $type = 'Целевые взносы';
                         break;
                 }
-                if($item->payed_summ === $item->summ){
+                if ($item->payed_summ === $item->summ) {
                     $text = "text-success";
-                }
-                else{
+                } else {
                     $text = "text-danger";
                 }
                 // расчитаю количество дней, за которые начисляются пени
-                    $dayDifference = TimeHandler::checkDayDifference($item->payUpLimit);
-                $daySumm = $item->summ / (int) $dayDifference;
-                if($item->is_enabled){
+                $dayDifference = TimeHandler::checkDayDifference($item->payUpLimit);
+                $daySumm = $item->summ / (int)$dayDifference;
+                if ($item->is_enabled) {
                     $controlItem = "<a href='#' id='fines_{$item->id}_enable' data-action='/fines/enable/{$item->id}' class='btn btn-default activator hidden'><span class='glyphicon glyphicon-plus text-success'></span></a><a href='#' id='fines_{$item->id}_disable' data-action='/fines/disable/{$item->id}' class='btn btn-default activator'><span class='glyphicon glyphicon-minus text-danger'></span></a>";
-                }
-                else{
+                } else {
                     $controlItem = "<a href='#' id='fines_{$item->id}_enable' data-action='/fines/enable/{$item->id}' class='btn btn-default activator'><span class='glyphicon glyphicon-plus text-success'></span></a><a href='#' id='fines_{$item->id}_disable' data-action='/fines/disable/{$item->id}' class='btn btn-default activator hidden'><span class='glyphicon glyphicon-minus text-danger'></span></a>";
                 }
-                if($item->is_locked){
+                if ($item->is_locked) {
                     $lockItem = "<a href='#' id='fines_{$item->id}_unlock' data-action='/unlock-fine/{$item->id}' class='btn btn-default activator'><span class='glyphicon glyphicon-lock text-danger'></span></a><a href='#' id='fines_{$item->id}_lock' class='btn btn-default control-element hidden' data-type='custom-edit' data-action='lock-fine' data-id='{$item->id}'><span class='glyphicon glyphicon-lock text-success'></span></a>";
-                }
-                else{
+                } else {
                     $lockItem = "<a href='#' id='fines_{$item->id}_unlock' data-action='/unlock-fine/{$item->id}' class='btn btn-default activator hidden'><span class='glyphicon glyphicon-lock text-danger'></span></a><a href='#' id='fines_{$item->id}_lock' class='btn btn-default control-element' data-type='custom-edit' data-action='lock-fine' data-id='{$item->id}'><span class='glyphicon glyphicon-lock text-success'></span></a>";
                 }
                 echo "<tr><td>$type</td><td>{$period}</td><td><b id='fines_{$item->id}_summ' class='text-info'>" . CashHandler::toRubles($item->summ) . "</b></td><td><b class='$text'>" . CashHandler::toRubles($item->payed_summ) . "</b></td><td>$dayDifference дней</td><td>" . CashHandler::toRubles($daySumm) . "</td><td>$controlItem $lockItem</td></tr>";
             }
             echo "</table>";
-        }
-        else{
+        } else {
             echo "<h2 class='text-center'>Просроченных задолженностей по участку не найдено</h2>";
         }
         ?>
@@ -539,7 +535,24 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
             echo "<button class='btn-default btn control-element' data-type='payment-actions' data-action='fill-energy' data-cottage-id='{$info->cottageInfo->cottageInfo->id}'  data-container='body' data-toggle='popover' data-placement='auto' data-trigger='hover' data-content='Заполнить показания потреблённой электроэнергии'><span class='glyphicon glyphicon-flash text-danger'></span></button>";
         }
         ?>
-
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Разное <span
+                        class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <?php
+                if (!CottagesHandler::haveAdditional($info->cottage->id) && !$info->cottage->is_additional) {
+                    echo '<li><a class="post-activator" data-action="/cottage/create-additional/' . $info->cottage->id . '" href="#">Зарегистрировать дополнительный участок</a></li>';
+                }
+                if ($info->cottage->is_individual_tariff) {
+                    echo '<li><a class="post-activator" data-action="/cottage/switch-individual/' . $info->cottage->id . '" href="#">Использовать общий тариф</a></li>';
+                } else {
+                    echo '<li><a class="post-activator" data-action="/cottage/switch-individual/' . $info->cottage->id . '" href="#">Использовать индивидуальный тариф</a></li>';
+                }
+                ?>
+                <li class="divider"></li>
+                <li><a href="#">Отдельная ссылка</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 <div id="ajaxJsContainer" class="hidden"></div>

@@ -31,7 +31,8 @@
       "ext-iconv": "*",
       "ext-curl": "*",
       "ext-zip": "*",
-        "kartik-v/yii2-widget-switchinput": "*"
+      "kartik-v/yii2-widget-switchinput": "*",
+      "kartik-v/yii2-widget-datepicker": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -10,6 +10,7 @@ use app\models\database\RegistredCountersHandler;
 use app\models\exceptions\ExceptionWithStatus;
 use app\models\selection_classes\PowerPeriodInfo;
 use app\models\utils\CashHandler;
+use app\models\utils\DbTransaction;
 use app\models\utils\EmailHandler;
 use app\models\utils\GrammarHandler;
 use app\models\utils\LogHandler;
@@ -63,6 +64,7 @@ class PowerHandler extends Model
      */
     public function insertData()
     {
+        $transaction = new DbTransaction();
         // внесу показания
         if (!empty($this->month)) {
             foreach ($this->month as $key => $value) {
@@ -107,8 +109,11 @@ class PowerHandler extends Model
                             return ['action' => "<script>makeInformer('danger', 'Ошибка', '{$e->getMessage()}');</script>"];
                         }
                     }
+                    $counter->last_data = $data->new_data;
+                    $counter->save();
                 }
             }
+            $transaction->commitTransaction();
             return ['action' => "<script>modal.modal('hide');makeInformerModal('Успех', 'Операция выполнена');</script>"];
         } else {
             return ['info' => 'Не выбран месяц'];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c42f5e98cf326689fb01de5fc1dcbd6",
+  "content-hash": "111d5c1d502d61405fa6aafdc7587495",
     "packages": [
         {
             "name": "bogdaan/viber-bot-php",
@@ -717,6 +717,60 @@
             "time": "2019-03-13T17:14:54+00:00"
         },
         {
+          "name": "kartik-v/yii2-widget-datepicker",
+          "version": "dev-master",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
+            "reference": "66035a0ed3f7a32f3e5f3d34700ca8bef8e8b95a"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/66035a0ed3f7a32f3e5f3d34700ca8bef8e8b95a",
+            "reference": "66035a0ed3f7a32f3e5f3d34700ca8bef8e8b95a",
+            "shasum": ""
+          },
+          "require": {
+            "kartik-v/yii2-krajee-base": ">=2.0.0"
+          },
+          "type": "yii2-extension",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "1.4.x-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "kartik\\date\\": "src"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "BSD-3-Clause"
+          ],
+          "authors": [
+            {
+              "name": "Kartik Visweswaran",
+              "email": "kartikv2@gmail.com",
+              "homepage": "http://www.krajee.com/"
+            }
+          ],
+          "description": "Enhanced Yii2 wrapper for the bootstrap datepicker plugin (sub repo split from yii2-widgets).",
+          "homepage": "https://github.com/kartik-v/yii2-widget-datepicker",
+          "keywords": [
+            "date",
+            "extension",
+            "form",
+            "jquery",
+            "picker",
+            "plugin",
+            "select2",
+            "widget",
+            "yii2"
+          ],
+          "time": "2019-05-25T07:31:37+00:00"
+        },
+      {
             "name": "kartik-v/yii2-widget-switchinput",
             "version": "v1.3.1",
             "source": {
@@ -2060,18 +2114,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                  "email": "arne@blankerts.de",
+                  "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                  "email": "sebastian@phpeople.de",
+                  "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "Developer"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -2380,8 +2434,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -2431,8 +2485,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "lead"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -2473,8 +2527,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "lead"
                 }
             ],
             "description": "Simple template engine.",
@@ -2522,8 +2576,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "lead"
                 }
             ],
             "description": "Utility class for timing",
@@ -3273,8 +3327,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                  "email": "sebastian@phpunit.de",
+                  "role": "lead"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
@@ -4238,7 +4292,8 @@
     "stability-flags": {
         "nixsolutions/yandex-php-library": 20,
         "nirvana-msu/yii2-showloading": 20,
-        "chillerlan/php-qrcode": 20
+      "chillerlan/php-qrcode": 20,
+      "kartik-v/yii2-widget-datepicker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

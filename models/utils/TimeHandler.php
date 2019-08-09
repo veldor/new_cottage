@@ -182,10 +182,32 @@ public static $months = ['Января','Февраля','Марта','Апре�
 
     public static function getNeighborQuarter($quarter, int $param)
     {
-        // получу первый месяц квартала
-        $month = self::getQuarterFirstMonth($quarter);
-        $targetMonth = self::getNeighborMonth($month, $param * 4);
-        return self::quarterFromMonth($targetMonth);
+        $parts = explode('-', $quarter);
+        $year = $parts[0];
+        $changedQuarter = $parts[1];
+        if ($param > 0) {
+            while ($param > 0) {
+                --$param;
+                if ($changedQuarter == 4) {
+                    $changedQuarter = 1;
+                    ++$year;
+                } else {
+                    ++$changedQuarter;
+                }
+            }
+        }
+        if ($param < 0) {
+            while ($param < 0) {
+                ++$param;
+                if ($changedQuarter == 1) {
+                    $changedQuarter = 4;
+                    --$year;
+                } else {
+                    --$changedQuarter;
+                }
+            }
+        }
+        return $year . '-' . $changedQuarter;
     }
 
     public static function getQuarterFirstMonth($quarter){

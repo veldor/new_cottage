@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\CottageInfo;
+use app\models\database\CottagesHandler;
 use app\models\database\FinesHandler;
 use app\models\EditContact;
 use app\models\EditCottageBase;
@@ -14,6 +15,7 @@ use Throwable;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class CottageController extends Controller
@@ -29,7 +31,7 @@ class CottageController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['show', 'edit'],
+                        'actions' => ['show', 'edit', 'create-additional', 'switch-individual', 'switch-use'],
                         'roles' => ['writer'],
                     ],
                 ],
@@ -42,7 +44,8 @@ class CottageController extends Controller
      * @return string|null
      * @throws Exception
      */
-    public function actionShow($cottageNumber){
+    public function actionShow($cottageNumber)
+    {
         try {
             $cottageInfo = new CottageInfo($cottageNumber);
             FinesHandler::check($cottageNumber);
@@ -62,12 +65,13 @@ class CottageController extends Controller
      * @throws Exception
      * @throws Throwable
      */
-    public function actionEdit($type, $action, $id){
+    public function actionEdit($type, $action, $id)
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        try{
-            if(Yii::$app->request->isGet){
-                if($type === 'edit-contact'){
-                    switch ($action){
+        try {
+            if (Yii::$app->request->isGet) {
+                if ($type === 'edit-contact') {
+                    switch ($action) {
                         case 'add-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_ADD_CONTACT]);
                             $model->fillCottageId($id);
@@ -105,9 +109,8 @@ class CottageController extends Controller
                             $model->fillPhoneInfo($id);
                             return ['title' => 'Изменение номера телефона', 'html' => $this->renderAjax('/edit_contact/edit-phone', ['model' => $model])];
                     }
-                }
-                elseif($type === 'edit-cottage'){
-                    switch ($action){
+                } elseif ($type === 'edit-cottage') {
+                    switch ($action) {
                         case 'switch-register':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_SWITCH_REGISTER]);
                             $model->fillCottageId($id);
@@ -131,13 +134,13 @@ class CottageController extends Controller
                     }
                 }
             }
-            if(Yii::$app->request->isPost){
-                if($type === 'edit-contact'){
-                    switch ($action){
+            if (Yii::$app->request->isPost) {
+                if ($type === 'edit-contact') {
+                    switch ($action) {
                         case 'add-mail':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_ADD_EMAIL]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->saveEmail();
                             }
                             return [
@@ -146,7 +149,7 @@ class CottageController extends Controller
                         case 'add-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_ADD_CONTACT]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->saveContact();
                             }
                             return [
@@ -155,7 +158,7 @@ class CottageController extends Controller
                         case 'add-phone':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_ADD_PHONE]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->savePhone();
                             }
                             return [
@@ -164,7 +167,7 @@ class CottageController extends Controller
                         case 'delete-mail':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_DELETE_EMAIL]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->deleteEmail();
                             }
                             return [
@@ -173,7 +176,7 @@ class CottageController extends Controller
                         case 'delete-phone':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_DELETE_PHONE]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->deletePhone();
                             }
                             return [
@@ -182,7 +185,7 @@ class CottageController extends Controller
                         case 'delete-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_DELETE_CONTACT]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->deleteContact();
                             }
                             return [
@@ -191,7 +194,7 @@ class CottageController extends Controller
                         case 'change-mail':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_EDIT_EMAIL]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changeEmail();
                             }
                             return [
@@ -200,7 +203,7 @@ class CottageController extends Controller
                         case 'change-phone':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_EDIT_PHONE]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changePhone();
                             }
                             return [
@@ -209,20 +212,19 @@ class CottageController extends Controller
                         case 'change-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_CHANGE_CONTACT]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changeContact();
                             }
                             return [
                                 'errors' => $model->errors
                             ];
                     }
-                }
-                elseif($type === 'edit-cottage') {
+                } elseif ($type === 'edit-cottage') {
                     switch ($action) {
                         case 'switch-register':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_SWITCH_REGISTER]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->switchRegister();
                             }
                             return [
@@ -231,7 +233,7 @@ class CottageController extends Controller
                         case 'switch-rights':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_SWITCH_RIGHTS]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->switchRights();
                             }
                             return [
@@ -240,7 +242,7 @@ class CottageController extends Controller
                         case 'change-rights':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_CHANGE_RIGHTS]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changeRights();
                             }
                             return [
@@ -249,7 +251,7 @@ class CottageController extends Controller
                         case 'change-deposit':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_CHANGE_DEPOSIT]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changeDeposit();
                             }
                             return [
@@ -258,7 +260,7 @@ class CottageController extends Controller
                         case 'change-square':
                             $model = new EditCottageBase(['scenario' => EditCottageBase::SCENARIO_CHANGE_SQUARE]);
                             $model->load(Yii::$app->request->post());
-                            if($model->validate()){
+                            if ($model->validate()) {
                                 return $model->changeSquare();
                             }
                             return [
@@ -267,10 +269,44 @@ class CottageController extends Controller
                     }
                 }
             }
-        }
-        catch (ExceptionWithStatus $e){
+        } catch (ExceptionWithStatus $e) {
             return ['error' => $e->getMessage()];
         }
         return ['info' => 'Действие не назначено'];
+    }
+
+    /**
+     * @param $cottageId
+     * @return array
+     * @throws ExceptionWithStatus
+     * @throws NotFoundHttpException
+     */
+    public function actionCreateAdditional($cottageId)
+    {
+        if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            // если у данного участка ещё нет дополнительного- добавляю
+            if (!CottagesHandler::haveAdditional($cottageId)) {
+                CottagesHandler::addAdditional($cottageId);
+                return ['status' => 1, 'message' => 'Заглушки для участков созданы'];
+            }
+            return ['error' => "Данный участок уже имеет дополнительный"];
+        }
+        throw new NotFoundHttpException('Страница не найдена');
+    }
+
+    /**
+     * @param $cottageId
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws ExceptionWithStatus
+     */
+    public function actionSwitchIndividual($cottageId)
+    {
+        if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return CottagesHandler::switchIndividual($cottageId);
+        }
+        throw new NotFoundHttpException('Страница не найдена');
     }
 }

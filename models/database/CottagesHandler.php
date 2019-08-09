@@ -56,7 +56,7 @@ class CottagesHandler extends ActiveRecord
     public static function getAdditionalCottage($cottage_number)
     {
         $cottageInfo = self::findOne($cottage_number);
-        return self::find()->where(['main_cottage_id' => $cottageInfo->cottage_number])->one();
+        return self::find()->where(['main_cottage_id' => $cottageInfo->id])->one();
     }
 
     /**
@@ -95,4 +95,66 @@ class CottagesHandler extends ActiveRecord
     {
         return self::find()->where(['id' => $cottage_id])->count();
     }
+
+    public static function haveAdditional(int $id)
+    {
+        return self::find()->where(['main_cottage_id' => $id])->count();
+    }
+
+    /**
+     * @param $cottageId
+     * @throws ExceptionWithStatus
+     */
+    public static function addAdditional($cottageId)
+    {
+        $cottageInfo = CottagesHandler::get($cottageId);
+        $newCottage = new CottagesHandler();
+        $newCottage->cottage_number = $cottageInfo->cottage_number . '-a';
+        $newCottage->is_membership = 0;
+        $newCottage->is_power = 0;
+        $newCottage->is_target = 0;
+        $newCottage->square = 0;
+        $newCottage->is_additional = 1;
+        $newCottage->main_cottage_id = $cottageId;
+        $newCottage->save();
+    }
+
+    /**
+     * @param $cottageId
+     * @throws ExceptionWithStatus
+     */
+    public static function switchIndividual($cottageId)
+    {
+        $cottageInfo = CottagesHandler::get($cottageId);
+        $cottageInfo->is_individual_tariff = !$cottageInfo->is_individual_tariff;
+        $cottageInfo->save();
+        if ($cottageInfo->is_individual_tariff) {
+            return ['status' => 1, 'message' => 'Индивидуальный тариф активирован'];
+        } else {
+            return ['status' => 1, 'message' => 'Индивидуальный тариф отключен'];
+        }
+    }
+
+    /**
+     * @param $type
+     * @param $cottageId
+     * @return array
+     * @throws ExceptionWithStatus
+     */
+    /*    public static function switchUse($type, $cottageId)
+        {
+            $cottageInfo = CottagesHandler::get($cottageId);
+            switch ($type){
+                case 'power' :
+                   $cottageInfo->is_power = !$cottageInfo->is_power;
+                   break;
+                case 'membership' :
+                   $cottageInfo->is_membership = !$cottageInfo->is_membership;
+                   break;
+                case 'target' :
+                   $cottageInfo->is_target = !$cottageInfo->is_target;
+            }
+            $cottageInfo->save();
+            return ['status' => 1, 'message' => 'Успешно'];
+        }*/
 }

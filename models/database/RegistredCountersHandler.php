@@ -20,12 +20,14 @@ use yii\db\StaleObjectException;
 
 class RegistredCountersHandler extends ActiveRecord
 {
+    public $firstCountedMonth;
+
     const SCENARIO_REGISTER_COUNTER = 'register_counter';
 
     public function scenarios(): array
     {
         return [
-            self::SCENARIO_REGISTER_COUNTER => ['cottage_id', 'last_data'],
+            self::SCENARIO_REGISTER_COUNTER => ['cottage_id', 'firstCountedMonth'],
             self::SCENARIO_DEFAULT => ['id', 'cottage_id', 'last_data', 'is_active']
         ];
     }

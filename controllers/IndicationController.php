@@ -50,7 +50,6 @@ class IndicationController extends Controller
             }
             // проверю, изменить можно только последние показания
                 $model = DataPowerHandler::findOne($id);
-
                 return ['title' => 'Изменение показаний счётчика', 'html' => $this->renderAjax('change-power', ['model' => $model])];
 
             }

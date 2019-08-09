@@ -55,7 +55,11 @@ class PaymentsController extends Controller
             switch ($action) {
                 case 'create-bill' :
                     $model = new Bill(['scenario' => Bill::SCENARIO_CREATE, 'cottageId' => $id]);
-                    $model->fill();
+                    try {
+                        $model->fill();
+                    } catch (ExceptionWithStatus $e) {
+                        return ['error' => $e->getMessage()];
+                    }
                     // если участок дополнительный- верну предложение выставить счёт главному участку
                 if($model->cottageInfo->is_additional){
                     return ['info' => 'Участок является дополнительным. Выставите счёт основному.'];
@@ -73,7 +77,7 @@ class PaymentsController extends Controller
                     if ($model->fill()) {
                         return ['title' => 'Заполнение данных электроэнергии', 'html' => $this->renderAjax('fill_power', ['model' => $model])];
                     } else {
-                        return ['status' => 2, 'message' => 'Данные уже введены.'];
+                        return ['info' => 'Данные уже введены.'];
                     }
             }
             return ['info' => 'Действие не назначено'];

@@ -14,6 +14,9 @@ return [
     'cottage/show/<cottageNumber:[0-9]+(-a)?>' => 'cottage/show',
 //      EDIT COTTAGE BLOCK
     'cottage/edit/<type:[0-9a-z\-]+>/<action:[0-9a-z\-]+>/<id:[0-9]+>' => 'cottage/edit',
+    'cottage/create-additional/<cottageId:[0-9]+>' => 'cottage/create-additional',
+    'cottage/switch-individual/<cottageId:[0-9]+>' => 'cottage/switch-individual',
+    'cottage/switch-<type:power|membership|target>/<cottageId:[0-9]+>' => 'cottage/switch-use',
 //    END COTTAGE BLOCK
 
 //    PAYMENTS BLOCK

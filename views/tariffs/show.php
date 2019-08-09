@@ -1,13 +1,11 @@
 <?php
 
-use app\assets\MainAsset;
 use app\assets\TariffsAsset;
 use app\models\selection_classes\TariffsInfo;
 use app\models\utils\CashHandler;
 use nirvana\showloading\ShowLoadingAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\JqueryAsset;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -36,7 +34,7 @@ echo '</div>';
 ActiveForm::end();
 ?>
 
-<div class="col-sm-12 text-center">
+<div class="col-sm-12 text-center margened">
     <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary active">
             <input type="checkbox" class="switcher" data-switch="powerBlock" checked> Электроэнергия

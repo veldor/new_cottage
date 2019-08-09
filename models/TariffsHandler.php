@@ -140,9 +140,9 @@ class TariffsHandler extends Model
         }
         if(!empty($this->target)){
             foreach ($this->target as $key => $value) {
-                // проверю, не заполнен ли уже месяц
+                // проверю, не заполнен ли уже год
                 if(TariffTargetHandler::find()->where(['year' => $key])->count() == 0){
-                    if(!empty($value['fixed']) && !empty($value['float']) && !empty($value['payUp'])){
+                    if ((!empty($value['fixed']) || !empty($value['float'])) && !empty($value['payUp'])) {
                         $newTariff = new TariffTargetHandler();
                         $newTariff->year = $key;
                         $newTariff->pay_for_cottage = CashHandler::fromRubles($value['fixed']);

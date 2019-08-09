@@ -132,6 +132,6 @@ class EmailHandler extends Model
     {
         $info = TransactionsHandler::getTransactionInfo($id);
         $text =  Yii::$app->controller->renderAjax('transaction_information', ['transaction_info' => $info]);
-        EmailHandler::notify(74, 'Подтверждение оплаты', $text);
+        EmailHandler::notify($info->cottageInfo->id, 'Подтверждение оплаты', $text);
     }
 }

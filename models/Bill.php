@@ -20,6 +20,7 @@ use app\models\database\DepositHandler;
 use app\models\database\DiscountHandler;
 use app\models\database\FinesHandler;
 use app\models\database\RegistredCountersHandler;
+use app\models\exceptions\ExceptionWithStatus;
 use app\models\utils\CashHandler;
 use app\models\utils\DbTransaction;
 use app\models\utils\DifferentUtils;
@@ -81,6 +82,9 @@ class Bill extends Model
      */
     public $singleData;
 
+    /**
+     * @throws ExceptionWithStatus
+     */
     public function fill()
     {
         $this->cottageInfo = CottagesHandler::findOne($this->cottageId);
@@ -96,6 +100,9 @@ class Bill extends Model
             $cottageId = $this->cottageId;
         }
         $owners = ContactsHandler::find()->where(['cottage_id' => $cottageId, 'is_owner' => 1, 'is_active' => 1])->all();
+        if (empty($owners)) {
+            throw new ExceptionWithStatus('Не найдены владельцы участка. Перед выставлением счёта зарегистрируйте хотя бы одного.');
+        }
         $ownersList = [];
         foreach ($owners as $owner) {
             $ownersList[$owner->id] = $owner->contact_name;
@@ -150,6 +157,7 @@ class Bill extends Model
             } else {
                 $newBill->cottage_number = $this->cottageId;
             }
+            $additionalCottageInfo = CottagesHandler::getAdditionalCottage($cottageInfo);
             $newBill->cottage_number = $cottageInfo->id;
             $newBill->payerId = $this->targetOwner;
             $newBill->save();
@@ -194,7 +202,7 @@ class Bill extends Model
                         // найду месяц оплаты
                         $powerMonthData = DataPowerHandler::findOne($month);
                         // проверю, что период относится к данному участку или к дополнительному
-                        if ($powerMonthData->cottage_number == $cottageInfo->id || $powerMonthData->cottage_number == $cottageInfo->main_cottage_id) {
+                        if ($powerMonthData->cottage_number == $cottageInfo->id || (!empty($additionalCottageInfo) && $powerMonthData->cottage_number == $additionalCottageInfo->id)) {
                             $requiredAmount = $powerMonthData->total_pay - $powerMonthData->payed_summ;
                             if ($amount > $requiredAmount) {
                                 $transaction->rollbackTransaction();

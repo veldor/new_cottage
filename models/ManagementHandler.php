@@ -33,8 +33,8 @@ use app\models\database\TariffMembershipHandler;
 use app\models\database\TariffPowerHandler;
 use app\models\database\TariffTargetHandler;
 use app\models\utils\DbTransaction;
+use app\priv\Info;
 use Throwable;
-use yii\db\StaleObjectException;
 
 class ManagementHandler
 {
@@ -77,8 +77,28 @@ class ManagementHandler
         $transaction->commitTransaction();
     }
 
+    /**
+     * @throws exceptions\ExceptionWithStatus
+     */
     public static function fillDb()
     {
-
+        $transaction = new DbTransaction();
+        // создам заглушки для необходимого количества участков
+        $requiredQuantity = Info::COTTAGES_QUANTITY;
+        $counter = 1;
+        while ($counter <= $requiredQuantity) {
+            // проверю, нет ли в базе участка с данным адресом
+            if (!CottagesHandler::findOne(['cottage_number' => $counter])) {
+                $newCottage = new CottagesHandler();
+                $newCottage->cottage_number = $counter;
+                $newCottage->is_membership = 0;
+                $newCottage->is_power = 0;
+                $newCottage->is_target = 0;
+                $newCottage->square = 0;
+                $newCottage->save();
+            }
+            $counter++;
+        }
+        $transaction->commitTransaction();
     }
 }

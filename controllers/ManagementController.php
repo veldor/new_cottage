@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\exceptions\ExceptionWithStatus;
 use app\models\ManagementHandler;
 use Throwable;
 use Yii;
@@ -55,12 +56,13 @@ class ManagementController extends Controller
     /**
      * @return array
      * @throws NotFoundHttpException
+     * @throws ExceptionWithStatus
      */
     public function actionDbFill(){
         if(Yii::$app->request->isPost){
             Yii::$app->response->format = Response::FORMAT_JSON;
             ManagementHandler::fillDb();
-            return ['status' => 1, 'message' => 'База данных полностью очищена'];
+            return ['status' => 1, 'message' => 'Заглушки для участков созданы'];
         }
         throw new NotFoundHttpException('Страница не найдена');
     }
