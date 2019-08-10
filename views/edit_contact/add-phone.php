@@ -1,6 +1,7 @@
 <?php
 
 use app\models\EditContact;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -22,10 +23,22 @@ echo $form->field($model, 'description', ['template' =>
     ->textarea()
     ->label('Примечание');
 
-echo $form->field($model, 'makeMain', ['template' =>
-    '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>'])
-    ->checkbox()
-    ->label('Назначить основным номером');
+try {
+    echo $form->field($model, 'makeMain', ['template' =>
+        '<div class="col-sm-5">{label}</div><div class="col-sm-4">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group margened']])->widget(SwitchInput::class, [
+        'type' => SwitchInput::CHECKBOX,
+        'pluginOptions' => [
+            'onText' => 'Да',
+            'offText' => 'Нет',
+            'handleWidth' => 20,
+        ]
+    ])
+        ->label('Назначить основным');
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die('i broke');
+}
 
 echo Html::submitButton('Сохранить', ['class' => 'btn btn-success']);
 

@@ -118,7 +118,7 @@ class EmailHandler extends Model
         $attachment = new FileAttachment();
         $attachment->name = "Квитанция на оплату.pdf";
         $attachment->url = str_replace('\\', '/', Yii::getAlias('@app')) . '/public_html/invoice.pdf';
-        EmailHandler::notify(74, 'Квитанция на оплату', $text, $attachment);
+        EmailHandler::notify($info['billInfo']->cottage->id, 'Квитанция на оплату', $text, $attachment);
         unlink($attachment->url);
         $info['billInfo']->bill->is_email_sended = 1;
         $info['billInfo']->bill->save();

@@ -10,6 +10,7 @@ use app\models\database\DataSingleHandler;
 use app\models\database\DataTargetHandler;
 use DateTime;
 use Exception;
+use yii\base\InvalidArgumentException;
 
 class TimeHandler{
 
@@ -270,5 +271,115 @@ public static $months = ['Января','Февраля','Марта','Апре�
         }
         $date->setDate($dates[0],$dates[1],$dates[2]);
         return $date->getTimestamp();
+    }
+
+    /**
+     * @param $month string
+     * @param bool $endMonth
+     * @return int
+     */
+    public static function checkMonthDifference($month, $endMonth = false): int
+    {
+        // считаю разницу между введённым значением и текущим кварталом
+        $info = self::isMonth($month);
+        if ($endMonth) {
+            $endMonthInfo = self::isMonth($endMonth);
+        } else {
+            $endMonthInfo = self::isMonth(self::getCurrentMonth());
+        }
+        if ($endMonthInfo['year'] === $info['year']) {
+            // если оплачен этот год- проверяю, если месяц меньше текущего- получаю разницу вычитанием
+            return $endMonthInfo['month'] - $info['month'];
+        }
+        // проверю, в какую сторону считать
+        if ($info['full'] <= $endMonthInfo['full']) {
+            // если неоплачено за несколько лет- считаю разницу между годами. За все больше одного беру по 4 квартала, плюс кварталы в этом году, плюс кварталы в крайнем году неоплаты
+            $difference = $endMonthInfo['year'] - $info['year'];
+            // возвращаю сумму кватралов в этом году и неоплаченных кварталов прошлого года
+            return $endMonthInfo['month'] + (12 - $info['month']) + (($difference - 1) * 12);
+        }
+        $difference = $info['year'] - $endMonthInfo['year'];
+        return -((12 - $endMonthInfo['month']) + $info['month'] + (($difference - 1) * 12));
+    }
+
+    /**
+     * Получаю список месяцев между двумя датами
+     * @param $month string
+     * @param $endMonth string
+     * @return array|null
+     */
+    public static function getMonthsList($month, $endMonth = '')
+    {
+        // составлю массив месяцев
+        $unpayed = null;
+        $count = self::checkMonthDifference($month, $endMonth);
+        if ($count) {
+            $month = self::isMonth($month)['full'];
+            $match = null;
+            preg_match('/^(\d{4})\W*(\d{2})$/', $month, $match);
+            list(, $year, $startMonth) = $match;
+            if ($count > 0) {
+                while ($count > 0) {
+                    $unpayed[$year . '-' . $startMonth] = ['monthNumber' => $startMonth, 'year' => $year];
+                    --$count;
+                    if ($startMonth === '12' || $startMonth === 12) {
+                        $startMonth = '01';
+                        ++$year;
+                    } else {
+                        ++$startMonth;
+                        if ($startMonth < 10) {
+                            $startMonth = '0' . $startMonth;
+                        }
+                    }
+                }
+            } else if ($count < 0) {
+                --$startMonth;
+                while ($count < 0) {
+                    $unpayed[$year . '-' . $startMonth] = ['monthNumber' => $startMonth, 'year' => $year];
+                    if ($startMonth < 10) {
+                        $startMonth = '0' . $startMonth;
+                    }
+                    if ($startMonth === '01' || $startMonth === 1 || $startMonth === '1') {
+                        $startMonth = '12';
+                        --$year;
+                    } else {
+                        --$startMonth;
+                    }
+                    ++$count;
+                }
+                $unpayed = array_reverse($unpayed);
+            }
+            return $unpayed;
+        }
+        return null;
+    }
+
+    /**
+     * @param $month string
+     * @return array
+     */
+    public static function isMonth($month): array
+    {
+        $match = null;
+        if (preg_match('/^(\d{4})\W*([0-1]?\d)$/', $month, $match) && $match[2] > 0 && $match[2] < 13 && self::isYear($match[1])) {
+            if ($match[2] < 10) {
+                $match[2] = '0' . (int)$match[2];
+            }
+            return ['full' => "$match[1]-$match[2]", 'year' => $match[1], 'month' => $match[2]];
+        }
+        throw new InvalidArgumentException("Значение \"$month\" не является месяцем");
+    }
+
+    /**
+     * @param $year string|int
+     * @return int
+     */
+    public static function isYear($year): int
+    {
+        $year = (int)$year;
+        if ($year > 1900 && $year < 3000) {
+            return $year;
+        }
+        throw new InvalidArgumentException("Значение \"$year\" не является годом");
     }
 }

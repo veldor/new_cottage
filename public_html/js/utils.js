@@ -46,6 +46,19 @@ function handleUtils() {
        let text = $(this).attr('data-fill');
        $(this).parents('.input-group').eq(0).find('input').val(text);
     });
+
+    // активирую копирование значений форм
+    $('.copy-previous').on('click.copy', function (e) {
+        e.preventDefault();
+        let parent = $(this).parents('.period-set').eq(0);
+        let previousBlock = parent.prev();
+        let previousInputs = previousBlock.find('input');
+        previousInputs.each(function () {
+            let type = $(this).attr('data-type');
+            let clone = parent.find('[data-type="' + type + '"]');
+            clone.val($(this).val());
+        });
+    });
 }
 function getLastDayOfMonth(y, m) {
     if (m === 1) {

@@ -77,6 +77,9 @@ class Pay extends Model
 
         $billInfo = BillsHandler::findOne($this->billId);
 
+
+        $cottageInfo = CottagesHandler::get($this->cottageId);
+
         $requiredAmount = $billInfo->bill_summ - $billInfo->payed;
 
         $payWholeness = $amount >= $requiredAmount ? true : false;
@@ -91,9 +94,9 @@ class Pay extends Model
         $newTransaction->transaction_reason = 'Оплата по счёту #' . $this->billId;
         $newTransaction->save();
 
-        if(!empty($this->bankTransactionId)){
+        if (!empty($this->bankTransactionId)) {
             $bankTransaction = BankTransactionsHandler::get($this->bankTransactionId);
-            if(!empty($bankTransaction->bounded_transaction_id)){
+            if (!empty($bankTransaction->bounded_transaction_id)) {
                 throw new ExceptionWithStatus('Банковская транзакция уже связана со счётом');
             }
             $bankTransaction->bounded_transaction_id = $newTransaction->id;
@@ -115,7 +118,7 @@ class Pay extends Model
                             $payedAmount += $payedItem->summ;
                         }
                         if ($payedAmount == $periodInfo->total_pay) {
-                            die('Доработать излишнюю оплату членских взносов');
+                            die('П');
                         }
                     } else {
                         // проверю, что оплаченная сумма не больше необходимой
@@ -157,8 +160,41 @@ class Pay extends Model
                         foreach ($payed as $payedItem) {
                             $payedAmount += $payedItem->summ;
                         }
-                        if ($payedAmount == $periodInfo->total_pay) {
-                            die('Доработать излишнюю оплату членских взносов');
+                        // проверю, что сумма оплаты меньше или равна необходимой сумме оплаты
+                        $requiredPowerAmount = $periodInfo->total_pay;
+                        $leftToPay = $requiredPowerAmount - $payedAmount;
+                        if ($toPay > $leftToPay) {
+                            $powerOut = $toPay - $leftToPay;
+
+                            // создам оплату электроэнергии
+                            $newPayedPower = new PayedPowerHandler();
+                            $newPayedPower->transaction_id = $newTransaction->id;
+                            $newPayedPower->month = $periodInfo->month;
+                            $newPayedPower->counter_id = $periodInfo->counter_id;
+                            $newPayedPower->summ = $leftToPay;
+                            $newPayedPower->pay_date = $dealTime;
+                            $newPayedPower->period_id = $periodInfo->id;
+                            $newPayedPower->cottage_id = $this->cottageId;
+                            $newPayedPower->bill_id = $this->billId;
+                            $newPayedPower->save();
+                            $periodInfo->payed_summ += $leftToPay;
+                            $periodInfo->is_full_payed = 1;
+                            $periodInfo->save();
+                            // остальное отправлю на депозит
+                            $depositTransaction = new DepositHandler();
+                            $depositTransaction->cottage_number = $this->cottageId;
+                            $depositTransaction->bill_id = $this->billId;
+                            $depositTransaction->transaction_id = $newTransaction->id;
+                            $depositTransaction->destination = 'in';
+                            $depositTransaction->summ_before = $cottageInfo->deposit;
+                            $cottageInfo->deposit += $powerOut;
+                            $depositTransaction->summ_after = $cottageInfo->deposit;
+                            $depositTransaction->pay_date = $newTransaction->bankDate;
+                            $depositTransaction->summ = $powerOut;
+                            $depositTransaction->description = 'Излишняя оплата электроэнергиии за период #' . $periodInfo->id . ', транзакция #' . $newTransaction->id;
+                            $depositTransaction->save();
+                            $cottageInfo->save();
+                            continue;
                         }
                     }
                     // проверю, что оплаченная сумма не больше необходимой
@@ -315,9 +351,8 @@ class Pay extends Model
         }
         if ($payWholeness) {
             if ($amount > $requiredAmount) {
-                $cottageInfo = CottagesHandler::get($this->cottageId);
                 // зачислю переплаченную сумму на депозит
-                $difference = $amount - $requiredAmount;
+                $difference = $amount - $dividedAmount;
                 $depositTransaction = new DepositHandler();
                 $depositTransaction->cottage_number = $this->cottageId;
                 $depositTransaction->bill_id = $this->billId;
@@ -339,9 +374,10 @@ class Pay extends Model
             $billInfo->is_partial_payed = 1;
         }
         $billInfo->payed += $amount;
-        $billInfo->save();if($this->notify){
-        EmailHandler::sendTransactionInfo($newTransaction->id);
-    }
+        $billInfo->save();
+        if ($this->notify) {
+            EmailHandler::sendTransactionInfo($newTransaction->id);
+        }
         $transaction->commitTransaction();
         return ['status' => 1, 'message' => 'Средства успешно распределены'];
     }

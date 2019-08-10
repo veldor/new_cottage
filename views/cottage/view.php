@@ -176,7 +176,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                 // депозит участка
                 echo "<tr>
                         <td>Депозит участка</td>
-                        <td><b id='depositWrapper' class='text-success'>" . CashHandler::toRubles($info->cottageInfo->cottageInfo->deposit) . "</b> <button class='btn btn-primary pull-right control-container control-element hidden' data-type='edit-cottage' data-action='change-deposit' data-cottage-id='{$info->cottageInfo->cottageInfo->id}'><span class='glyphicon glyphicon-pencil'></span></button></td>
+                        <td><a href='#' class='activator' data-action='/info/deposit/{$info->cottageInfo->cottageInfo->id}'><b id='depositWrapper' class='text-success'>" . CashHandler::toRubles($info->cottageInfo->cottageInfo->deposit) . "</b></a> <button class='btn btn-primary pull-right control-container control-element hidden' data-type='edit-cottage' data-action='change-deposit' data-cottage-id='{$info->cottageInfo->cottageInfo->id}'><span class='glyphicon glyphicon-pencil'></span></button></td>
                        </tr>";
             }
             echo "<tr>
@@ -260,7 +260,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
                 echo "
                             <tr id='power_item_{$item->id}'>
-                                <td>{$item->month}</td>
+                                <td><a class='activator' href='#' data-action='/info/power/{$item->id}'>{$item->month}</a></td>
                                 <td>{$item->counter_id}</td>
                                 <td>{$item->old_data} кВт·ч</td>
                                 <td>{$item->new_data} кВт·ч</td>

@@ -75,7 +75,7 @@ class CottageController extends Controller
                         case 'add-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_ADD_CONTACT]);
                             $model->fillCottageId($id);
-                            return ['title' => 'Добавление контакта', 'html' => $this->renderAjax('/edit_contact/add-cottage', ['model' => $model])];
+                            return ['title' => 'Добавление контакта', 'html' => $this->renderAjax('add-contact', ['model' => $model])];
                         case 'change-contact':
                             $model = new EditContact(['scenario' => EditContact::SCENARIO_CHANGE_CONTACT]);
                             $model->fillContactInfo($id);

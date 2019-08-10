@@ -6011,3 +6011,303 @@ get is
 	 cottageId => 547
 
 
+Surprise 1565420084
+url /tariff/fill/power/$key
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565420129
+url /tariff/fill/power/2019-07
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565420782
+url /tariff/fill/power/2019-07
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565420790
+url /tariff/fill/power/2019-07
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565420811
+url /tariff/fill/power/2019-07
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565424517
+url /tariffs/fill-power
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+post is 
+	 _csrf => fGUWb22ImZ8fgKReBSKJs_V20pJUNqrR9W3ulyL3bEkPFFUfJePJ8lv40xBqd83gjBKF2Dda24TBBarRFKM4HA==
+	 TariffsHandler => 
+	 energy => 
+	 2019-01 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-02 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-03 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-04 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-05 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-06 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 2019-07 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+
+
+Surprise 1565426873
+url /counter/add/547
+message Getting unknown property: app\models\database\RegistredCountersHandler::emailAddress
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('emailAddress')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(2227): yii\db\BaseActiveRecord->__get('emailAddress')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(1353): yii\helpers\BaseHtml::getAttributeValue(Object(app\models\database\RegistredCountersHandler), 'emailAddress')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(1407): yii\helpers\BaseHtml::activeInput('text', Object(app\models\database\RegistredCountersHandler), 'emailAddress', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\widgets\ActiveField.php(404): yii\helpers\BaseHtml::activeTextInput(Object(app\models\database\RegistredCountersHandler), 'emailAddress', Array)
+#5 Z:\sites\new_cottage\views\indication\add-counter.php(21): yii\widgets\ActiveField->textInput(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\View.php(212): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\IndicationController))
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Controller.php(49): yii\web\View->renderAjax('add-counter', Array, Object(app\controllers\IndicationController))
+#10 Z:\sites\new_cottage\controllers\IndicationController.php(110): yii\web\Controller->renderAjax('add-counter', Array)
+#11 [internal function]: app\controllers\IndicationController->actionCounter('add', '547')
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#14 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('counter', Array)
+#15 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('indication/coun...', Array)
+#16 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#18 {main}
+get is 
+	 action => add
+	 id => 547
+
+
+Surprise 1565427166
+url /get/counter-start
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565430035
+url /counter/add
+message Array to string conversion
+code 8
+in file Z:\sites\new_cottage\models\database\RegistredCountersHandler.php
+in sting 135
+#0 Z:\sites\new_cottage\models\database\RegistredCountersHandler.php(135): yii\base\ErrorHandler->handleError(8, 'Array to string...', 'Z:\\sites\\new_co...', 135, Array)
+#1 Z:\sites\new_cottage\controllers\IndicationController.php(124): app\models\database\RegistredCountersHandler->register()
+#2 [internal function]: app\controllers\IndicationController->actionCounter('add', NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('counter', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('indication/coun...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => R919lDiqhuMqtTyoU1oK42Cp4gTE6NjycgG2VrVHR-M0rD7kcMHWjm7NS-Y8D06wGc21TqeEqadGafIQgxMTtg==
+	 RegistredCountersHandler => 
+	 cottage_id => 547
+	 counterSerial => asdafasd
+	 startValue => 1
+	 firstCountedMonth => 2019-02
+	 months => 
+	 2019-02 => 
+	 finish => 
+	 2019-03 => 
+	 finish => 
+	 2019-04 => 
+	 finish => 
+	 2019-05 => 
+	 finish => 
+	 2019-06 => 
+	 finish => 
+	 2019-07 => 
+	 finish => get is 
+	 action => add
+
+
+Surprise 1565432750
+url /info/power/1811
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565435454
+url /bill/create
+message Сведения об участке не найдены
+code 0
+in file Z:\sites\new_cottage\models\database\CottagesHandler.php
+in sting 89
+#0 Z:\sites\new_cottage\models\utils\EmailHandler.php(34): app\models\database\CottagesHandler::get(74)
+#1 Z:\sites\new_cottage\models\utils\EmailHandler.php(121): app\models\utils\EmailHandler::notify(74, '\xD0\x9A\xD0\xB2\xD0\xB8\xD1\x82\xD0\xB0\xD0\xBD\xD1\x86\xD0...', '<link href="/as...', Object(app\models\selection_classes\FileAttachment))
+#2 Z:\sites\new_cottage\models\Bill.php(334): app\models\utils\EmailHandler::sendBIllInfo(448)
+#3 Z:\sites\new_cottage\controllers\PaymentsController.php(134): app\models\Bill->createBill()
+#4 [internal function]: app\controllers\PaymentsController->actionBill('create')
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('bill', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/bill', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#11 {main}
+post is 
+	 _csrf => cyniq_Kw7-aoYtLTVVHWCALs44xydsBMvs-WKpLr29YAWKHbutu_i-wapZ06BJJbe4i0xhEasRmKp9JspL-Pgw==
+	 Bill => 
+	 cottageId => 727
+	 notify => 1
+	 print => 1
+	 targetOwner => 248
+	 power => 
+	 211 => 
+	 1811 => 
+	 pay => on
+	 value => 552.48
+	 discountReason => get is 
+	 action => create
+
+
+Surprise 1565435721
+url /bill/create
+message Trying to get property 'cottage' of non-object
+code 8
+in file Z:\sites\new_cottage\models\utils\EmailHandler.php
+in sting 121
+#0 Z:\sites\new_cottage\models\utils\EmailHandler.php(121): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'Z:\\sites\\new_co...', 121, Array)
+#1 Z:\sites\new_cottage\models\Bill.php(334): app\models\utils\EmailHandler::sendBIllInfo(449)
+#2 Z:\sites\new_cottage\controllers\PaymentsController.php(134): app\models\Bill->createBill()
+#3 [internal function]: app\controllers\PaymentsController->actionBill('create')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('bill', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/bill', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+post is 
+	 _csrf => cyniq_Kw7-aoYtLTVVHWCALs44xydsBMvs-WKpLr29YAWKHbutu_i-wapZ06BJJbe4i0xhEasRmKp9JspL-Pgw==
+	 Bill => 
+	 cottageId => 727
+	 notify => 1
+	 print => 1
+	 targetOwner => 248
+	 power => 
+	 211 => 
+	 1811 => 
+	 pay => on
+	 value => 552.48
+	 discountReason => get is 
+	 action => create
+
+
+Surprise 1565441817
+url /pay/bill
+message SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'summ' at row 1
+The SQL being executed was: INSERT INTO `deposit_io` (`cottage_number`, `bill_id`, `transaction_id`, `destination`, `summ_before`, `summ_after`, `pay_date`, `summ`, `description`) VALUES (1087, 454, 330, 'in', '63600', '62800', '1565441817', '-800', 'Зачисление по счёту 454')
+code 22003
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `de...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('INSERT INTO `de...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php(432): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(600): yii\db\Schema->insert('deposit_io', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(566): yii\db\ActiveRecord->insertInternal(NULL)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(678): yii\db\ActiveRecord->insert(true, NULL)
+#6 Z:\sites\new_cottage\models\Pay.php(367): yii\db\BaseActiveRecord->save()
+#7 Z:\sites\new_cottage\controllers\PaymentsController.php(212): app\models\Pay->pay()
+#8 [internal function]: app\controllers\PaymentsController->actionPay(NULL, NULL)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('pay', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/pay', Array)
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#15 {main}
+post is 
+	 _csrf => etr9MitAkooTzg-MZMn4_mOd2OQtY0332lH3nv4sCcEJq75CYyvC51e2eMILnLytGvmPrk4PPKLuObPYyHhdlA==
+	 Pay => 
+	 billId => 454
+	 cottageId => 1087
+	 payedSumm => 0.00
+	 bankTransactionId => 
+	 payCustomDate => 
+	 getCustomDate => 
+	 power => 
+	 94 => 8.00
+	 notify => 0
+
+

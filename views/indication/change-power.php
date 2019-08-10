@@ -48,22 +48,52 @@ try {
     echo $e->getMessage();
     die('i broke');
 }
+if ($model->is_individual_tariff) {
+    echo $form->field($model, 'individual_limit', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::KILOWATT . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '1'])
+        ->label('Индивидуальный льготный лимит');
 
-echo $form->field($model, 'individual_limit', ['template' =>
-    '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::KILOWATT . '</span></div>{error}{hint}</div>'])
-    ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '1'])
-    ->label('Индивидуальный льготный лимит');
+    echo $form->field($model, 'individual_cost', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01', 'value' => CashHandler::toMathRubles($model->individual_cost)])
+        ->label('Индивидуальная льготная стоимость ' . GrammarHandler::KILOWATT);
 
-echo $form->field($model, 'individual_cost', ['template' =>
-    '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
-    ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01', 'value' => CashHandler::toMathRubles($model->individual_cost)])
-    ->label('Индивидуальная льготная стоимость ' . GrammarHandler::KILOWATT);
+    echo $form->field($model, 'individual_overcost', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01', 'value' => CashHandler::toMathRubles($model->individual_overcost)])
+        ->label('Индивидуальная стоимость ' . GrammarHandler::KILOWATT);
+} else {
+    echo $form->field($model, 'individual_limit', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::KILOWATT . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '1'])
+        ->label('Индивидуальный льготный лимит');
 
-echo $form->field($model, 'individual_overcost', ['template' =>
-    '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
-    ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01', 'value' => CashHandler::toMathRubles($model->individual_overcost)])
-->label('Индивидуальная стоимость ' . GrammarHandler::KILOWATT);
+    echo $form->field($model, 'individual_cost', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01'])
+        ->label('Индивидуальная льготная стоимость ' . GrammarHandler::KILOWATT);
+
+    echo $form->field($model, 'individual_overcost', ['template' =>
+        '<div class="col-sm-7">{label}</div><div class="col-sm-5"><div class="input-group">{input}<span class="input-group-addon">' . GrammarHandler::RUBLE . '</span></div>{error}{hint}</div>'])
+        ->textInput(['autocomplete' => 'off', 'type' => 'number', 'step' => '0.01'])
+        ->label('Индивидуальная стоимость ' . GrammarHandler::KILOWATT);
+}
 
 echo Html::submitButton('Сохранить', ['class' => 'btn btn-success']);
 
 ActiveForm::end();
+
+?>
+
+<script>
+    function handleChangePower() {
+        let form = $('form#changePower');
+        form.on('submit.send', function (e) {
+            e.preventDefault();
+            sendAjax('post', '/power/change', simpleAnswerHandler, form, true);
+        });
+    }
+
+    handleChangePower();
+</script>

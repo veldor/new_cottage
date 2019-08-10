@@ -1,6 +1,7 @@
 <?php
 
 use app\models\EditContact;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -16,10 +17,22 @@ $form = ActiveForm::begin(['id' => 'addContact', 'options' => ['class' => 'form-
 
 echo $form->field($model, 'cottageId', ['options' => ['class' => 'hidden'], 'template' => '{input}'])->hiddenInput()->label(false);
 
-echo $form->field($model, 'isOwner', ['template' =>
-    '<div class="col-sm-5">{label}</div><div class="col-sm-7"><button type="button" class="btn btn-info">{input}</button>{error}{hint}</div>'])
-    ->checkbox()
-    ->label('Владелец');
+try {
+    echo $form->field($model, 'isOwner', ['template' =>
+        '<div class="col-sm-5">{label}</div><div class="col-sm-4">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group margened']])->widget(SwitchInput::class, [
+        'type' => SwitchInput::CHECKBOX,
+        'pluginOptions' => [
+            'onText' => 'Да',
+            'offText' => 'Нет',
+            'handleWidth' => 20,
+        ]
+    ])
+        ->label('Владелец');
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die('i broke');
+}
 
 echo $form->field($model, 'contactName', ['template' =>
     '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>'])

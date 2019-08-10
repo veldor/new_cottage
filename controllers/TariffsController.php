@@ -6,6 +6,8 @@ namespace app\controllers;
 use app\models\database\DataMembershipHandler;
 use app\models\database\DataPowerHandler;
 use app\models\database\DataTargetHandler;
+use app\models\database\TariffPowerHandler;
+use app\models\exceptions\ExceptionWithStatus;
 use app\models\selection_classes\TariffsInfo;
 use app\models\TariffsHandler;
 use app\models\utils\TimeHandler;
@@ -54,7 +56,36 @@ class TariffsController extends Controller
         }
         return $this->render('show', ['data' => $data, 'model' => $model]);
     }
-    public function actionFill(){
+
+    /**
+     * @param null $type
+     * @param null $period
+     * @return string
+     * @throws ExceptionWithStatus
+     */
+    public function actionFill($type = null, $period = null)
+    {
+        if (!empty($type)) {
+            if (Yii::$app->request->isGet) {
+                if ($type === 'power') {
+                    if (Yii::$app->request->isGet) {
+                        // получу список месяцев для заполнения
+                        $fillingPeriods = TariffPowerHandler::getFillingList($period);
+                        if (empty($fillingPeriods)) {
+                            echo '<script>window.close();</script>';
+                            die;
+                        }
+                        return $this->render('power', ['months' => $fillingPeriods]);
+                    }
+                }
+            } elseif (Yii::$app->request->isPost) {
+                if ($type === 'power') {
+                    $model = new TariffPowerHandler(['scenario' => TariffPowerHandler::SCENARIO_MASS_FILL]);
+                    $model->load(Yii::$app->request->post());
+                    return $model->massSave();
+                }
+            }
+        }
         $model = new TariffsHandler(['scenario' => TariffsHandler::SCENARIO_FILL]);
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());

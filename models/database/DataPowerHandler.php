@@ -5,8 +5,10 @@ namespace app\models\database;
 
 
 use app\models\exceptions\ExceptionWithStatus;
+use app\models\selection_classes\ActivatorAnswer;
 use app\models\utils\CashHandler;
 use app\models\utils\DbTransaction;
+use app\models\utils\GrammarHandler;
 use app\models\utils\TimeHandler;
 use Exception;
 use Throwable;
@@ -48,6 +50,27 @@ class DataPowerHandler extends ActiveRecord
     public static function tableName()
     {
         return "data_power";
+    }
+
+    public static function periodInfo($id)
+    {
+        // найду информацию о периоде
+        $info = self::findOne($id);
+        $answer = new ActivatorAnswer();
+        $answer->status = 1;
+        $answer->header = 'Сведения об электроэнергии за ' . TimeHandler::getFullFromShotMonth($info->month);
+        $answer->view = "<table class='table table-hover table-striped'>
+                            <tr><td>Показания на начало периода</td><td><b class='text-info'>{$info->old_data} " . GrammarHandler::KILOWATT . "</b></td></tr>
+                            <tr><td>Показания на конец периода</td><td><b class='text-info'>{$info->new_data} " . GrammarHandler::KILOWATT . "</b></td></tr>
+                            <tr><td>Израсходовано электроэнергии</td><td><b class='text-info'>{$info->difference} " . GrammarHandler::KILOWATT . "</b></td></tr>
+                            <tr><td>Из них льготно</td><td><b class='text-info'>{$info->in_limit_data} " . GrammarHandler::KILOWATT . "</b></td></tr>
+                            <tr><td>Из них сверх льгот</td><td><b class='text-info'>{$info->over_limit_data} " . GrammarHandler::KILOWATT . "</b></td></tr>
+                            <tr><td>Оплата по льготному тарифу</td><td><b class='text-danger'>" . CashHandler::toRubles($info->in_limit_pay) . "</b></td></tr>
+                            <tr><td>Оплата по обычному тарифу</td><td><b class='text-danger'>" . CashHandler::toRubles($info->over_limit_pay) . "</b></td></tr>
+                            <tr><td>Итого к оплате</td><td><b class='text-danger'>" . CashHandler::toRubles($info->total_pay) . "</b></td></tr>
+                            <tr><td>Оплачено ранее</td><td><b class='text-success'>" . CashHandler::toRubles($info->payed_summ) . "</b></td></tr>
+                        </table>";
+        return $answer->return();
     }
 
     public function scenarios()
@@ -106,6 +129,7 @@ class DataPowerHandler extends ActiveRecord
             $newRecord->save();
             // обновлю данные счётчика
             $counter->last_data = $newRecord->new_data;
+            $counter->save();
             $transaction->commitTransaction();
             return $newRecord;
         } catch (Exception $e) {

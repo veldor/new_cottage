@@ -24,6 +24,8 @@ return [
 //    TARIFFS BLOCK
     'tariffs' => 'tariffs/index',
     'tariffs/fill' => 'tariffs/fill',
+    'tariffs/fill-<type:power|membership|target>' => 'tariffs/fill',
+    'tariff/fill/<type:power|membership|target>/<period:[0-9\-]+>' => 'tariffs/fill',
     'tariffs/details/<type:energy|membership|target>/<period:[0-9\-]+>' => 'tariffs/details',
 //    FINES BLOCK
     'fines/<action:enable|disable>/<finesId:[0-9]+>' => 'fines/change',
@@ -39,6 +41,7 @@ return [
     'power/<action:change>' => 'indication/power',
     'counter/<action:disable|enable|add|delete>/<id:[0-9]+>' => 'indication/counter',
     'counter/<action:disable|enable|add>' => 'indication/counter',
+    'get/counter-start/<date:[0-9]{4}-[0-9]{2}>' => 'indication/get-counter-start',
 //    MEMBERSHIP BLOCK
     'membership/<action:change>/<id:[0-9]+>' => 'indication/membership',
     'membership/<action:change>' => 'indication/membership',
@@ -59,4 +62,8 @@ return [
 //    BANK TRANSACTION BLOCK
     'bank-transaction/get/<id:[0-9]+>' => 'payments/get-transaction',
     'bank-transaction/confirm-manual' => 'payments/confirm-bank-transaction',
+
+
+//    FLOATING INFO BLOCKS
+    '/info/<type:power|membership|target|deposit>/<id:[0-9]+>' => 'info/float',
 ];

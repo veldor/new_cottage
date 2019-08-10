@@ -7,8 +7,10 @@ namespace app\controllers;
 use app\models\database\DataMembershipHandler;
 use app\models\database\DataPowerHandler;
 use app\models\database\RegistredCountersHandler;
+use app\models\exceptions\ExceptionWithStatus;
 use Throwable;
 use Yii;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -26,7 +28,7 @@ class IndicationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['power', 'counter', 'membership'],
+                        'actions' => ['power', 'counter', 'membership', 'get-counter-start'],
                         'roles' => ['writer'],
                     ],
                 ],
@@ -50,8 +52,7 @@ class IndicationController extends Controller
             }
             // проверю, изменить можно только последние показания
                 $model = DataPowerHandler::findOne($id);
-                return ['title' => 'Изменение показаний счётчика', 'html' => $this->renderAjax('change-power', ['model' => $model])];
-
+            return ['status' => 1, 'header' => 'Изменение показаний счётчика', 'view' => $this->renderAjax('change-power', ['model' => $model])];
             }
         }
         if (Yii::$app->request->isPost) {
@@ -77,7 +78,7 @@ class IndicationController extends Controller
         if($action === 'change'){
             // проверю, изменить можно только последние показания
                 $model = DataMembershipHandler::findOne($id);
-                return ['title' => 'Изменение показаний по членским взносам', 'html' => $this->renderAjax('change-membership', ['model' => $model])];
+            return ['status' => 1, 'header' => 'Изменение показаний по членским взносам', 'view' => $this->renderAjax('change-membership', ['model' => $model])];
 
             }
         }
@@ -90,6 +91,14 @@ class IndicationController extends Controller
         }
     }
 
+    /**
+     * @param $action
+     * @param null $id
+     * @return array
+     * @throws Throwable
+     * @throws ExceptionWithStatus
+     * @throws StaleObjectException
+     */
     public function actionCounter($action, $id = null){
         Yii::$app->response->format = Response::FORMAT_JSON;
         if(Yii::$app->request->isGet){
@@ -115,6 +124,11 @@ class IndicationController extends Controller
 
             }
         }
+    }
 
+    public function actionGetCounterStart($date)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return RegistredCountersHandler::getStartFilling($date);
     }
 }

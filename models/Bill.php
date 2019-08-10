@@ -330,11 +330,11 @@ class Bill extends Model
             $newBill->payed = $newBill->from_deposit + $newBill->discount;
             //todo сделать проверку нераспределённых среств и напоминать о необходимости распределения
             $newBill->save();
-            if ($this->notify == 1) {
+            if ($this->notify) {
                 EmailHandler::sendBIllInfo($newBill->id);
             }
             $action = '';
-            if($this->print == 1){
+            if ($this->print) {
                 $action = "<script>let win = window.open('/print/bill/{$newBill->id}', '_blank');win.focus();</script>";
             }
             $transaction->commitTransaction();

@@ -1,6 +1,7 @@
 <?php
 
 use app\models\EditCottageBase;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -13,11 +14,23 @@ $form = ActiveForm::begin(['id' => 'changeDeposit', 'options' => ['class' => 'fo
 
 echo $form->field($model, 'cottageId', ['options' => ['class' => 'hidden'],'template' => '{input}'])->hiddenInput()->label(false);
 
-echo $form->field($model, 'is_register_deposit', ['template' =>
-    '<div class="col-sm-5">{label}</div><div class="col-sm-7"><button type="button" class="btn btn-info">{input}</button>{error}{hint}</div>'])
-    ->checkbox()
-    ->hint('Если активно- операция будет отображаться как транзакция. Если неактивно- факт изменения суммы не будет зарегистрирован в системе')
-    ->label('Отображать в отчётах');
+try {
+    echo $form->field($model, 'is_register_deposit', ['template' =>
+        '<div class="col-sm-5">{label}</div><div class="col-sm-4">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group margened']])->widget(SwitchInput::class, [
+        'type' => SwitchInput::CHECKBOX,
+        'pluginOptions' => [
+            'onText' => 'Да',
+            'offText' => 'Нет',
+            'handleWidth' => 20,
+        ]
+    ])
+        ->hint('Если активно- операция будет отображаться как транзакция. Если неактивно- факт изменения суммы не будет зарегистрирован в системе')
+        ->label('Отображать в отчётах');
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die('i broke');
+}
 
 echo $form->field($model, 'deposit', ['template' =>
     '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>'])

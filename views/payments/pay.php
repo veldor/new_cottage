@@ -76,10 +76,13 @@ echo "<div class='col-sm-12'><h2 class='text-center'>Детали</h2></div>";
 
 if(!empty($bill_info->billPower)){
     foreach ($bill_info->billPower as $powerItem) {
+        $popover = '';
         $powerInfo = DataPowerHandler::findOne($powerItem->power_data_id);
-        // Получу цифры
-        $amount = CashHandler::toRubles($powerItem->start_summ);
-        $popover = "К оплате: $amount<br/>";
+        $popover .= 'Электроэнергия <b class="text-info">' . TimeHandler::getFullFromShotMonth($powerInfo->month) . '</b><br/>';
+        $popover .= 'Всего к оплате <b class="text-warning">' . CashHandler::toRubles($powerInfo->total_pay) . '</b><br/>';
+        $popover .= 'Всего оплачено <b class="text-success">' . CashHandler::toRubles($powerInfo->payed_summ) . '</b><br/>';
+        $popover .= 'Осталось оплатить всего <b class="text-success">' . CashHandler::toRubles($powerInfo->total_pay - $powerInfo->payed_summ) . '</b><br/>';
+        $popover .= 'К оплате по счёту <b class="text-warning">' . CashHandler::toRubles($powerItem->start_summ) . '</b><br/>';
         $payedAmount = 0;
         $payed = PayedPowerHandler::find()->where(['period_id' => $powerItem->power_data_id, 'bill_id' => $bill_info->bill->id])->all();
         if(!empty($payed)){
@@ -88,7 +91,9 @@ if(!empty($bill_info->billPower)){
             }
         }
         $max = $powerItem->start_summ - $payedAmount;
-        $popover .= "Уже оплачено: " . CashHandler::toRubles($payedAmount);
+        $popover .= 'Оплачено по счёту <b class="text-success">' . CashHandler::toRubles($payedAmount) . '</b><br/>';
+
+        $popover .= 'Осталось оплатить по счёту <b class="text-success">' . CashHandler::toRubles($powerItem->start_summ - $payedAmount) . '</b><br/>';
         echo "<div class='form-group margened payment-details'><div class='col-sm-5'><label class='control-label'>Электроэнергия (" . TimeHandler::getFullFromShotMonth($powerInfo->month) . ")</label></div><div class='col-sm-4'><div class='input-group'><span class='btn btn-success input-group-addon all-distributed-button'>Максимум</span><input data-max-summ='$max' class='form-control distributed-summ-input popovered' type='number' step='0.01' name='Pay[power][{$powerItem->id}]' data-toggle='popover' data-placement='auto' data-content='$popover' data-html='true' data-trigger='hover'><span class='input-group-addon'>₽</span></div></div></div>";
     }
 }

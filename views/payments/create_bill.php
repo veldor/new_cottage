@@ -20,6 +20,41 @@ $form = ActiveForm::begin(['id' => 'createBill', 'options' => ['class' => 'form-
 
 echo $form->field($model, 'cottageId', ['options' => ['class' => 'hidden'], 'template' => '{input}'])->hiddenInput()->label(false);
 
+
+try {
+    echo $form->field($model, 'notify', ['template' =>
+        '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group col-sm-12 margened']])->widget(SwitchInput::class, [
+        'type' => SwitchInput::CHECKBOX,
+        'pluginOptions' => [
+            'onText' => 'Да',
+            'offText' => 'Нет',
+            'handleWidth' => 20,
+        ]
+    ])
+        ->label('Оповестить по электронной почте');
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die('i broke');
+}
+
+try {
+    echo $form->field($model, 'print', ['template' =>
+        '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group col-sm-12 margened']])->widget(SwitchInput::class, [
+        'type' => SwitchInput::CHECKBOX,
+        'pluginOptions' => [
+            'onText' => 'Да',
+            'offText' => 'Нет',
+            'handleWidth' => 20,
+        ]
+    ])
+        ->label('Распечатать квитанцию');
+
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die('i broke');
+}
+
 echo $form->field($model, 'targetOwner', ['template' =>
     '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>'])
     ->dropDownList($model->ownersList)
@@ -194,40 +229,6 @@ else{
 
 echo "<table class='table table-condensed table-striped'><tr><td><input type='checkbox' class='pay-activator' data-for='Bill[discount]' name='Bill[discountActivator]' /></td><td>Скидка</td><td><input type='number' class='form-control' step='0.01' id='discountInput' name='Bill[discount]' disabled='disabled'/></td><td><input type='text' class='form-control' name='Bill[discountReason]' placeholder='Причина скидки' /></td></tr></table>";
 echo "</div>";
-
-try {
-    echo $form->field($model, 'notify', ['template' =>
-        '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group col-sm-12 margened']])->widget(SwitchInput::class, [
-        'type' => SwitchInput::CHECKBOX,
-        'pluginOptions' => [
-            'onText'=>'Да',
-            'offText'=>'Нет',
-            'handleWidth'=>20,
-        ]
-    ])
-        ->label('Оповестить по электронной почте');
-
-} catch (Exception $e) {
-    echo $e->getMessage();
-    die('i broke');
-}
-
-try {
-    echo $form->field($model, 'print', ['template' =>
-        '<div class="col-sm-5">{label}</div><div class="col-sm-7">{input}{error}{hint}</div>', 'options' => ['class' => 'form-group col-sm-12 margened']])->widget(SwitchInput::class, [
-        'type' => SwitchInput::CHECKBOX,
-        'pluginOptions' => [
-            'onText'=>'Да',
-            'offText'=>'Нет',
-            'handleWidth'=>20,
-        ]
-    ])
-        ->label('Распечатать квитанцию');
-
-} catch (Exception $e) {
-    echo $e->getMessage();
-    die('i broke');
-}
 
 ActiveForm::end();
 
