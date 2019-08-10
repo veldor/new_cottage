@@ -288,10 +288,11 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
         <?php
 
-        echo "<div class='text-center margened'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='membership/change-period' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-pencil'></span> Изменить период оплаты</span></a></div>";
+        if($info->cottage->is_membership){
+            echo "<div class='text-center margened'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='membership/change-period' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-pencil'></span> Изменить период оплаты</span></a></div>";
 
-        if (!empty($info->membershipData)) {
-            echo "<table class='table table-hover table-striped table-condensed'>
+            if (!empty($info->membershipData)) {
+                echo "<table class='table table-hover table-striped table-condensed'>
                         <tr>
                             <th>Квартал</th>
                             <th>Площадь</th>
@@ -300,16 +301,16 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                             <th>Долг</th>
                         </tr>
                     ";
-            foreach ($info->membershipData as $item) {
+                foreach ($info->membershipData as $item) {
 
-                $textColor = $item->is_partial_payed ? 'color-info' : $item->is_full_payed ? 'text-success' : 'text-warning';
-                $duty = $item->total_pay - $item->payed_summ;
-                $dutyText = '<b class="text-success">0</b>';
-                if ($duty > 0) {
-                    $dutyText = "<b class='text-danger'>" . CashHandler::toRubles($duty) . "</b>";
-                }
+                    $textColor = $item->is_partial_payed ? 'color-info' : $item->is_full_payed ? 'text-success' : 'text-warning';
+                    $duty = $item->total_pay - $item->payed_summ;
+                    $dutyText = '<b class="text-success">0</b>';
+                    if ($duty > 0) {
+                        $dutyText = "<b class='text-danger'>" . CashHandler::toRubles($duty) . "</b>";
+                    }
 
-                echo "
+                    echo "
                             <tr>
                                 <td>{$item->quarter}</td>
                                 <td>{$item->square}</td>
@@ -326,11 +327,17 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                                 </td>
                             </tr>
                     ";
+                }
+                echo "</table>";
+            } else {
+                echo "<h2>Данных по членским взносам не найдено</h2>";
             }
-            echo "</table>";
-        } else {
-            echo "<h2>Данных по членским взносам не найдено</h2>";
         }
+        else{
+            echo "<div class='text-center'><h2 class='text-info'>Членские взносы не оплачиваются</h2></div>";
+            echo "<div class='text-center'><button class='btn btn-default btn-lg text-info activator' data-action='/cottage/switch-membership/{$info->cottage->id}'><span class='glyphicon glyphicon-ok text-success'></span><span class='text-success'> Оплачивать целевые взносы</span></button></div>";
+        }
+
         ?>
     </div>
     <div class="tab-pane" id="target">

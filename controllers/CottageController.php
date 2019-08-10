@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\CottageInfo;
 use app\models\database\CottagesHandler;
+use app\models\database\DataMembershipHandler;
 use app\models\database\FinesHandler;
 use app\models\EditContact;
 use app\models\EditCottageBase;
@@ -308,5 +309,22 @@ class CottageController extends Controller
             return CottagesHandler::switchIndividual($cottageId);
         }
         throw new NotFoundHttpException('Страница не найдена');
+    }
+
+    /**
+     * @param $cottageId
+     * @param $type
+     * @return array
+     * @throws ExceptionWithStatus
+     */
+    public function actionSwitchUse($cottageId, $type){
+        if (Yii::$app->request->isGet) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            switch ($type){
+                case 'membership':
+                    return DataMembershipHandler::getSwitchForm($cottageId);
+            }
+
+        }
     }
 }

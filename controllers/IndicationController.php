@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 
 namespace app\controllers;
@@ -13,6 +13,7 @@ use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class IndicationController extends Controller
@@ -28,7 +29,7 @@ class IndicationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['power', 'counter', 'membership', 'get-counter-start'],
+                        'actions' => ['power', 'counter', 'membership', 'get-counter-start', 'get-membership-start'],
                         'roles' => ['writer'],
                     ],
                 ],
@@ -65,6 +66,7 @@ class IndicationController extends Controller
                 return $model->changeData();
             }
         }
+        throw new NotFoundHttpException('Страница не найдена');
     }
     /**
      * @param $action
@@ -89,6 +91,7 @@ class IndicationController extends Controller
                 return $model->changeData();
             }
         }
+        throw new NotFoundHttpException('Страница не найдена');
     }
 
     /**
@@ -124,11 +127,22 @@ class IndicationController extends Controller
 
             }
         }
+        throw new NotFoundHttpException('Страница не найдена');
     }
 
     public function actionGetCounterStart($date)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         return RegistredCountersHandler::getStartFilling($date);
+    }
+
+    /**
+     * @param $date
+     * @return mixed
+     */
+    public function actionGetMembershipStart($date)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return DataMembershipHandler::getStartFilling($date);
     }
 }

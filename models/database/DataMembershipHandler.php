@@ -3,8 +3,13 @@
 
 namespace app\models\database;
 
+use app\models\exceptions\ExceptionWithStatus;
+use app\models\selection_classes\ActivatorAnswer;
 use app\models\utils\CashHandler;
 use app\models\utils\DbTransaction;
+use app\models\utils\GrammarHandler;
+use app\models\utils\TimeHandler;
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -25,6 +30,11 @@ use yii\db\ActiveRecord;
  */
 class DataMembershipHandler extends ActiveRecord
 {
+
+    public $firstCountedQuarter;
+
+    const SCENARIO_ENABLE = 'enable';
+
     // имя таблицы
     /**
      * @return string
@@ -34,9 +44,71 @@ class DataMembershipHandler extends ActiveRecord
         return "data_membership";
     }
 
+    public static function switchUse()
+    {
+
+    }
+
+    public static function getStartFilling($date){
+        $quartersForFill = [];
+        // получу список месяцев для заполнения, проверю, заполнены ли тарифы на эти месяцы.
+        $quarters = TimeHandler::getQuarterList($date);
+        if (!empty($quarters)) {
+            // проверю заполненность тарифов
+            foreach ($quarters as $key => $value) {
+                $tariff = TariffMembershipHandler::findOne(['quarter' => $key]);
+                if (empty($tariff)) {
+                    return ['error' => 'Не заполнены тарифы.<br><a class="btn btn-info" target="_blank" href="/tariff/fill/membership/' . $key . '">Заполнить тарифы</a>'];
+                }
+                // добавлю месяц в список
+                $quartersForFill[$key] = $tariff;
+            }
+        } else {
+            // отсчёт начнётся с этого месяца
+            $tariff = TariffMembershipHandler::findOne(['quarter' => TimeHandler::getCurrentQuarter()]);
+            if (empty($tariff)) {
+                return ['error' => 'Не заполнены тарифы.<br><a class="btn btn-info" target="_blank" href="/tariff/index' . TimeHandler::getCurrentQuarter() . '">Заполнить тарифы</a>'];
+            }
+        }
+        $answerText = '';
+        foreach ($quartersForFill as $quarter => $tariff) {
+            $answerText .= "
+            <div class='col-sm-8 col-sm-offset-2'><h2 class='text-center text-success'>" . TimeHandler::getFullFromShotQuarter($quarter) . "</h2>
+            <div class='form-group'><div class='col-sm-5'><label class='control-label'>Конечные показания</label></div><div class='col-sm-7'><div class='input-group'><input class='form-control' type='number' step='1' name='DataMembershipHandler[quarters][$quarter][finish]'/><span class='input-group-addon'>" . GrammarHandler::KILOWATT . "</span></div></div></div>
+            </div>
+            ";
+        }
+        return ['text' => $answerText];
+    }
+
+    /**
+     * @param $cottageId
+     * @return array
+     * @throws ExceptionWithStatus
+     */
+    public static function getSwitchForm($cottageId)
+    {
+        $cottageInfo = CottagesHandler::get($cottageId);
+        if($cottageInfo->is_membership){
+
+        }
+        else{
+            // верну форму активации оплаты
+            $model = new DataMembershipHandler(['scenario' => DataMembershipHandler::SCENARIO_ENABLE, 'cottage_number' => $cottageInfo->id]);
+            $answer = new ActivatorAnswer();
+            $answer->status = 1;
+            $answer->header = "Активация оплаты членских взносов";
+            $answer->view = Yii::$app->controller->renderAjax('/indication/change-membership', ['model' => $model]);
+            return $answer->return();
+        }
+    }
+
     public function scenarios()
     {
-        return [self::SCENARIO_DEFAULT => ['id', 'cottage_number', 'quarter', 'search_timestamp', 'square', 'total_pay', 'payed_summ', 'is_partial_payed', 'is_full_payed', 'is_individual_tariff', 'individual_pay_for_field', 'individual_pay_for_cottage', 'pay_up_date']];
+        return [
+            self::SCENARIO_DEFAULT => ['id', 'cottage_number', 'quarter', 'search_timestamp', 'square', 'total_pay', 'payed_summ', 'is_partial_payed', 'is_full_payed', 'is_individual_tariff', 'individual_pay_for_field', 'individual_pay_for_cottage', 'pay_up_date'],
+            self::SCENARIO_ENABLE => ['cottage_number', 'firstCountedQuarter']
+        ];
     }
 
     /**
@@ -50,7 +122,7 @@ class DataMembershipHandler extends ActiveRecord
 
     /**
      * @return array
-     * @throws \app\models\exceptions\ExceptionWithStatus
+     * @throws ExceptionWithStatus
      */
     public function changeData()
     {

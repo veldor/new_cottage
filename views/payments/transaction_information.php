@@ -27,8 +27,14 @@ $bankTransactionId = !empty($bankTransactionInfo) ? $bankTransactionInfo->bank_o
 
 $fromDeposit = DepositHandler::findOne(['transaction_id' => $transaction_info->transaction->id, 'destination' => 'out']);
 $fromDepositSumm = !empty($fromDeposit) ? CashHandler::toRubles($fromDeposit->summ) : '--';
-$toDeposit = DepositHandler::findOne(['transaction_id' => $transaction_info->transaction->id, 'destination' => 'in']);
-$toDepositSumm = !empty($toDeposit) ? CashHandler::toRubles($toDeposit->summ) : '--';
+$toDepositItems = DepositHandler::find()->where(['transaction_id' => $transaction_info->transaction->id, 'destination' => 'in'])->all();
+$toDeposit = 0;
+if(!empty($toDepositItems)){
+    foreach ($toDepositItems as $toDepositItem) {
+        $toDeposit += $toDepositItem->summ;
+    }
+}
+$toDepositSumm = !empty($toDeposit) ? CashHandler::toRubles($toDeposit) : '--';
 $discount = DiscountHandler::findOne(['transaction_id' => $transaction_info->transaction->id]);
 $discountSumm = !empty($discount) ? CashHandler::toRubles($discount->summ) : '--';
 

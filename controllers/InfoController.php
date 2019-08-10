@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\database\DataPowerHandler;
 use app\models\database\DepositHandler;
+use app\models\exceptions\ExceptionWithStatus;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -32,6 +33,12 @@ class InfoController extends Controller
         ];
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return array
+     * @throws ExceptionWithStatus
+     */
     public function actionFloat($type, $id)
     {
         // верну данные для отображения

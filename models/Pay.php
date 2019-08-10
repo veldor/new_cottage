@@ -165,21 +165,22 @@ class Pay extends Model
                         $leftToPay = $requiredPowerAmount - $payedAmount;
                         if ($toPay > $leftToPay) {
                             $powerOut = $toPay - $leftToPay;
-
-                            // создам оплату электроэнергии
-                            $newPayedPower = new PayedPowerHandler();
-                            $newPayedPower->transaction_id = $newTransaction->id;
-                            $newPayedPower->month = $periodInfo->month;
-                            $newPayedPower->counter_id = $periodInfo->counter_id;
-                            $newPayedPower->summ = $leftToPay;
-                            $newPayedPower->pay_date = $dealTime;
-                            $newPayedPower->period_id = $periodInfo->id;
-                            $newPayedPower->cottage_id = $this->cottageId;
-                            $newPayedPower->bill_id = $this->billId;
-                            $newPayedPower->save();
-                            $periodInfo->payed_summ += $leftToPay;
-                            $periodInfo->is_full_payed = 1;
-                            $periodInfo->save();
+                            if($leftToPay > 0){
+                                // создам оплату электроэнергии
+                                $newPayedPower = new PayedPowerHandler();
+                                $newPayedPower->transaction_id = $newTransaction->id;
+                                $newPayedPower->month = $periodInfo->month;
+                                $newPayedPower->counter_id = $periodInfo->counter_id;
+                                $newPayedPower->summ = $leftToPay;
+                                $newPayedPower->pay_date = $dealTime;
+                                $newPayedPower->period_id = $periodInfo->id;
+                                $newPayedPower->cottage_id = $this->cottageId;
+                                $newPayedPower->bill_id = $this->billId;
+                                $newPayedPower->save();
+                                $periodInfo->payed_summ += $leftToPay;
+                                $periodInfo->is_full_payed = 1;
+                                $periodInfo->save();
+                            }
                             // остальное отправлю на депозит
                             $depositTransaction = new DepositHandler();
                             $depositTransaction->cottage_number = $this->cottageId;
@@ -353,18 +354,20 @@ class Pay extends Model
             if ($amount > $requiredAmount) {
                 // зачислю переплаченную сумму на депозит
                 $difference = $amount - $dividedAmount;
-                $depositTransaction = new DepositHandler();
-                $depositTransaction->cottage_number = $this->cottageId;
-                $depositTransaction->bill_id = $this->billId;
-                $depositTransaction->transaction_id = $newTransaction->id;
-                $depositTransaction->destination = 'in';
-                $depositTransaction->summ_before = $cottageInfo->deposit;
-                $cottageInfo->deposit += $difference;
-                $depositTransaction->summ_after = $cottageInfo->deposit;
-                $depositTransaction->pay_date = $newTransaction->bankDate;
-                $depositTransaction->summ = $difference;
-                $depositTransaction->description = 'Зачисление по счёту ' . $this->billId;
-                $depositTransaction->save();
+                if($difference > 0){
+                    $depositTransaction = new DepositHandler();
+                    $depositTransaction->cottage_number = $this->cottageId;
+                    $depositTransaction->bill_id = $this->billId;
+                    $depositTransaction->transaction_id = $newTransaction->id;
+                    $depositTransaction->destination = 'in';
+                    $depositTransaction->summ_before = $cottageInfo->deposit;
+                    $cottageInfo->deposit += $difference;
+                    $depositTransaction->summ_after = $cottageInfo->deposit;
+                    $depositTransaction->pay_date = $newTransaction->bankDate;
+                    $depositTransaction->summ = $difference;
+                    $depositTransaction->description = 'Зачисление по счёту ' . $this->billId;
+                    $depositTransaction->save();
+                }
                 $cottageInfo->save();
             }
             $billInfo->is_full_payed = 1;

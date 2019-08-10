@@ -6311,3 +6311,124 @@ post is
 	 notify => 0
 
 
+Surprise 1565450136
+url /transaction/show/329
+message Trying to get property 'summ' of non-object
+code 8
+in file Z:\sites\new_cottage\views\payments\transaction_information.php
+in sting 37
+#0 Z:\sites\new_cottage\views\payments\transaction_information.php(37): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'Z:\\sites\\new_co...', 37, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\PaymentsController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('transaction_inf...', Array, Object(app\controllers\PaymentsController))
+#5 Z:\sites\new_cottage\controllers\PaymentsController.php(157): yii\base\Controller->render('transaction_inf...', Array)
+#6 [internal function]: app\controllers\PaymentsController->actionShowTransaction('329')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('show-transactio...', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/show-t...', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 id => 329
+
+
+Surprise 1565450942
+url /switch/membership/1087
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565451035
+url /switch/membership/1087
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565451038
+url /cottage/show/cottage/switch-membership/1087
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565451050
+url /cottage/switch-membership/1087
+message Отсутствуют обязательные параметры: id
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Controller.php
+in sting 149
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(51): yii\web\Controller->bindActionParams(Object(yii\base\InlineAction), Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('switch-use', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('cottage/switch-...', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#6 {main}
+get is 
+	 type => membership
+	 cottageId => 1087
+
+
+Surprise 1565452120
+url /cottage/switch-membership/1087
+message Getting unknown property: app\models\database\DataMembershipHandler::cottage_id
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('cottage_id')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(2227): yii\db\BaseActiveRecord->__get('cottage_id')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(1353): yii\helpers\BaseHtml::getAttributeValue(Object(app\models\database\DataMembershipHandler), 'cottage_id')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\helpers\BaseHtml.php(1442): yii\helpers\BaseHtml::activeInput('hidden', Object(app\models\database\DataMembershipHandler), 'cottage_id', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\widgets\ActiveField.php(429): yii\helpers\BaseHtml::activeHiddenInput(Object(app\models\database\DataMembershipHandler), 'cottage_id', Array)
+#5 Z:\sites\new_cottage\views\indication\change-membership.php(19): yii\widgets\ActiveField->hiddenInput()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\View.php(212): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\CottageController))
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Controller.php(49): yii\web\View->renderAjax('/indication/cha...', Array, Object(app\controllers\CottageController))
+#10 Z:\sites\new_cottage\models\database\DataMembershipHandler.php(66): yii\web\Controller->renderAjax('/indication/cha...', Array)
+#11 Z:\sites\new_cottage\controllers\CottageController.php(319): app\models\database\DataMembershipHandler::getSwitchForm('1087')
+#12 [internal function]: app\controllers\CottageController->actionSwitchUse('1087', 'membership')
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#14 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#15 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('switch-use', Array)
+#16 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('cottage/switch-...', Array)
+#17 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#19 {main}
+get is 
+	 type => membership
+	 cottageId => 1087
+
+
+Surprise 1565461414
+url /get/membership-start/2018-1
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+

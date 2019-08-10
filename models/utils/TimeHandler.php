@@ -382,4 +382,93 @@ public static $months = ['Января','Февраля','Марта','Апре�
         }
         throw new InvalidArgumentException("Значение \"$year\" не является годом");
     }
+
+    /**
+     * @param $q
+     * @return array|null
+     */
+    public static function getQuarterList($q)
+    {
+        if (is_string($q)) {
+            $start = self::isQuarter($q);
+            $end = self::isQuarter(self::getCurrentQuarter());
+        }
+        elseif (is_array($q)) {
+            $start = self::isQuarter($q['start']);
+            $end = self::isQuarter($q['finish']);
+        }
+        else {
+            throw new InvalidArgumentException('Неверный параметр даты');
+        }
+        // составлю массив кварталов
+        $unpayed = null;
+        $count = self::checkQuarterDifference($start['full'], $end['full']);
+        if ($count === 0) {
+            return [];
+        }
+        if ($count > 0) {
+            $quarter = $end['quarter'];
+            $year = $end['year'];
+        }
+        else{
+            $quarter = $start['quarter'];
+            $year = $start['year'];
+            $count = abs($count);
+        }
+        while ($count > 0) {
+            if ($quarter === 4) {
+                $quarter = 1;
+                ++$year;
+            }
+            else {
+                ++$quarter;
+            }
+            $unpayed[$year . '-' . $quarter] = ['quarterNumber' => $quarter, 'year' => $year];
+            --$count;
+        }
+        return $unpayed;
+    }
+
+    /**
+     * @param $quarter
+     * @return array
+     */
+    public static function isQuarter($quarter): array
+    {
+        $match = null;
+        if (preg_match('/^\s*(\d{4})\W*([1-4])\s*$/', $quarter, $match) && $match[1] > 0 && $match[2] < 5 && self::isYear($match[1])) {
+            return ['full' => "$match[1]-$match[2]", 'year' => (int)$match[1], 'quarter' => (int)$match[2]];
+        }
+        throw new InvalidArgumentException("Значение \"$quarter\" не является кварталом");
+    }
+
+    /**
+     * @param $s
+     * @param bool $f
+     * @return float|int|mixed
+     */
+    public static function checkQuarterDifference($s, $f = false)
+    {
+        // считаю разницу между введённым значением и текущим кварталом
+        $start = self::isQuarter($s);
+        if ($f) {
+            $finish = self::isQuarter($f);
+        }
+        else {
+            $finish = self::isQuarter(self::getCurrentQuarter());
+        }
+        if ($start['year'] === $finish['year']) {
+            // если оплачен этот год- проверяю, если квартал меньше текущего- получаю разницу вычитанием
+            return $start['quarter'] - $finish['quarter'];
+        }
+        // проверю, в какую сторону считать
+        if ($start['full'] <= $finish['full']) {
+            // если неоплачено за несколько лет- считаю разницу между годами. За все больше одного беру по 4 квартала, плюс кварталы в этом году, плюс кварталы в крайнем году неоплаты
+            $difference = $start['year'] - $finish['year'];
+            // возвращаю сумму кватралов в этом году и неоплаченных кварталов прошлого года
+            return $start['quarter'] + (4 - $finish['quarter']) + (($difference - 1) * 4);
+        }
+        $difference = $start['year'] - $finish['year'];
+        return ((4 - $finish['quarter']) + $start['quarter'] + (($difference - 1) * 4));
+    }
 }

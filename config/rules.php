@@ -45,6 +45,7 @@ return [
 //    MEMBERSHIP BLOCK
     'membership/<action:change>/<id:[0-9]+>' => 'indication/membership',
     'membership/<action:change>' => 'indication/membership',
+    'get/membership-start/<date:[0-9]{4}-[1-4]{1}>' => 'indication/get-membership-start',
 //    BILL BLOCK
     'bill/show/<id:[0-9]+>' => 'payments/show-bill',
     'transaction/show/<id:[0-9]+>' => 'payments/show-transaction',
@@ -65,5 +66,5 @@ return [
 
 
 //    FLOATING INFO BLOCKS
-    '/info/<type:power|membership|target|deposit>/<id:[0-9]+>' => 'info/float',
+    'info/<type:power|membership|target|deposit>/<id:[0-9]+>' => 'info/float',
 ];

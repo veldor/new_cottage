@@ -56,6 +56,13 @@ class DataPowerHandler extends ActiveRecord
     {
         // найду информацию о периоде
         $info = self::findOne($id);
+        $transactions = '';
+        $payed = PayedPowerHandler::find()->where(['period_id' => $info->id])->all();
+        if(!empty($payed)){
+            foreach ($payed as $item) {
+                $transactions .= '<a href="/transaction/show/' . $item->transaction_id . '">' . $item->transaction_id . '</a> - ' . CashHandler::toRubles($item->summ) . '<br/>';
+            }
+        }
         $answer = new ActivatorAnswer();
         $answer->status = 1;
         $answer->header = 'Сведения об электроэнергии за ' . TimeHandler::getFullFromShotMonth($info->month);
@@ -69,6 +76,7 @@ class DataPowerHandler extends ActiveRecord
                             <tr><td>Оплата по обычному тарифу</td><td><b class='text-danger'>" . CashHandler::toRubles($info->over_limit_pay) . "</b></td></tr>
                             <tr><td>Итого к оплате</td><td><b class='text-danger'>" . CashHandler::toRubles($info->total_pay) . "</b></td></tr>
                             <tr><td>Оплачено ранее</td><td><b class='text-success'>" . CashHandler::toRubles($info->payed_summ) . "</b></td></tr>
+                            <tr><td>Детали оплаты</td><td>$transactions</td></tr>
                         </table>";
         return $answer->return();
     }
