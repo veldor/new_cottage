@@ -111,7 +111,7 @@ class TransactionsHandler extends ActiveRecord
 
         if($billInfo->from_deposit > 0){
             // добавлю сведения об операции в отчёт по депозиту
-            $depositItem = DepositHandler::findOne(['bill_id' => $billInfo->id, 'destination' => 'in']);
+            $depositItem = DepositHandler::findOne(['bill_id' => $billInfo->id, 'destination' => 'out']);
             $depositItem->transaction_id = $newTransaction->id;
             $depositItem->save();
         }

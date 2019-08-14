@@ -5,6 +5,7 @@ namespace app\models\database;
 
 use app\models\exceptions\ExceptionWithStatus;
 use app\models\selection_classes\ActivatorAnswer;
+use app\models\utils\Calculator;
 use app\models\utils\CashHandler;
 use app\models\utils\DbTransaction;
 use app\models\utils\GrammarHandler;
@@ -103,12 +104,119 @@ class DataMembershipHandler extends ActiveRecord
         }
     }
 
+    public static function periodInfo($id)
+    {
+        // найду информацию о периоде
+        $info = self::findOne($id);
+        $tariff = TariffMembershipHandler::findOne(['quarter' => $info->quarter]);
+        $transactions = '';
+        $payed = PayedMembershipHandler::find()->where(['period_id' => $info->id])->all();
+        if (!empty($payed)) {
+            foreach ($payed as $item) {
+                $transactions .= '<a href="/transaction/show/' . $item->transaction_id . '">' . $item->transaction_id . '</a> - ' . CashHandler::toRubles($item->summ) . '<br/>';
+            }
+        }
+        $forMeter = $info->is_individual_tariff ? CashHandler::toRubles($info->individual_pay_for_field) : CashHandler::toRubles($tariff->pay_for_meter);
+        $forCottage = $info->is_individual_tariff ? CashHandler::toRubles($info->individual_pay_for_cottage) : CashHandler::toRubles($tariff->pay_for_cottage);
+        $answer = new ActivatorAnswer();
+        $answer->status = 1;
+        $answer->header = 'Сведения об членских взносах за ' . TimeHandler::getFullFromShotQuarter($info->quarter);
+        $answer->view = "<table class='table table-hover table-striped'>
+                            <tr><td>Площадь участка</td><td><b class='text-info'>{$info->square} " . " m<sup>2</sup></b></td></tr>
+                            <tr><td>Оплатить до</td><td><b class='text-info'>" . TimeHandler::timestampToDate($tariff->pay_up_date) . "</b></td></tr>
+                            <tr><td>Оплата за сотку</td><td><b class='text-info'>$forMeter</b></td></tr>
+                            <tr><td>Оплата за участок</td><td><b class='text-info'>$forCottage</b></td></tr>
+                            <tr><td>Итого к оплате</td><td><b class='text-danger'>" . CashHandler::toRubles($info->total_pay) . "</b></td></tr>
+                            <tr><td>Оплачено ранее</td><td><b class='text-success'>" . CashHandler::toRubles($info->payed_summ) . "</b></td></tr>
+                            <tr><td>Детали оплаты</td><td>$transactions</td></tr>
+                        </table>";
+        return $answer->return();
+    }
+
+    /**
+     * @param $cottage CottagesHandler
+     * @param $tariff TariffMembershipHandler
+     * @throws ExceptionWithStatus
+     */
+    public static function add($cottage, $tariff)
+    {
+        if ($cottage->square == 0) {
+            throw new ExceptionWithStatus('Нулевая площадь участка');
+        }
+        $newMembershipDebt = new DataMembershipHandler();
+        $newMembershipDebt->cottage_number = $cottage->id;
+        $newMembershipDebt->quarter = $tariff->quarter;
+        $newMembershipDebt->search_timestamp = $tariff->search_timestamp;
+        $newMembershipDebt->square = $cottage->square;
+        $newMembershipDebt->total_pay = $tariff->pay_for_cottage + $tariff->pay_for_meter / 100 * $cottage->square;
+        $newMembershipDebt->pay_up_date = $tariff->pay_up_date;
+        $newMembershipDebt->save();
+    }
+
+    /**
+     * @param $id
+     * @throws ExceptionWithStatus
+     */
+    public static function checkCurrentFilling($id = null)
+    {
+        $quarter = TimeHandler::getCurrentQuarter();
+        if (!empty($id)) {
+            $cottage = CottagesHandler::get($id);
+            if ($cottage->is_membership) {
+                $existentData = DataMembershipHandler::findOne(['cottage_number' => $id, 'quarter' => $quarter]);
+                if (empty($existentData)) {
+                    // добавлю данные
+                    self::insertData($cottage, $quarter);
+                }
+            }
+        } else {
+            $cottages = CottagesHandler::findAll(['is_membership' => 1]);
+            if (!empty($cottages)) {
+                foreach ($cottages as $cottage) {
+                    $existentData = DataMembershipHandler::findOne(['cottage_number' => $cottage->id, 'quarter' => $quarter]);
+                    if (empty($existentData)) {
+                        // добавлю данные
+                        self::insertData($cottage, $quarter);
+                    }
+                }
+            }
+        }
+    }
+
     public function scenarios()
     {
         return [
             self::SCENARIO_DEFAULT => ['id', 'cottage_number', 'quarter', 'search_timestamp', 'square', 'total_pay', 'payed_summ', 'is_partial_payed', 'is_full_payed', 'is_individual_tariff', 'individual_pay_for_field', 'individual_pay_for_cottage', 'pay_up_date'],
             self::SCENARIO_ENABLE => ['cottage_number', 'firstCountedQuarter']
         ];
+    }
+
+    /**
+     * @param $cottage CottagesHandler
+     * @param $quarter string
+     * @throws ExceptionWithStatus
+     */
+    public static function insertData($cottage, $quarter)
+    {
+        if ($cottage->square == 0) {
+            throw new ExceptionWithStatus('Нулевая площадь участка');
+        }
+        $tariff = TariffMembershipHandler::findOne(['quarter' => $quarter]);
+        if (!empty($tariff)) {
+            // проверю, что данные ещё не заполнены
+            $oldData = DataMembershipHandler::findOne(['cottage_number' => $cottage->id, 'quarter' => $quarter]);
+            if (empty($oldData)) {
+                $newData = new DataMembershipHandler();
+                $newData->cottage_number = $cottage->id;
+                $newData->quarter = $quarter;
+                $newData->search_timestamp = $tariff->search_timestamp;
+                $newData->square = $cottage->square;
+                $newData->pay_up_date = $tariff->pay_up_date;
+                $newData->total_pay = Calculator::calculateWithSquare($cottage->square, $tariff->pay_for_meter, $tariff->pay_for_cottage);
+                $newData->save();
+            }
+        }
+
     }
 
     /**
@@ -189,5 +297,60 @@ class DataMembershipHandler extends ActiveRecord
         $current->save();
         $transaction->commitTransaction();
         return ['action' => '<script>makeInformerModal("Успех", "Показания успешно изменены")</script>'];
+    }
+
+    /**
+     * @return array
+     * @throws ExceptionWithStatus
+     */
+    public function enable()
+    {
+
+        $cottageInfo = CottagesHandler::get($this->cottage_number);
+        if ($cottageInfo->is_membership) {
+            return ['info' => 'Членские взносы уже оплачиваются'];
+        }
+        // если пуст параметр последнего оплаченного квартала- выдам ошибку, ну нафиг
+        if (empty($this->firstCountedQuarter)) {
+            return ['info' => 'Не заполнены данные о первом неоплаченном квартале'];
+        }
+        // если площадь участка равна нулю- предупрежу, что она не верна
+        if ($cottageInfo->square == 0) {
+            return ['info' => 'Не заполнены данные о площади участка'];
+        }
+        $transaction = new DbTransaction();
+        $quarters = TimeHandler::getQuarterList($this->firstCountedQuarter);
+        if (!empty($quarters)) {
+            foreach ($quarters as $quarter => $value) {
+                $tariff = TariffMembershipHandler::findOne(['quarter' => $quarter]);
+                $newData = new DataMembershipHandler();
+                $newData->cottage_number = $cottageInfo->id;
+                $newData->quarter = $quarter;
+                $newData->search_timestamp = TimeHandler::getMonthTimestamp(TimeHandler::getQuarterFirstMonth($quarter));
+                $newData->square = $cottageInfo->square;
+                $newData->pay_up_date = TimeHandler::getPayUpQuarter($quarter);
+                $newData->total_pay = $tariff->pay_for_meter / 100 * $newData->square + $tariff->pay_for_cottage;
+                $newData->save();
+            }
+        }
+        $quarter = TimeHandler::getCurrentQuarter();
+        // запишу в долги данный квартал
+        $tariff = TariffMembershipHandler::findOne(['quarter' => $quarter]);
+        $newData = new DataMembershipHandler();
+        $newData->cottage_number = $cottageInfo->id;
+        $newData->quarter = $quarter;
+        $newData->search_timestamp = TimeHandler::getMonthTimestamp(TimeHandler::getQuarterFirstMonth($quarter));
+        $newData->square = $cottageInfo->square;
+        $newData->pay_up_date = TimeHandler::getPayUpQuarter($quarter);
+        $newData->total_pay = $tariff->pay_for_meter / 100 * $newData->square + $tariff->pay_for_cottage;
+        $newData->save();
+        $cottageInfo->is_membership = 1;
+        $cottageInfo->save();
+        $transaction->commitTransaction();
+        $answer = new ActivatorAnswer();
+        $answer->status = 1;
+        $answer->header = 'Успех';
+        $answer->view = 'Теперь по участку оплачиваются членские взносы';
+        return $answer->return();
     }
 }

@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\models\database\DataMembershipHandler;
 use app\models\database\DataPowerHandler;
 use app\models\database\DataTargetHandler;
+use app\models\database\TariffMembershipHandler;
 use app\models\database\TariffPowerHandler;
 use app\models\exceptions\ExceptionWithStatus;
 use app\models\selection_classes\TariffsInfo;
@@ -31,7 +32,7 @@ class TariffsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'fill', 'details'],
+                        'actions' => ['index', 'fill', 'details', 'check'],
                         'roles' => ['writer'],
                     ],
                 ],
@@ -77,10 +78,24 @@ class TariffsController extends Controller
                         }
                         return $this->render('power', ['months' => $fillingPeriods]);
                     }
+                } elseif ($type === 'membership') {
+                    if (Yii::$app->request->isGet) {
+                        // получу список месяцев для заполнения
+                        $fillingPeriods = TariffMembershipHandler::getFillingList($period);
+                        if (empty($fillingPeriods)) {
+                            echo '<script>window.close();</script>';
+                            die;
+                        }
+                        return $this->render('membership', ['quaters' => $fillingPeriods]);
+                    }
                 }
             } elseif (Yii::$app->request->isPost) {
                 if ($type === 'power') {
                     $model = new TariffPowerHandler(['scenario' => TariffPowerHandler::SCENARIO_MASS_FILL]);
+                    $model->load(Yii::$app->request->post());
+                    return $model->massSave();
+                } elseif ($type === 'membership') {
+                    $model = new TariffMembershipHandler(['scenario' => TariffMembershipHandler::SCENARIO_MASS_FILL]);
                     $model->load(Yii::$app->request->post());
                     return $model->massSave();
                 }
@@ -115,5 +130,16 @@ class TariffsController extends Controller
                 return ['status' => 1, 'header' => 'Отчёт о потреблённой электроэнергии за ' . TimeHandler::getFullFromShotMonth($period) . '.',  'view' => $this->renderAjax('energyStatistics', ['data' => $data])];
         }
         throw new NotFoundHttpException();
+    }
+
+    public function actionCheck($type)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        switch ($type) {
+            case 'power' :
+                return TariffPowerHandler::check();
+            case 'membership' :
+                return TariffMembershipHandler::check();
+        }
     }
 }

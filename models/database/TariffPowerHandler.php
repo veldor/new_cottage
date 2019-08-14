@@ -26,6 +26,16 @@ class TariffPowerHandler extends ActiveRecord
 
     const SCENARIO_MASS_FILL = 'mass_fill';
 
+    public static function check()
+    {
+        // проверю заполненность данных за предыдущий месяц
+        if (!self::find()->where(['month' => TimeHandler::getNeighborMonth(TimeHandler::getCurrentMonth(), -1)])->count()) {
+            return ['status' => 1];
+        } else {
+            return ['status' => 2];
+        }
+    }
+
     public function scenarios()
     {
         return [

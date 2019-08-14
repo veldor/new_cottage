@@ -416,6 +416,7 @@ public static $months = ['Января','Февраля','Марта','Апре�
             $count = abs($count);
         }
         while ($count > 0) {
+            $unpayed[$year . '-' . $quarter] = ['quarterNumber' => $quarter, 'year' => $year];
             if ($quarter === 4) {
                 $quarter = 1;
                 ++$year;
@@ -423,7 +424,6 @@ public static $months = ['Января','Февраля','Марта','Апре�
             else {
                 ++$quarter;
             }
-            $unpayed[$year . '-' . $quarter] = ['quarterNumber' => $quarter, 'year' => $year];
             --$count;
         }
         return $unpayed;

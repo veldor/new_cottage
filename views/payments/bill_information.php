@@ -244,9 +244,10 @@ $payer = ContactsHandler::findOne($bill_info->bill->payerId);
                         }
                     }
                 }
-                try {
-                    $payUp = TimeHandler::timestampToDate($membershipInfo->pay_up_date);
-                } catch (Exception $e) {
+               if (!empty($singleInfo->pay_up_date)) {
+                   $payUp = TimeHandler::timestampToDate($singleInfo->pay_up_date);
+               } else {
+                   $payUp = '--';
                 }
 
                 echo "<tr class='shadowed'><td>Цель платежа</td><td>{$singleInfo->pay_description}</td></tr>";

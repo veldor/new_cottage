@@ -107,7 +107,7 @@ class Pay extends Model
         if (!empty($this->membership)) {
             foreach ($this->membership as $key => $value) {
                 $toPay = CashHandler::fromRubles($value);
-                if ($value > 0) {
+                if ($toPay > 0) {
                     $dividedAmount += $toPay;
                     // проверю, не проводилась ли оплата по этому периоду, если она проводилась и сумма оплаты больше необходимой- вместо оплаты зачислю средства на депозит участка
                     $periodInfo = DataMembershipHandler::findOne(BillMembershipHandler::findOne($key)->membership_data_id);
@@ -117,32 +117,64 @@ class Pay extends Model
                         foreach ($payed as $payedItem) {
                             $payedAmount += $payedItem->summ;
                         }
-                        if ($payedAmount == $periodInfo->total_pay) {
-                            die('П');
+                        // проверю, что сумма оплаты меньше или равна необходимой сумме оплаты
+                        $requiredMembershipAmount = $periodInfo->total_pay;
+                        $leftToPay = $requiredMembershipAmount - $payedAmount;
+                        if ($toPay > $leftToPay) {
+                            $membershipOut = $toPay - $leftToPay;
+                            if ($leftToPay > 0) {
+                                // создам оплату членских взносов
+                                $newPayedMembership = new PayedMembershipHandler();
+                                $newPayedMembership->transaction_id = $newTransaction->id;
+                                $newPayedMembership->quarter = $periodInfo->quarter;
+                                $newPayedMembership->summ = $leftToPay;
+                                $newPayedMembership->pay_date = $newTransaction->bankDate;
+                                $newPayedMembership->period_id = $periodInfo->id;
+                                $newPayedMembership->cottage_id = $this->cottageId;
+                                $newPayedMembership->bill_id = $this->billId;
+                                $newPayedMembership->save();
+                                $periodInfo->payed_summ += $leftToPay;
+                                $periodInfo->is_full_payed = 1;
+                                $periodInfo->save();
+                            }
+                            // остальное отправлю на депозит
+                            $depositTransaction = new DepositHandler();
+                            $depositTransaction->cottage_number = $this->cottageId;
+                            $depositTransaction->bill_id = $this->billId;
+                            $depositTransaction->transaction_id = $newTransaction->id;
+                            $depositTransaction->destination = 'in';
+                            $depositTransaction->summ_before = $cottageInfo->deposit;
+                            $cottageInfo->deposit += $membershipOut;
+                            $depositTransaction->summ_after = $cottageInfo->deposit;
+                            $depositTransaction->pay_date = $newTransaction->bankDate;
+                            $depositTransaction->summ = $membershipOut;
+                            $depositTransaction->description = 'Излишняя оплата членских взносов за период #' . $periodInfo->id . ', транзакция #' . $newTransaction->id;
+                            $depositTransaction->save();
+                            $cottageInfo->save();
+                            continue;
                         }
-                    } else {
-                        // проверю, что оплаченная сумма не больше необходимой
-                        if ($toPay > $periodInfo->total_pay) {
-                            die('переплата');
-                        }
-                        // создам оплату членских взносов
-                        $newPayedMembership = new PayedMembershipHandler();
-                        $newPayedMembership->transaction_id = $newTransaction->id;
-                        $newPayedMembership->quarter = $periodInfo->quarter;
-                        $newPayedMembership->summ = $toPay;
-                        $newPayedMembership->pay_date = $dealTime;
-                        $newPayedMembership->period_id = $periodInfo->id;
-                        $newPayedMembership->cottage_id = $this->cottageId;
-                        $newPayedMembership->bill_id = $this->billId;
-                        $newPayedMembership->save();
-                        $periodInfo->payed_summ = $toPay;
-                        if ($periodInfo->total_pay == $toPay) {
-                            $periodInfo->is_full_payed = 1;
-                        } else {
-                            $periodInfo->is_partial_payed = 1;
-                        }
-                        $periodInfo->save();
                     }
+                    // проверю, что оплаченная сумма не больше необходимой
+                    if ($toPay > $periodInfo->total_pay) {
+                        die('переплата');
+                    }
+                    // создам оплату членских взносов
+                    $newPayedMembership = new PayedMembershipHandler();
+                    $newPayedMembership->transaction_id = $newTransaction->id;
+                    $newPayedMembership->quarter = $periodInfo->quarter;
+                    $newPayedMembership->summ = $toPay;
+                    $newPayedMembership->pay_date = $newTransaction->bankDate;
+                    $newPayedMembership->period_id = $periodInfo->id;
+                    $newPayedMembership->cottage_id = $this->cottageId;
+                    $newPayedMembership->bill_id = $this->billId;
+                    $newPayedMembership->save();
+                    $periodInfo->payed_summ += $toPay;
+                    if ($periodInfo->total_pay == $toPay) {
+                        $periodInfo->is_full_payed = 1;
+                    } else {
+                        $periodInfo->is_partial_payed = 1;
+                    }
+                    $periodInfo->save();
                 }
             }
         }
@@ -172,7 +204,7 @@ class Pay extends Model
                                 $newPayedPower->month = $periodInfo->month;
                                 $newPayedPower->counter_id = $periodInfo->counter_id;
                                 $newPayedPower->summ = $leftToPay;
-                                $newPayedPower->pay_date = $dealTime;
+                                $newPayedPower->pay_date = $newTransaction->bankDate;
                                 $newPayedPower->period_id = $periodInfo->id;
                                 $newPayedPower->cottage_id = $this->cottageId;
                                 $newPayedPower->bill_id = $this->billId;
@@ -208,7 +240,7 @@ class Pay extends Model
                     $newPayedPower->month = $periodInfo->month;
                     $newPayedPower->counter_id = $periodInfo->counter_id;
                     $newPayedPower->summ = $toPay;
-                    $newPayedPower->pay_date = $dealTime;
+                    $newPayedPower->pay_date = $newTransaction->bankDate;
                     $newPayedPower->period_id = $periodInfo->id;
                     $newPayedPower->cottage_id = $this->cottageId;
                     $newPayedPower->bill_id = $this->billId;
@@ -226,7 +258,7 @@ class Pay extends Model
         if (!empty($this->target)) {
             foreach ($this->target as $key => $value) {
                 $toPay = CashHandler::fromRubles($value);
-                if ($value > 0) {
+                if ($toPay > 0) {
                     $dividedAmount += $toPay;
                     // проверю, не проводилась ли оплата по этому периоду, если она проводилась и сумма оплаты больше необходимой- вместо оплаты зачислю средства на депозит участка
                     $periodInfo = DataTargetHandler::findOne(BillTargetHandler::findOne($key)->year_id);
@@ -236,8 +268,41 @@ class Pay extends Model
                         foreach ($payed as $payedItem) {
                             $payedAmount += $payedItem->summ;
                         }
-                        if ($payedAmount == $periodInfo->total_pay) {
-                            die('Доработать излишнюю оплату целевых взносов');
+                        // проверю, что сумма оплаты меньше или равна необходимой сумме оплаты
+                        $requiredTargetAmount = $periodInfo->total_pay;
+                        $leftToPay = $requiredTargetAmount - $payedAmount;
+                        if ($toPay > $leftToPay) {
+                            $targetOut = $toPay - $leftToPay;
+                            if ($leftToPay > 0) {
+                                // создам оплату членских взносов
+                                $newPayedTarget = new PayedTargetHandler();
+                                $newPayedTarget->transaction_id = $newTransaction->id;
+                                $newPayedTarget->year = $periodInfo->year;
+                                $newPayedTarget->summ = $leftToPay;
+                                $newPayedTarget->pay_date = $newTransaction->bankDate;
+                                $newPayedTarget->period_id = $periodInfo->id;
+                                $newPayedTarget->cottage_id = $this->cottageId;
+                                $newPayedTarget->bill_id = $this->billId;
+                                $newPayedTarget->save();
+                                $periodInfo->payed_summ += $leftToPay;
+                                $periodInfo->is_full_payed = 1;
+                                $periodInfo->save();
+                            }
+                            // остальное отправлю на депозит
+                            $depositTransaction = new DepositHandler();
+                            $depositTransaction->cottage_number = $this->cottageId;
+                            $depositTransaction->bill_id = $this->billId;
+                            $depositTransaction->transaction_id = $newTransaction->id;
+                            $depositTransaction->destination = 'in';
+                            $depositTransaction->summ_before = $cottageInfo->deposit;
+                            $cottageInfo->deposit += $targetOut;
+                            $depositTransaction->summ_after = $cottageInfo->deposit;
+                            $depositTransaction->pay_date = $newTransaction->bankDate;
+                            $depositTransaction->summ = $targetOut;
+                            $depositTransaction->description = 'Излишняя оплата целевых взносов за период #' . $periodInfo->id . ', транзакция #' . $newTransaction->id;
+                            $depositTransaction->save();
+                            $cottageInfo->save();
+                            continue;
                         }
                     }
                     // проверю, что оплаченная сумма не больше необходимой
@@ -249,7 +314,7 @@ class Pay extends Model
                     $newPayedTarget->transaction_id = $newTransaction->id;
                     $newPayedTarget->year = $periodInfo->year;
                     $newPayedTarget->summ = $toPay;
-                    $newPayedTarget->pay_date = $dealTime;
+                    $newPayedTarget->pay_date = $newTransaction->bankDate;
                     $newPayedTarget->period_id = $periodInfo->id;
                     $newPayedTarget->cottage_id = $this->cottageId;
                     $newPayedTarget->bill_id = $this->billId;
@@ -267,18 +332,50 @@ class Pay extends Model
         if (!empty($this->single)) {
             foreach ($this->single as $key => $value) {
                 $toPay = CashHandler::fromRubles($value);
-                if ($value > 0) {
+                if ($toPay > 0) {
                     $dividedAmount += $toPay;
                     // проверю, не проводилась ли оплата по этому периоду, если она проводилась и сумма оплаты больше необходимой- вместо оплаты зачислю средства на депозит участка
                     $periodInfo = DataSingleHandler::findOne(BillSingleHandler::findOne($key)->single_id);
-                    $payed = PayedSingleHandler::find()->where(['period_id' => $periodInfo->id])->all();
+                    $payed = PayedSingleHandler::find()->where(['pay_id' => $periodInfo->id])->all();
                     if (!empty($payed)) {
                         $payedAmount = 0;
                         foreach ($payed as $payedItem) {
                             $payedAmount += $payedItem->summ;
                         }
-                        if ($payedAmount == $periodInfo->total_pay) {
-                            die('Доработать излишнюю оплату целевых взносов');
+                        // проверю, что сумма оплаты меньше или равна необходимой сумме оплаты
+                        $requiredSingleAmount = $periodInfo->total_pay;
+                        $leftToPay = $requiredSingleAmount - $payedAmount;
+                        if ($toPay > $leftToPay) {
+                            $singleOut = $toPay - $leftToPay;
+                            if ($leftToPay > 0) {
+                                // создам оплату разных взносов
+                                $newPayedSingle = new PayedSingleHandler();
+                                $newPayedSingle->transaction_id = $newTransaction->id;
+                                $newPayedSingle->pay_id = $periodInfo->id;
+                                $newPayedSingle->summ = $leftToPay;
+                                $newPayedSingle->pay_date = $dealTime;
+                                $newPayedSingle->cottage_id = $this->cottageId;
+                                $newPayedSingle->bill_id = $this->billId;
+                                $newPayedSingle->save();
+                                $periodInfo->payed_summ += $leftToPay;
+                                $periodInfo->is_full_payed = 1;
+                                $periodInfo->save();
+                            }
+                            // остальное отправлю на депозит
+                            $depositTransaction = new DepositHandler();
+                            $depositTransaction->cottage_number = $this->cottageId;
+                            $depositTransaction->bill_id = $this->billId;
+                            $depositTransaction->transaction_id = $newTransaction->id;
+                            $depositTransaction->destination = 'in';
+                            $depositTransaction->summ_before = $cottageInfo->deposit;
+                            $cottageInfo->deposit += $singleOut;
+                            $depositTransaction->summ_after = $cottageInfo->deposit;
+                            $depositTransaction->pay_date = $newTransaction->bankDate;
+                            $depositTransaction->summ = $singleOut;
+                            $depositTransaction->description = 'Излишняя оплата разных взносов за период #' . $periodInfo->id . ', транзакция #' . $newTransaction->id;
+                            $depositTransaction->save();
+                            $cottageInfo->save();
+                            continue;
                         }
                     }
                     // проверю, что оплаченная сумма не больше необходимой
@@ -288,9 +385,9 @@ class Pay extends Model
                     // создам оплату членских взносов
                     $newPayedSingle = new PayedSingleHandler();
                     $newPayedSingle->transaction_id = $newTransaction->id;
-                    $newPayedSingle->pay_id = $periodInfo->id;
                     $newPayedSingle->summ = $toPay;
                     $newPayedSingle->pay_date = $dealTime;
+                    $newPayedSingle->pay_id = $periodInfo->id;
                     $newPayedSingle->cottage_id = $this->cottageId;
                     $newPayedSingle->bill_id = $this->billId;
                     $newPayedSingle->save();
@@ -302,7 +399,6 @@ class Pay extends Model
                     }
                     $periodInfo->save();
                 }
-
             }
         }
         if (!empty($this->fines)) {

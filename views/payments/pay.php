@@ -99,10 +99,13 @@ if(!empty($bill_info->billPower)){
 }
 if(!empty($bill_info->billMembership)){
     foreach ($bill_info->billMembership as $membershipItem) {
+        $popover = '';
         $membershipInfo = DataMembershipHandler::findOne($membershipItem->membership_data_id);
-        // Получу цифры
-        $amount = CashHandler::toRubles($membershipItem->start_summ);
-        $popover = "К оплате: $amount<br/>";
+        $popover .= 'Членские взносы <b class="text-info">' . TimeHandler::getFullFromShotQuarter($membershipInfo->quarter) . '</b><br/>';
+        $popover .= 'Всего к оплате <b class="text-warning">' . CashHandler::toRubles($membershipInfo->total_pay) . '</b><br/>';
+        $popover .= 'Всего оплачено <b class="text-success">' . CashHandler::toRubles($membershipInfo->payed_summ) . '</b><br/>';
+        $popover .= 'Осталось оплатить всего <b class="text-success">' . CashHandler::toRubles($membershipInfo->total_pay - $membershipInfo->payed_summ) . '</b><br/>';
+        $popover .= 'К оплате по счёту <b class="text-warning">' . CashHandler::toRubles($membershipItem->start_summ) . '</b><br/>';
         $payedAmount = 0;
         $payed = PayedMembershipHandler::find()->where(['period_id' => $membershipItem->membership_data_id, 'bill_id' => $bill_info->bill->id])->all();
         if(!empty($payed)){
@@ -110,8 +113,10 @@ if(!empty($bill_info->billMembership)){
                 $payedAmount += $payedItem->summ;
             }
         }
-        $popover .= "Уже оплачено: " . CashHandler::toRubles($payedAmount);
         $max = $membershipItem->start_summ - $payedAmount;
+        $popover .= 'Оплачено по счёту <b class="text-success">' . CashHandler::toRubles($payedAmount) . '</b><br/>';
+
+        $popover .= 'Осталось оплатить по счёту <b class="text-success">' . CashHandler::toRubles($membershipItem->start_summ - $payedAmount) . '</b><br/>';
         echo "<div class='form-group margened payment-details'><div class='col-sm-5'><label class='control-label'>Членские взносы (" . TimeHandler::getFullFromShotQuarter($membershipInfo->quarter) . ")</label></div><div class='col-sm-4'><div class='input-group'><span class='btn btn-success input-group-addon all-distributed-button'>Максимум</span><input data-max-summ='$max' class='form-control distributed-summ-input popovered' type='number' step='0.01' name='Pay[membership][{$membershipItem->id}]' data-toggle='popover' data-placement='auto' data-content='$popover' data-html='true' data-trigger='hover'><span class='input-group-addon'>₽</span></div></div></div>";
     }
 }

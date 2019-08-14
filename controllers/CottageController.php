@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\models\CottageInfo;
 use app\models\database\CottagesHandler;
 use app\models\database\DataMembershipHandler;
+use app\models\database\DataTargetHandler;
 use app\models\database\FinesHandler;
 use app\models\EditContact;
 use app\models\EditCottageBase;
@@ -48,8 +49,9 @@ class CottageController extends Controller
     public function actionShow($cottageNumber)
     {
         try {
-            $cottageInfo = new CottageInfo($cottageNumber);
             FinesHandler::check($cottageNumber);
+            $cottageInfo = new CottageInfo($cottageNumber);
+            DataMembershipHandler::checkCurrentFilling($cottageInfo->cottage->id);
             /** @var CottageInfo $cottageInfo */
             return $this->render('/cottage/view', ['info' => $cottageInfo]);
         } catch (ExceptionWithStatus $e) {
@@ -323,8 +325,9 @@ class CottageController extends Controller
             switch ($type){
                 case 'membership':
                     return DataMembershipHandler::getSwitchForm($cottageId);
+                case 'target':
+                    return DataTargetHandler::getSwitchForm($cottageId);
             }
-
         }
     }
 }

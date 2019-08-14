@@ -367,4 +367,15 @@ $(function () {
     printPageActivator.on('click.print', function () {
         window.print();
     });
+    // проверю заполненность тарифов
+    sendSilentAjax('get', '/tariff/check/power', function (answer) {
+        if (answer['status'] && answer['status'] === 1) {
+            makeInformer('info', 'Не заполнен тариф электроэнергии', '<a class="btn btn-danger" target="_blank" href="/tariffs/fill">Заполнить тариф электроэнергии</a>');
+        }
+    });
+    sendSilentAjax('get', '/tariff/check/membership', function (answer) {
+        if (answer['status'] && answer['status'] === 1) {
+            makeInformer('info', 'Не заполнен тариф членских взносов', '<a class="btn btn-danger" target="_blank" href="/tariffs/fill">Заполнить тариф членских взносов</a>');
+        }
+    });
 });

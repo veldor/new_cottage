@@ -39,6 +39,7 @@ if (depositInput.length === 1) {
 }
 payActivators.on('click.switch', function () {
     let payInput = billModal.find('input[name="' + $(this).attr('data-for') + '"]');
+    console.log(payInput);
     if ($(this).prop('checked')) {
         // активирую платёж
         payInput.prop('disabled', false);

@@ -83,7 +83,7 @@ if ($model->cottageInfo->is_membership) {
         echo "<table class='table table-condensed table-striped'><tr><th>Платить</th><th>Квартал</th><th>Сумма</th><th>К оплате</th></tr>";
         foreach ($model->membershipData as $value) {
             $summToPay = $value->total_pay - $value->payed_summ;
-            echo "<tr><td><input type='checkbox' class='pay-activator' data-for='Bill[membership][{$value->quarter}][value]' name='Bill[membership][{$value->id}][pay]' checked='checked'/></td><td>{$value->quarter}</td><td>" . CashHandler::toRubles($value->total_pay) . "</td><td><input type='number' class='form-control bill-pay' step='0.01'  name='Bill[membership][{$value->id}][value]' value='" . CashHandler::toMathRubles($summToPay) . "'/></td></tr>";
+            echo "<tr><td><input type='checkbox' class='pay-activator' data-for='Bill[membership][{$value->id}][value]' name='Bill[membership][{$value->id}][pay]' checked='checked'/></td><td>{$value->quarter}</td><td>" . CashHandler::toRubles($value->total_pay) . "</td><td><input type='number' class='form-control bill-pay' step='0.01'  name='Bill[membership][{$value->id}][value]' value='" . CashHandler::toMathRubles($summToPay) . "'/></td></tr>";
         }
         echo "</table>";
     } else {
@@ -96,7 +96,7 @@ if ($model->cottageInfo->is_target) {
         echo "<table class='table table-condensed table-striped'><tr><th>Платить</th><th>Год</th><th>Сумма</th><th>К оплате</th></tr>";
         foreach ($model->targetData as $value) {
             $summToPay = $value->total_pay - $value->payed_summ;
-            echo "<tr><td><input type='checkbox' class='pay-activator' data-for='Bill[target][{$value->year}][value]' name='Bill[target][{$value->id}][pay]' checked='checked'/></td><td>{$value->year}</td><td>" . CashHandler::toRubles($value->total_pay) . "</td><td><input type='number' class='form-control bill-pay' step='0.01'  name='Bill[target][{$value->id}][value]' value='" . CashHandler::toMathRubles($summToPay) . "'/></td></tr>";
+            echo "<tr><td><input type='checkbox' class='pay-activator' data-for='Bill[target][{$value->id}][value]' name='Bill[target][{$value->id}][pay]' checked='checked'/></td><td>{$value->year}</td><td>" . CashHandler::toRubles($value->total_pay) . "</td><td><input type='number' class='form-control bill-pay' step='0.01'  name='Bill[target][{$value->id}][value]' value='" . CashHandler::toMathRubles($summToPay) . "'/></td></tr>";
         }
         echo "</table>";
     } else {

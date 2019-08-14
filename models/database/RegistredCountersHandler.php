@@ -131,7 +131,7 @@ class RegistredCountersHandler extends ActiveRecord
             $counter = new RegistredCountersHandler(['scenario' => RegistredCountersHandler::SCENARIO_REGISTER_COUNTER]);
             $counter->cottage_id = $this->cottage_id;
         $counter->last_data = (int)$this->startValue;
-        $counter->counter_serial = $this->counter_serial;
+        $counter->counter_serial = $this->counterSerial;
             $counter->is_active = 1;
             $counter->save();
         if (!empty($this->firstCountedMonth)) {

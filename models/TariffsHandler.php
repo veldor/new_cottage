@@ -4,11 +4,14 @@
 namespace app\models;
 
 
+use app\models\database\CottagesHandler;
+use app\models\database\DataTargetHandler;
 use app\models\database\TariffMembershipHandler;
 use app\models\database\TariffPowerHandler;
 use app\models\database\TariffTargetHandler;
 use app\models\selection_classes\TariffsInfo;
 use app\models\utils\CashHandler;
+use app\models\utils\DbTransaction;
 use app\models\utils\TimeHandler;
 use DateTime;
 use Exception;
@@ -16,6 +19,10 @@ use Yii;
 use yii\base\Model;
 
 
+/**
+ *
+ * @property string $lastFilled
+ */
 class TariffsHandler extends Model
 {
     const SCENARIO_SEARCH_TARIFFS = 'search_tariffs';
@@ -99,8 +106,12 @@ class TariffsHandler extends Model
         $this->lastFilledTarget = TariffTargetHandler::find()->orderBy('year DESC')->one();
     }
 
+    /**
+     * @throws exceptions\ExceptionWithStatus
+     */
     public function saveTariffs()
     {
+        $transaction = new DbTransaction();
         if(!empty($this->energy)){
             foreach ($this->energy as $key => $value) {
                 // проверю, не заполнен ли уже месяц
@@ -152,9 +163,23 @@ class TariffsHandler extends Model
                         $newTariff->search_timestamp = TimeHandler::getYearTimestamp($key);
                         $newTariff->save();
                         Yii::$app->session->addFlash('success', 'Зарегистрирован тариф целевых взносов на ' . $key . ' год');
+                        // добавлю год в долги всем участкам, у которых заявлена оплата целевых взносов
+                        $cottages = CottagesHandler::find()->where(['is_target' => 1])->all();
+                        if (!empty($cottages)) {
+                            foreach ($cottages as $cottage) {
+                                $newTargetDebt = new DataTargetHandler();
+                                $newTargetDebt->cottage_number = $cottage->id;
+                                $newTargetDebt->year = $key;
+                                $newTargetDebt->square = $cottage->square;
+                                $newTargetDebt->total_pay = $newTariff->pay_for_cottage + ($newTariff->pay_for_meter / 100 * $cottage->square);
+                                $newTargetDebt->pay_up_date = $newTariff->pay_up_date;
+                                $newTargetDebt->save();
+                            }
+                        }
                     }
                 }
             }
         }
+        $transaction->commitTransaction();
     }
 }

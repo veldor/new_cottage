@@ -5,6 +5,7 @@ namespace app\models\database;
 
 use app\models\CottageInfo;
 use app\models\exceptions\ExceptionWithStatus;
+use app\models\selection_classes\ActivatorAnswer;
 use app\models\selection_classes\FineDetails;
 use app\models\utils\CashHandler;
 use app\models\utils\LogHandler;
@@ -27,7 +28,6 @@ use yii\db\ActiveRecord;
  * @property bool $is_enabled [tinyint(1)]  Активность пени
  * @property bool $is_locked [tinyint(1) unsigned]  Сумма зафиксирована
  */
-
 class FinesHandler extends ActiveRecord
 {
     private const PERCENT = 0.5;
@@ -37,7 +37,7 @@ class FinesHandler extends ActiveRecord
 
     public static function getPeriod(string $pay_type, int $period_id)
     {
-        switch ($pay_type){
+        switch ($pay_type) {
             case 'membership':
                 return TimeHandler::getFullFromShotQuarter(DataMembershipHandler::findOne($period_id)->quarter);
             case 'target':
@@ -47,12 +47,90 @@ class FinesHandler extends ActiveRecord
         }
     }
 
+    /**
+     * @param $id
+     * @return array
+     * @throws ExceptionWithStatus
+     * @throws Exception
+     */
+    public static function periodInfo($id)
+    {
+        // найду информацию о периоде
+        $period = self::findOne($id);
+        switch ($period->pay_type) {
+            case 'membership' :
+                $payInfo = DataMembershipHandler::findOne($period->period_id);
+                break;
+            case 'power' :
+                $payInfo = DataPowerHandler::findOne($period->period_id);
+        }
+
+
+        $dayDifference = TimeHandler::checkDayDifference($period->payUpLimit);
+        $pays = PayedMembershipHandler::find()->where(['period_id' => $period->period_id])->orderBy('pay_date')->all();
+        $daysInfo = [];
+        if (!empty($pays)) {
+            // пересчитаю остаток пени с учётом оплаты
+            // пересчитаю данные- в период оплаты начинаю считать по сниженной стоимости
+            $daysLeft = $dayDifference;
+            $previousDate = $period->payUpLimit;
+            $summ = $payInfo->total_pay;
+            foreach ($pays as $pay) {
+                $payTime = TransactionsHandler::get($pay->transaction_id)->payDate;
+                $daysDifference = TimeHandler::checkDayDifference($previousDate, $payTime);
+                // это количество дней оплачивается по предыдущей стоимости
+                $fines = CashHandler::countPercent($summ, self::PERCENT);
+                $daysInfo [] = ['days' => $daysDifference, 'pay' => $fines, 'payAmount' => $summ, 'thisPay' => $pay->summ];
+                $daysLeft -= $daysDifference;
+                $summ -= $pay->summ;
+            }
+            // теперь найду разницу между последней оплатой и настоящим временем
+            if ($daysLeft > 0) {
+                // это количество дней оплачивается по предыдущей стоимости
+                $fines = CashHandler::countPercent($summ, self::PERCENT);
+                $daysInfo [] = ['days' => $daysLeft, 'pay' => $fines, 'payAmount' => $summ];
+            }
+        } else {
+            $fines = CashHandler::countPercent($payInfo->total_pay, self::PERCENT);
+            $daysInfo[] = ['days' => $dayDifference, 'pay' => $fines, 'payAmount' => $payInfo->total_pay];
+        }
+        $answer = new ActivatorAnswer();
+        $answer->status = 1;
+        $answer->header = 'Сведения об пени';
+        $answer->view = "<table class='table table-hover table-striped'>
+                            <tr><td>Тип платежа</td><td><b class='text-info'>" . FinesHandler::$types[$period->pay_type] . "</b></td></tr>
+                            <tr><td>Стоимость периода</td><td><b class='text-info'>" . CashHandler::toRubles($payInfo->total_pay) . "</b></td></tr>
+                            <tr><td>Начислено пени</td><td><b class='text-danger'>" . CashHandler::toRubles($period->summ) . "</b></td></tr>
+                            <tr><td>Оплачено</td><td><b class='text-success'>" . CashHandler::toRubles($period->payed_summ) . "</b></td></tr>
+                            <tr><td>Просрочено дней</td><td><b class='text-info'>$dayDifference</b></td></tr>
+                            <tr><td colspan='2' class='text-center'>Подробно по дням</td></tr>";
+
+        $counter = 1;
+        $nextPay = false;
+        foreach ($daysInfo as $item) {
+            if ($nextPay) {
+                $answer->view .= "<tr><td colspan='2' class='text-center'>Оплата</td></tr>";
+            } else {
+                $nextPay = !$nextPay;
+            }
+            $daysCounter = 1;
+            while ($item['days'] >= $daysCounter) {
+                $answer->view .= "<tr><td>$counter</td><td><b class='text-info'>" . CashHandler::toRubles($item['payAmount']) . " / " . self::PERCENT . "% = " . CashHandler::toRubles($item['pay']) . "</b></td></tr>";
+                $daysCounter++;
+                $counter++;
+            }
+        }
+        $answer->view .= "</table>";
+        return $answer->return();
+    }
+
     public function scenarios()
     {
         return [self::SCENARIO_DEFAULT => ['id', 'summ']];
     }
 
     // имя таблицы
+
     /**
      * @return string
      */
@@ -67,27 +145,27 @@ class FinesHandler extends ActiveRecord
      */
     public static function check(string $cottageNumber)
     {
+        $cottage = CottagesHandler::findOne(['cottage_number' => $cottageNumber]);
         // получу неплаченные задолженности по электроэнергии, где сумма платежа больше 0
-        $powers = DataPowerHandler::find()->where(['cottage_number' => $cottageNumber, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
-        if(!empty($powers)){
+        $powers = DataPowerHandler::find()->where(['cottage_number' => $cottage->id, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
+        if (!empty($powers)) {
             foreach ($powers as $power) {
                 // получу дату оплаты долга
                 if ($power->pay_up_date < self::START_POINT) {
                     $payUp = self::START_POINT;
-                }
-                else{
+                } else {
                     $payUp = $power->pay_up_date;
                 }
                 // посчитаю количество дней, прошедших с момента крайнего дня оплаты до этого дня
 
                 // посчитаю количество дней, прошедших с момента крайнего дня оплаты до этого дня
                 $dayDifference = TimeHandler::checkDayDifference($payUp);
-                if($dayDifference > 0){
+                if ($dayDifference > 0) {
                     // если есть частичные оплаты по данному периоду- буду расчитывать сумму с учётом уменьшения общей стоимости
-                    if($power->is_partial_payed){
+                    if ($power->is_partial_payed) {
                         // найду платежи по счёту
                         $pays = PayedPowerHandler::find()->where(['period_id' => $power->id])->orderBy('pay_date')->all();
-                        if(!empty($pays)){
+                        if (!empty($pays)) {
                             // пересчитаю данные- в период оплаты начинаю считать по сниженной стоимости
                             $previousDate = $payUp;
                             $summ = $power->total_pay;
@@ -95,7 +173,7 @@ class FinesHandler extends ActiveRecord
                             foreach ($pays as $pay) {
                                 // оплата может быть до дня расчёта пени, проверю
                                 $dayDifference = TimeHandler::checkDayDifference($previousDate, $pay->pay_date);
-                                if($dayDifference > 0){
+                                if ($dayDifference > 0) {
                                     // посчитаю сумму пени
                                     // получу стоимость одного дня просрочки
                                     $fines = CashHandler::countPercent($summ, self::PERCENT);
@@ -106,14 +184,14 @@ class FinesHandler extends ActiveRecord
                             }
                             // теперь найду разницу между последней оплатой и настоящим временем
                             $dayDifference = TimeHandler::checkDayDifference($previousDate);
-                            if($dayDifference > 0){
+                            if ($dayDifference > 0) {
                                 $fines = CashHandler::countPercent($summ, self::PERCENT);
                                 $finesSumm += $dayDifference * $fines;
                             }
                             // сохраню данные
-                            if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $power->id])){
+                            if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $power->id])) {
                                 $existentFine = new FinesHandler();
-                                $existentFine->cottage_number = $cottageNumber;
+                                $existentFine->cottage_number = $cottage->id;
                                 $existentFine->pay_type = 'power';
                                 $existentFine->period_id = $power->id;
                                 $existentFine->payUpLimit = $payUp;
@@ -122,21 +200,20 @@ class FinesHandler extends ActiveRecord
                                 $existentFine->is_partial_payed = 0;
                                 $existentFine->is_enabled = 1;
                             }
-                            if(!$existentFine->is_locked){
+                            if (!$existentFine->is_locked) {
                                 $existentFine->summ = $finesSumm;
                                 $existentFine->save();
                             }
                         }
-                    }
-                    else{
+                    } else {
                         // если уже есть данные- обновлю, если нет- создам заново
                         // получу стоимость одного дня просрочки
                         $fines = CashHandler::countPercent($power->total_pay, self::PERCENT);
                         $totalFine = $dayDifference * $fines;
                         // сохраню данные
-                        if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $power->id])){
+                        if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $power->id])) {
                             $existentFine = new FinesHandler();
-                            $existentFine->cottage_number = $cottageNumber;
+                            $existentFine->cottage_number = $cottage->id;
                             $existentFine->pay_type = 'power';
                             $existentFine->period_id = $power->id;
                             $existentFine->payUpLimit = $payUp;
@@ -145,7 +222,7 @@ class FinesHandler extends ActiveRecord
                             $existentFine->is_partial_payed = 0;
                             $existentFine->is_enabled = 1;
                         }
-                        if(!$existentFine->is_locked){
+                        if (!$existentFine->is_locked) {
                             $existentFine->summ = $totalFine;
                             $existentFine->save();
                         }
@@ -154,50 +231,51 @@ class FinesHandler extends ActiveRecord
             }
         }
         // получу неплаченные задолженности по членским взносам
-        $memberships = DataMembershipHandler::find()->where(['cottage_number' => $cottageNumber, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
-        if(!empty($memberships)){
+        $memberships = DataMembershipHandler::find()->where(['cottage_number' => $cottage->id, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
+        if (!empty($memberships)) {
             foreach ($memberships as $membership) {
                 // получу дату оплаты долга
                 if ($membership->pay_up_date < self::START_POINT) {
                     $payUp = self::START_POINT;
-                }
-                else{
+                } else {
                     $payUp = $membership->pay_up_date;
                 }
                 // посчитаю количество дней, прошедших с момента крайнего дня оплаты до этого дня
                 $dayDifference = TimeHandler::checkDayDifference($payUp);
-                if($dayDifference > 0){
+                if ($dayDifference > 0) {
                     // если есть частичные оплаты по данному периоду- буду расчитывать сумму с учётом уменьшения общей стоимости
-                    if($membership->is_partial_payed){
+                    if ($membership->is_partial_payed) {
                         // найду платежи по счёту
                         $pays = PayedMembershipHandler::find()->where(['period_id' => $membership->id])->orderBy('pay_date')->all();
-                        if(!empty($pays)){
+                        if (!empty($pays)) {
                             // пересчитаю данные- в период оплаты начинаю считать по сниженной стоимости
                             $previousDate = $payUp;
                             $summ = $membership->total_pay;
                             $finesSumm = 0;
                             foreach ($pays as $pay) {
                                 // оплата может быть до дня расчёта пени, проверю
-                                $dayDifference = TimeHandler::checkDayDifference($previousDate, $pay->pay_date);
-                                if($dayDifference > 0){
+                                // дату платежа возьму из транзакции
+                                $payDate = TransactionsHandler::get($pay->transaction_id)->payDate;
+                                $dayDifference = TimeHandler::checkDayDifference($previousDate, $payDate);
+                                if ($dayDifference > 0) {
                                     // посчитаю сумму пени
                                     // получу стоимость одного дня просрочки
                                     $fines = CashHandler::countPercent($summ, self::PERCENT);
                                     $finesSumm += $dayDifference * $fines;
                                 }
-                                $previousDate = $pay->pay_date;
+                                $previousDate = $payDate;
                                 $summ -= $pay->summ;
                             }
                             // теперь найду разницу между последней оплатой и настоящим временем
                             $dayDifference = TimeHandler::checkDayDifference($previousDate);
-                            if($dayDifference > 0){
+                            if ($dayDifference > 0) {
                                 $fines = CashHandler::countPercent($summ, self::PERCENT);
                                 $finesSumm += $dayDifference * $fines;
                             }
                             // сохраню данные
-                            if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $membership->id])){
+                            if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $membership->id])) {
                                 $existentFine = new FinesHandler();
-                                $existentFine->cottage_number = $cottageNumber;
+                                $existentFine->cottage_number = $cottage->id;
                                 $existentFine->pay_type = 'membership';
                                 $existentFine->period_id = $membership->id;
                                 $existentFine->payUpLimit = $payUp;
@@ -206,21 +284,20 @@ class FinesHandler extends ActiveRecord
                                 $existentFine->is_partial_payed = 0;
                                 $existentFine->is_enabled = 1;
                             }
-                            if(!$existentFine->is_locked){
+                            if (!$existentFine->is_locked) {
                                 $existentFine->summ = $finesSumm;
                                 $existentFine->save();
                             }
                         }
-                    }
-                    else{
+                    } else {
                         // если уже есть данные- обновлю, если нет- создам заново
                         // получу стоимость одного дня просрочки
                         $fines = CashHandler::countPercent($membership->total_pay, self::PERCENT);
                         $totalFine = $dayDifference * $fines;
                         // сохраню данные
-                        if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $membership->id])){
+                        if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $membership->id])) {
                             $existentFine = new FinesHandler();
-                            $existentFine->cottage_number = $cottageNumber;
+                            $existentFine->cottage_number = $cottage->id;
                             $existentFine->pay_type = 'membership';
                             $existentFine->period_id = $membership->id;
                             $existentFine->payUpLimit = $payUp;
@@ -229,7 +306,7 @@ class FinesHandler extends ActiveRecord
                             $existentFine->is_partial_payed = 0;
                             $existentFine->is_enabled = 1;
                         }
-                        if(!$existentFine->is_locked){
+                        if (!$existentFine->is_locked) {
                             $existentFine->summ = $totalFine;
                             $existentFine->save();
                         }
@@ -238,25 +315,24 @@ class FinesHandler extends ActiveRecord
             }
         }
         // получу неплаченные задолженности по целевым взносам
-        $targets = DataTargetHandler::find()->where(['cottage_number' => $cottageNumber, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
-        if(!empty($targets)){
+        $targets = DataTargetHandler::find()->where(['cottage_number' => $cottage->id, 'is_full_payed' => 0])->andWhere(['>', 'total_pay', 0])->all();
+        if (!empty($targets)) {
             foreach ($targets as $target) {
                 // получу дату оплаты долга
                 if ($target->pay_up_date < self::START_POINT) {
                     $payUp = self::START_POINT;
-                }
-                else{
+                } else {
                     $payUp = $target->pay_up_date;
                 }
 
                 // посчитаю количество дней, прошедших с момента крайнего дня оплаты до этого дня
                 $dayDifference = TimeHandler::checkDayDifference($payUp);
-                if($dayDifference > 0){
+                if ($dayDifference > 0) {
                     // если есть частичные оплаты по данному периоду- буду расчитывать сумму с учётом уменьшения общей стоимости
-                    if($target->is_partial_payed){
+                    if ($target->is_partial_payed) {
                         // найду платежи по счёту
                         $pays = PayedTargetHandler::find()->where(['period_id' => $target->id])->orderBy('pay_date')->all();
-                        if(!empty($pays)){
+                        if (!empty($pays)) {
                             // пересчитаю данные- в период оплаты начинаю считать по сниженной стоимости
                             $previousDate = $payUp;
                             $summ = $target->total_pay;
@@ -264,7 +340,7 @@ class FinesHandler extends ActiveRecord
                             foreach ($pays as $pay) {
                                 // оплата может быть до дня расчёта пени, проверю
                                 $dayDifference = TimeHandler::checkDayDifference($previousDate, $pay->pay_date);
-                                if($dayDifference > 0){
+                                if ($dayDifference > 0) {
                                     // посчитаю сумму пени
                                     // получу стоимость одного дня просрочки
                                     $fines = CashHandler::countPercent($summ, self::PERCENT);
@@ -275,14 +351,14 @@ class FinesHandler extends ActiveRecord
                             }
                             // теперь найду разницу между последней оплатой и настоящим временем
                             $dayDifference = TimeHandler::checkDayDifference($previousDate);
-                            if($dayDifference > 0){
+                            if ($dayDifference > 0) {
                                 $fines = CashHandler::countPercent($summ, self::PERCENT);
                                 $finesSumm += $dayDifference * $fines;
                             }
                             // сохраню данные
-                            if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $target->id])){
+                            if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $target->id])) {
                                 $existentFine = new FinesHandler();
-                                $existentFine->cottage_number = $cottageNumber;
+                                $existentFine->cottage_number = $cottage->id;
                                 $existentFine->pay_type = 'target';
                                 $existentFine->period_id = $target->id;
                                 $existentFine->payUpLimit = $payUp;
@@ -291,12 +367,11 @@ class FinesHandler extends ActiveRecord
                                 $existentFine->is_partial_payed = 0;
                                 $existentFine->is_enabled = 1;
                             }
-                            if(!$existentFine->is_locked){
+                            if (!$existentFine->is_locked) {
                                 $existentFine->summ = $finesSumm;
                                 $existentFine->save();
                             }
-                        }
-                        else{
+                        } else {
                             // платёж частично оплачен но не в программе
                             $summ = $target->total_pay - $target->payed_summ;
                             // теперь найду разницу между последней оплатой и настоящим временем
@@ -304,9 +379,9 @@ class FinesHandler extends ActiveRecord
                             $fines = CashHandler::countPercent($summ, self::PERCENT);
                             $finesSumm = $dayDifference * $fines;
                             // сохраню данные
-                            if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $target->id])){
+                            if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $target->id])) {
                                 $existentFine = new FinesHandler();
-                                $existentFine->cottage_number = $cottageNumber;
+                                $existentFine->cottage_number = $cottage->id;
                                 $existentFine->pay_type = 'target';
                                 $existentFine->period_id = $target->id;
                                 $existentFine->payUpLimit = $payUp;
@@ -315,21 +390,20 @@ class FinesHandler extends ActiveRecord
                                 $existentFine->is_partial_payed = 0;
                                 $existentFine->is_enabled = 1;
                             }
-                            if(!$existentFine->is_locked){
+                            if (!$existentFine->is_locked) {
                                 $existentFine->summ = $finesSumm;
                                 $existentFine->save();
                             }
                         }
-                    }
-                    else{
+                    } else {
                         // если уже есть данные- обновлю, если нет- создам заново
                         // получу стоимость одного дня просрочки
                         $fines = CashHandler::countPercent($target->total_pay, self::PERCENT);
                         $totalFine = $dayDifference * $fines;
                         // сохраню данные
-                        if(!$existentFine = FinesHandler::findOne(['cottage_number' => $cottageNumber, 'period_id' => $target->id])){
+                        if (!$existentFine = FinesHandler::findOne(['cottage_number' => $cottage->id, 'period_id' => $target->id])) {
                             $existentFine = new FinesHandler();
-                            $existentFine->cottage_number = $cottageNumber;
+                            $existentFine->cottage_number = $cottage->id;
                             $existentFine->pay_type = 'target';
                             $existentFine->period_id = $target->id;
                             $existentFine->payUpLimit = $payUp;
@@ -338,7 +412,7 @@ class FinesHandler extends ActiveRecord
                             $existentFine->is_partial_payed = 0;
                             $existentFine->is_enabled = 1;
                         }
-                        if(!$existentFine->is_locked){
+                        if (!$existentFine->is_locked) {
                             $existentFine->summ = $totalFine;
                             $existentFine->save();
                         }
@@ -405,6 +479,7 @@ class FinesHandler extends ActiveRecord
         }
         return $summ;
     }
+
     public static function lockFine($finesId)
     {
         $info = self::findOne($finesId);
@@ -419,7 +494,7 @@ class FinesHandler extends ActiveRecord
      */
     public function lock()
     {
-        if($this->summ > 0){
+        if ($this->summ > 0) {
             // найду пени
             $info = self::findOne($this->id);
             $info->summ = CashHandler::fromRubles($this->summ);
@@ -456,10 +531,11 @@ class FinesHandler extends ActiveRecord
      * @param $fine FinesHandler
      * @throws Exception
      */
-    private static function count($fine){
+    private static function count($fine)
+    {
         /** @var DataTargetHandler|DataMembershipHandler|TariffPowerHandler $result */
         $result = null;
-        switch ($fine->pay_type){
+        switch ($fine->pay_type) {
             case 'membership':
                 $result = DataMembershipHandler::findOne($fine->period_id);
                 break;
@@ -471,7 +547,7 @@ class FinesHandler extends ActiveRecord
                 break;
         }
         $dayDifference = TimeHandler::checkDayDifference($fine->payUpLimit);
-        if($result->is_partial_payed){
+        if ($result->is_partial_payed) {
             die('расчёт пени по частично оплаченным счетам в разработке');
         }
         $fines = CashHandler::countPercent($result->total_pay, self::PERCENT);
@@ -482,9 +558,10 @@ class FinesHandler extends ActiveRecord
      * @param $fine FinesHandler
      * @return FineDetails
      */
-    private static function getFinesDetail($fine){
+    private static function getFinesDetail($fine)
+    {
         $details = new FineDetails();
-        switch ($fine->pay_type){
+        switch ($fine->pay_type) {
             case 'membership':
                 $result = DataMembershipHandler::findOne($fine->period_id);
                 $details->type = 'Членские взносы';

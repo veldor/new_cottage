@@ -9,10 +9,12 @@ use app\models\database\CottagesHandler;
 use app\models\database\DataMembershipHandler;
 use app\models\database\DataPowerHandler;
 use app\models\database\DataTargetHandler;
+use app\models\database\RegistredCountersHandler;
 use app\models\exceptions\ExceptionWithStatus;
 use app\models\utils\CashHandler;
 use app\models\utils\TimeHandler;
 use nirvana\showloading\ShowLoadingAsset;
+use onmotion\apexcharts\ApexchartsWidget;
 use yii\web\View;
 
 /* @var $this View */
@@ -214,7 +216,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
     </div>
     <div class="tab-pane" id="power">
         <?php
-            echo "<table class='table table-hover table-striped table-condensed'>
+        echo "<table class='table table-hover table-striped table-condensed'>
                         <caption>Счётчики электрэнергии</caption>
                         <tr>
                             <th>Номер</th>
@@ -238,11 +240,106 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                             </td>
                        </tr>";
             }
-            }
-            echo "</table>";
+        }
+        echo "</table>";
 
-            echo "<div class='text-center'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='counter/add' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-plus'></span> Добавить счётчик</span></a></div>";
+        echo "<div class='text-center'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='counter/add' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-plus'></span> Добавить счётчик</span></a></div>";
         if (!empty($info->powerData)) {
+            $series = [];
+            // тест графиков
+            $counters = RegistredCountersHandler::find()->where(['cottage_id' => $info->cottage->id])->all();
+            foreach ($counters as $counter) {
+                $newArr = [];
+                $newArr['name'] = 'Счётчик # ' . $counter->counter_serial;
+                $data = DataPowerHandler::find()->where(['counter_id' => $counter->id])->orderBy('month')->all();
+                $dataArr['data'] = [];
+                if (!empty($data)) {
+                    foreach ($data as $item) {
+                        $dataArr = [];
+                        $dataArr[] = $item->month;
+                        $dataArr[] = $item->difference;
+                        $newArr['data'][] = $dataArr;
+                    }
+                }
+                $series[] = $newArr;
+            }
+            /*
+                        var_dump($series);
+                      $series = [
+                            [
+                                'name' => 'Счётчик 1',
+                                'data' => [
+                                    ['2019-01', 1],
+                                    ['2019-02', 100],
+                                    ['2019-03', 300],
+                                    ['2019-04', 10],
+                                    ['2019-05', 100],
+                                    ['2019-06', 100],
+                                    ['2019-07', 100],
+                                    ['2019-08', 100],
+                                    ['2019-09', 100],
+                                    ['2019-10', 100],
+                                    ['2019-11', 100],
+                                    ['2019-12', 100],
+                                ],
+                            ],
+                            [
+                                'name' => 'Счётчик 2',
+                                'data' => [
+                                    ['2019-01', ''],
+                                    ['2019-02', ''],
+                                    ['2019-03', ''],
+                                    ['2019-04', 10],
+                                    ['2019-05', 200],
+                                    ['2019-06', 100],
+                                    ['2019-07', 100],
+                                    ['2019-08', 200],
+                                    ['2019-09', 100],
+                                    ['2019-10', 200],
+                                    ['2019-11', 100],
+                                    ['2019-12', 100],
+                                ],
+                            ],
+                        ];
+                      echo "\n\n\n";
+                      var_dump($series);
+                      die;*/
+
+            echo ApexchartsWidget::widget([
+                'type' => 'area', // default area
+                'height' => '350', // default 350
+                'chartOptions' => [
+                    'chart' => [
+                        'toolbar' => [
+                            'show' => true,
+                            'autoSelected' => 'zoom'
+                        ],
+                    ],
+                    'xaxis' => [
+                        'type' => 'datetime',
+                        // 'categories' => $categories,
+                    ],
+                    'plotOptions' => [
+                        'bar' => [
+                            'horizontal' => false,
+                            'endingShape' => 'rounded'
+                        ],
+                    ],
+                    'dataLabels' => [
+                        'enabled' => true
+                    ],
+                    'stroke' => [
+                        'show' => true,
+                        'colors' => ['transparent']
+                    ],
+                    'legend' => [
+                        'verticalAlign' => 'bottom',
+                        'horizontalAlign' => 'left',
+                    ],
+                ],
+                'series' => $series
+            ]);
+
             echo "<table class='table table-hover table-striped table-condensed'>
                         <caption>Показания</caption>
                         <tr>
@@ -288,7 +385,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
         <?php
 
-        if($info->cottage->is_membership){
+        if ($info->cottage->is_membership) {
             echo "<div class='text-center margened'><a class='btn btn-default control-element'  data-type='custom-edit' data-action='membership/change-period' data-id='{$info->cottage->id}'><span class='text-success'><span class='glyphicon glyphicon-pencil'></span> Изменить период оплаты</span></a></div>";
 
             if (!empty($info->membershipData)) {
@@ -312,7 +409,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
                     echo "
                             <tr>
-                                <td>{$item->quarter}</td>
+                                <td><a class='activator' href='#' data-action='/info/membership/{$item->id}'>{$item->quarter}</a></td>
                                 <td>{$item->square}</td>
                                 <td><b class='text-danger'>" . CashHandler::toRubles($item->total_pay) . "</b></td>
                                 <td><b class='$textColor'>" . CashHandler::toRubles($item->payed_summ) . "</b></td>
@@ -332,31 +429,31 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
             } else {
                 echo "<h2>Данных по членским взносам не найдено</h2>";
             }
-        }
-        else{
+        } else {
             echo "<div class='text-center'><h2 class='text-info'>Членские взносы не оплачиваются</h2></div>";
-            echo "<div class='text-center'><button class='btn btn-default btn-lg text-info activator' data-action='/cottage/switch-membership/{$info->cottage->id}'><span class='glyphicon glyphicon-ok text-success'></span><span class='text-success'> Оплачивать целевые взносы</span></button></div>";
+            echo "<div class='text-center'><button class='btn btn-default btn-lg text-info activator' data-action='/cottage/switch-membership/{$info->cottage->id}'><span class='glyphicon glyphicon-ok text-success'></span><span class='text-success'> Оплачивать членские взносы</span></button></div>";
         }
 
         ?>
     </div>
     <div class="tab-pane" id="target">
         <?php
-        if (!empty($info->targetData)) {
-            echo "<table class='table table-hover table-striped table-condensed'>
+        if ($info->cottage->is_target) {
+            if (!empty($info->targetData)) {
+                echo "<table class='table table-hover table-striped table-condensed'>
                         <tr>
                             <th>Год</th>
                             <th>Сумма</th>
                             <th>Оплачено</th>
                         </tr>
                     ";
-            foreach ($info->targetData as $item) {
+                foreach ($info->targetData as $item) {
 
-                $textColor = $item->is_partial_payed ? 'color-info' : $item->is_full_payed ? 'text-success' : 'text-warning';
+                    $textColor = $item->is_partial_payed ? 'color-info' : $item->is_full_payed ? 'text-success' : 'text-warning';
 
-                echo "
+                    echo "
                             <tr>
-                                <td>{$item->year}</td>
+                                <td><a class='activator' href='#' data-action='/info/target/{$item->id}'>{$item->year}</a></td>
                                 <td><b class='text-danger'>" . CashHandler::toRubles($item->total_pay) . "</b></td>
                                 <td><b class='$textColor'>" . CashHandler::toRubles($item->payed_summ) . "</b></td>
                                 <td>
@@ -373,10 +470,14 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                                 </td>
                             </tr>
                     ";
+                }
+                echo "</table>";
+            } else {
+                echo "<h2>Данных по целевым взносам не найдено</h2>";
             }
-            echo "</table>";
         } else {
-            echo "<h2>Данных по целевым взносам не найдено</h2>";
+            echo "<div class='text-center'><h2 class='text-info'>Целевые взносы не оплачиваются</h2></div>";
+            echo "<div class='text-center'><button class='btn btn-default btn-lg text-info activator' data-action='/cottage/switch-target/{$info->cottage->id}'><span class='glyphicon glyphicon-ok text-success'></span><span class='text-success'> Оплачивать целевые взносы</span></button></div>";
         }
         ?>
     </div>
@@ -397,7 +498,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
 
                 echo "
                             <tr>
-                                <td>{$item->pay_description}</td>
+                                <td><a class='activator' href='#' data-action='/info/single/{$item->id}'>{$item->pay_description}</a></td>
                                 <td><b class='text-danger'>" . CashHandler::toRubles($item->total_pay) . "</b></td>
                                 <td><b class='$textColor'>" . CashHandler::toRubles($item->payed_summ) . "</b></td>
                                 <td>
@@ -522,7 +623,7 @@ $this->title = $info->cottageInfo->cottageInfo->cottage_number . ' участо�
                 } else {
                     $lockItem = "<a href='#' id='fines_{$item->id}_unlock' data-action='/unlock-fine/{$item->id}' class='btn btn-default activator hidden'><span class='glyphicon glyphicon-lock text-danger'></span></a><a href='#' id='fines_{$item->id}_lock' class='btn btn-default control-element' data-type='custom-edit' data-action='lock-fine' data-id='{$item->id}'><span class='glyphicon glyphicon-lock text-success'></span></a>";
                 }
-                echo "<tr><td>$type</td><td>{$period}</td><td><b id='fines_{$item->id}_summ' class='text-info'>" . CashHandler::toRubles($item->summ) . "</b></td><td><b class='$text'>" . CashHandler::toRubles($item->payed_summ) . "</b></td><td>$dayDifference дней</td><td>" . CashHandler::toRubles($daySumm) . "</td><td>$controlItem $lockItem</td></tr>";
+                echo "<tr><td><a class='activator' href='#' data-action='/info/fines/{$item->id}'>$type</a></td><td>{$period}</td><td><b id='fines_{$item->id}_summ' class='text-info'>" . CashHandler::toRubles($item->summ) . "</b></td><td><b class='$text'>" . CashHandler::toRubles($item->payed_summ) . "</b></td><td>$dayDifference дней</td><td>" . CashHandler::toRubles($daySumm) . "</td><td>$controlItem $lockItem</td></tr>";
             }
             echo "</table>";
         } else {

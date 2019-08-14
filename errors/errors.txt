@@ -6432,3 +6432,642 @@ in sting 115
 
 
 
+Surprise 1565506681
+url /tariff/fill/membership/2018-2
+message Trying to get property 'pay_for_meter' of non-object
+code 8
+in file Z:\sites\new_cottage\views\tariffs\membership.php
+in sting 21
+#0 Z:\sites\new_cottage\views\tariffs\membership.php(21): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'Z:\\sites\\new_co...', 21, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\TariffsController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('membership', Array, Object(app\controllers\TariffsController))
+#5 Z:\sites\new_cottage\controllers\TariffsController.php(90): yii\base\Controller->render('membership', Array)
+#6 [internal function]: app\controllers\TariffsController->actionFill('membership', '2018-2')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('fill', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('tariffs/fill', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 type => membership
+	 period => 2018-2
+
+
+Surprise 1565509335
+url /membership/enable
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+post is 
+	 _csrf => cq01BKCeqp4dWwMivW46xlO_VB00xE-XXAiF7Lkl1DYB3HZ06PX681kjdGzSO36VKtsDV1eoPsJoYMGqj3GAYw==
+	 DataMembershipHandler => 
+	 cottage_number => 1087
+	 firstCountedQuarter => 
+
+
+Surprise 1565511958
+url /bill/distribute
+message Creating default object from empty value
+code 2
+in file Z:\sites\new_cottage\models\database\TransactionsHandler.php
+in sting 115
+#0 Z:\sites\new_cottage\models\database\TransactionsHandler.php(115): yii\base\ErrorHandler->handleError(2, 'Creating defaul...', 'Z:\\sites\\new_co...', 115, Array)
+#1 Z:\sites\new_cottage\controllers\PaymentsController.php(190): app\models\database\TransactionsHandler->distribute()
+#2 [internal function]: app\controllers\PaymentsController->actionDistributeBill(NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('distribute-bill', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/distri...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => dm6vp08SmqHmfbJWm5IysSt6PeKnqFJ0yuAjCqNzJxgFH-zXB3nKzKIFxRj0x3biUh5qqMTEIyH-iGdMlSdzTQ==
+	 TransactionsHandler => 
+	 bill_id => 455
+	 cottage_id => 1087
+	 summ => 562.50
+	 membership => 
+	 52 => 187.50
+	 53 => 187.50
+	 54 => 187.50
+	 notify => 1
+
+
+Surprise 1565512013
+url /bill/distribute
+message Creating default object from empty value
+code 2
+in file Z:\sites\new_cottage\models\database\TransactionsHandler.php
+in sting 115
+#0 Z:\sites\new_cottage\models\database\TransactionsHandler.php(115): yii\base\ErrorHandler->handleError(2, 'Creating defaul...', 'Z:\\sites\\new_co...', 115, Array)
+#1 Z:\sites\new_cottage\controllers\PaymentsController.php(190): app\models\database\TransactionsHandler->distribute()
+#2 [internal function]: app\controllers\PaymentsController->actionDistributeBill(NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('distribute-bill', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/distri...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => dm6vp08SmqHmfbJWm5IysSt6PeKnqFJ0yuAjCqNzJxgFH-zXB3nKzKIFxRj0x3biUh5qqMTEIyH-iGdMlSdzTQ==
+	 TransactionsHandler => 
+	 bill_id => 455
+	 cottage_id => 1087
+	 summ => 562.50
+	 membership => 
+	 52 => 187.50
+	 53 => 187.50
+	 54 => 187.50
+	 notify => 1
+
+
+Surprise 1565514058
+url /pay/bill/455
+message Undefined variable: powerInfo
+code 8
+in file Z:\sites\new_cottage\views\payments\pay.php
+in sting 108
+#0 Z:\sites\new_cottage\views\payments\pay.php(108): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', 'Z:\\sites\\new_co...', 108, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\PaymentsController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('pay', Array, Object(app\controllers\PaymentsController))
+#5 Z:\sites\new_cottage\controllers\PaymentsController.php(206): yii\base\Controller->render('pay', Array)
+#6 [internal function]: app\controllers\PaymentsController->actionPay('455', NULL)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('pay', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/pay', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 id => 455
+
+
+Surprise 1565515526
+url /bill/show/458
+message Undefined variable: payUp
+code 8
+in file Z:\sites\new_cottage\views\payments\bill_information.php
+in sting 258
+#0 Z:\sites\new_cottage\views\payments\bill_information.php(258): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', 'Z:\\sites\\new_co...', 258, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\PaymentsController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('bill_informatio...', Array, Object(app\controllers\PaymentsController))
+#5 Z:\sites\new_cottage\controllers\PaymentsController.php(147): yii\base\Controller->render('bill_informatio...', Array)
+#6 [internal function]: app\controllers\PaymentsController->actionShowBill('458')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('show-bill', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/show-b...', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 id => 458
+
+
+Surprise 1565515526
+url /bill/show/457
+message Undefined variable: payUp
+code 8
+in file Z:\sites\new_cottage\views\payments\bill_information.php
+in sting 258
+#0 Z:\sites\new_cottage\views\payments\bill_information.php(258): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', 'Z:\\sites\\new_co...', 258, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\PaymentsController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('bill_informatio...', Array, Object(app\controllers\PaymentsController))
+#5 Z:\sites\new_cottage\controllers\PaymentsController.php(147): yii\base\Controller->render('bill_informatio...', Array)
+#6 [internal function]: app\controllers\PaymentsController->actionShowBill('457')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('show-bill', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/show-b...', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 id => 457
+
+
+Surprise 1565515713
+url /pay/bill
+message SQLSTATE[42S22]: Column not found: 1054 Unknown column 'period_id' in 'where clause'
+The SQL being executed was: SELECT * FROM `payed_single` WHERE `period_id`=9
+code 42
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'SELECT * FROM `...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1158): yii\db\Command->internalExecute('SELECT * FROM `...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Query.php(237): yii\db\Command->queryAll()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveQuery.php(133): yii\db\Query->all(NULL)
+#5 Z:\sites\new_cottage\models\Pay.php(306): yii\db\ActiveQuery->all()
+#6 Z:\sites\new_cottage\controllers\PaymentsController.php(212): app\models\Pay->pay()
+#7 [internal function]: app\controllers\PaymentsController->actionPay(NULL, NULL)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('pay', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/pay', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+post is 
+	 _csrf => _XfjN6iSB9743nqtrvXlg4FcwwSxy3aza9s83CiiXjeOBqBH4PlXs7ymDePBoKHQ-DiUTtKnB-Zfs3iaHvYKYg==
+	 Pay => 
+	 billId => 458
+	 cottageId => 1087
+	 payedSumm => 180
+	 bankTransactionId => 
+	 payCustomDate => 
+	 getCustomDate => 
+	 single => 
+	 3 => 180.00
+	 notify => 0
+
+
+Surprise 1565515722
+url /pay/bill
+message SQLSTATE[42S22]: Column not found: 1054 Unknown column 'period_id' in 'where clause'
+The SQL being executed was: SELECT * FROM `payed_single` WHERE `period_id`=9
+code 42
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'SELECT * FROM `...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1158): yii\db\Command->internalExecute('SELECT * FROM `...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Query.php(237): yii\db\Command->queryAll()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveQuery.php(133): yii\db\Query->all(NULL)
+#5 Z:\sites\new_cottage\models\Pay.php(306): yii\db\ActiveQuery->all()
+#6 Z:\sites\new_cottage\controllers\PaymentsController.php(212): app\models\Pay->pay()
+#7 [internal function]: app\controllers\PaymentsController->actionPay(NULL, NULL)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('pay', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/pay', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+post is 
+	 _csrf => _XfjN6iSB9743nqtrvXlg4FcwwSxy3aza9s83CiiXjeOBqBH4PlXs7ymDePBoKHQ-DiUTtKnB-Zfs3iaHvYKYg==
+	 Pay => 
+	 billId => 458
+	 cottageId => 1087
+	 payedSumm => 180
+	 bankTransactionId => 
+	 payCustomDate => 
+	 getCustomDate => 
+	 single => 
+	 3 => 180.00
+	 notify => 0
+
+
+Surprise 1565516093
+url /pay/bill
+message Unknown scenario: default
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Model.php
+in sting 357
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(670): yii\base\Model->validate(NULL)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(681): yii\db\ActiveRecord->update(true, NULL)
+#2 Z:\sites\new_cottage\models\Pay.php(335): yii\db\BaseActiveRecord->save()
+#3 Z:\sites\new_cottage\controllers\PaymentsController.php(212): app\models\Pay->pay()
+#4 [internal function]: app\controllers\PaymentsController->actionPay(NULL, NULL)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('pay', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('payments/pay', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#11 {main}
+post is 
+	 _csrf => _XfjN6iSB9743nqtrvXlg4FcwwSxy3aza9s83CiiXjeOBqBH4PlXs7ymDePBoKHQ-DiUTtKnB-Zfs3iaHvYKYg==
+	 Pay => 
+	 billId => 458
+	 cottageId => 1087
+	 payedSumm => 180
+	 bankTransactionId => 
+	 payCustomDate => 
+	 getCustomDate => 
+	 single => 
+	 3 => 180.00
+	 notify => 0
+
+
+Surprise 1565517203
+url /info/single/9
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565518218
+url /info/single/9
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565518225
+url /info/single/9
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565521871
+url /tariffs/fill
+message Object of class app\models\database\TariffTargetHandler could not be converted to number
+code 8
+in file Z:\sites\new_cottage\models\TariffsHandler.php
+in sting 174
+#0 Z:\sites\new_cottage\models\TariffsHandler.php(174): yii\base\ErrorHandler->handleError(8, 'Object of class...', 'Z:\\sites\\new_co...', 174, Array)
+#1 Z:\sites\new_cottage\controllers\TariffsController.php(109): app\models\TariffsHandler->saveTariffs()
+#2 [internal function]: app\controllers\TariffsController->actionFill(NULL, NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('fill', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('tariffs/fill', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => u63tlL1jwyTQ8G31Ho8UvP5vssSN1llqwt0qYeH14ZLI3K7k9QiTSZSIGrtx2lDvhwvlju66KD_2tW4n16G1xw==
+	 TariffsHandler => 
+	 energy => 
+	 2019-07 => 
+	 limit => 
+	 cost => 
+	 overcost => 
+	 membership => 
+	 2019-3 => 
+	 fixed => 
+	 float => 
+	 target => 
+	 2019 => 
+	 fixed => 3000
+	 float => 0
+	 payUp => 2019-08-31
+	 description => sdf
+
+
+Surprise 1565525798
+url /target/enable
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+post is 
+	 _csrf => YalyeBGQaGnllX-g_p8D9VInA_prZiqZMuV6VE9t32oS2DEIWfs4BKHtCO6RykemK0NUsAgKW8wGjT4SeTmLPw==
+	 DataTargetHandler => 
+	 cottage_number => 1268
+	 targets => 
+	 2019 => 
+	 payed => 
+
+
+Surprise 1565526973
+url /target/enable
+message A non-numeric value encountered
+code 2
+in file Z:\sites\new_cottage\models\database\DataTargetHandler.php
+in sting 98
+#0 Z:\sites\new_cottage\models\database\DataTargetHandler.php(98): yii\base\ErrorHandler->handleError(2, 'A non-numeric v...', 'Z:\\sites\\new_co...', 98, Array)
+#1 Z:\sites\new_cottage\controllers\IndicationController.php(118): app\models\database\DataTargetHandler->enable()
+#2 [internal function]: app\controllers\IndicationController->actionTarget('enable', NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('target', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('indication/targ...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => vXsIZQ1He_59ZMJPSz7itowIBAlA4snDia4C9rZaiynOCksVRSwrkzkctQEka6bl9WxTQyOOuJa9xkawgA7ffA==
+	 DataTargetHandler => 
+	 cottage_number => 1268
+	 targets => 
+	 2019 => get is 
+	 action => enable
+
+
+Surprise 1565528350
+url /info/target/721
+message Undefined offset: 1
+code 8
+in file Z:\sites\new_cottage\models\utils\TimeHandler.php
+in sting 226
+#0 Z:\sites\new_cottage\models\utils\TimeHandler.php(226): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', 'Z:\\sites\\new_co...', 226, Array)
+#1 Z:\sites\new_cottage\models\database\DataTargetHandler.php(52): app\models\utils\TimeHandler::getFullFromShotQuarter(2019)
+#2 Z:\sites\new_cottage\controllers\InfoController.php(55): app\models\database\DataTargetHandler::periodInfo('721')
+#3 [internal function]: app\controllers\InfoController->actionFloat('target', '721')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('float', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('info/float', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+get is 
+	 type => target
+	 id => 721
+
+
+Surprise 1565528355
+url /info/target/721
+message Undefined offset: 1
+code 8
+in file Z:\sites\new_cottage\models\utils\TimeHandler.php
+in sting 226
+#0 Z:\sites\new_cottage\models\utils\TimeHandler.php(226): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', 'Z:\\sites\\new_co...', 226, Array)
+#1 Z:\sites\new_cottage\models\database\DataTargetHandler.php(52): app\models\utils\TimeHandler::getFullFromShotQuarter(2019)
+#2 Z:\sites\new_cottage\controllers\InfoController.php(55): app\models\database\DataTargetHandler::periodInfo('721')
+#3 [internal function]: app\controllers\InfoController->actionFloat('target', '721')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('float', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('info/float', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+get is 
+	 type => target
+	 id => 721
+
+
+Surprise 1565531941
+url /count/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565531943
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565531946
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565762282
+url /info/fines/2
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565766293
+url /info/fines/2
+message Undefined variable: ddyDifference
+code 8
+in file Z:\sites\new_cottage\models\database\FinesHandler.php
+in sting 77
+#0 Z:\sites\new_cottage\models\database\FinesHandler.php(77): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', 'Z:\\sites\\new_co...', 77, Array)
+#1 Z:\sites\new_cottage\controllers\InfoController.php(62): app\models\database\FinesHandler::periodInfo('2')
+#2 [internal function]: app\controllers\InfoController->actionFloat('fines', '2')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('float', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('info/float', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+get is 
+	 type => fines
+	 id => 2
+
+
+Surprise 1565767875
+url /cottage/edit/edit-contact/add-contact/1267
+message The view file does not exist: Z:\sites\new_cottage\views\cottage\add-contact.php
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php
+in sting 233
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\View.php(212): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\CottageController))
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Controller.php(49): yii\web\View->renderAjax('add-contact', Array, Object(app\controllers\CottageController))
+#2 Z:\sites\new_cottage\controllers\CottageController.php(81): yii\web\Controller->renderAjax('add-contact', Array)
+#3 [internal function]: app\controllers\CottageController->actionEdit('edit-contact', 'add-contact', '1267')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('edit', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('cottage/edit', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+get is 
+	 type => edit-contact
+	 action => add-contact
+	 id => 1267
+
+
+Surprise 1565771606
+url /info/fines/2
+message Undefined index: thisPay
+code 8
+in file Z:\sites\new_cottage\models\database\FinesHandler.php
+in sting 110
+#0 Z:\sites\new_cottage\models\database\FinesHandler.php(110): yii\base\ErrorHandler->handleError(8, 'Undefined index...', 'Z:\\sites\\new_co...', 110, Array)
+#1 Z:\sites\new_cottage\controllers\InfoController.php(62): app\models\database\FinesHandler::periodInfo('2')
+#2 [internal function]: app\controllers\InfoController->actionFloat('fines', '2')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('float', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('info/float', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+get is 
+	 type => fines
+	 id => 2
+
+
+Surprise 1565771933
+url /info/fines/3
+message Undefined variable: payInfo
+code 8
+in file Z:\sites\new_cottage\models\database\FinesHandler.php
+in sting 92
+#0 Z:\sites\new_cottage\models\database\FinesHandler.php(92): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', 'Z:\\sites\\new_co...', 92, Array)
+#1 Z:\sites\new_cottage\controllers\InfoController.php(62): app\models\database\FinesHandler::periodInfo('3')
+#2 [internal function]: app\controllers\InfoController->actionFloat('fines', '3')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('float', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('info/float', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+get is 
+	 type => fines
+	 id => 3
+
+
+Surprise 1565773031
+url /target/enable
+message Invalid argument supplied for foreach()
+code 2
+in file Z:\sites\new_cottage\models\database\DataTargetHandler.php
+in sting 119
+#0 Z:\sites\new_cottage\models\database\DataTargetHandler.php(119): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', 'Z:\\sites\\new_co...', 119, Array)
+#1 Z:\sites\new_cottage\controllers\IndicationController.php(118): app\models\database\DataTargetHandler->enable()
+#2 [internal function]: app\controllers\IndicationController->actionTarget('enable', NULL)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('target', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('indication/targ...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+post is 
+	 _csrf => XuxLuUAZWbZ7CdjIBvJDUsxJlPi3nH8huRub3fYxsKQtnQjJCHIJ2z9xr4ZppwcBtS3DstTwDnSNc9-bwGXk8Q==
+	 DataTargetHandler => 
+	 cottage_number => 1448get is 
+	 action => enable
+
+
+Surprise 1565773401
+url /cottage/show/4
+message Trying to get property 'quarter' of non-object
+code 8
+in file Z:\sites\new_cottage\views\cottage\view.php
+in sting 505
+#0 Z:\sites\new_cottage\views\cottage\view.php(505): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'Z:\\sites\\new_co...', 505, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\CottageController))
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('/cottage/view', Array, Object(app\controllers\CottageController))
+#5 Z:\sites\new_cottage\controllers\CottageController.php(56): yii\base\Controller->render('/cottage/view', Array)
+#6 [internal function]: app\controllers\CottageController->actionShow('4')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('show', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('cottage/show', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 cottageNumber => 4
+
+
+Surprise 1565774750
+url /count/index
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565774756
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+

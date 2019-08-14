@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\database\DataMembershipHandler;
 use app\models\exceptions\ExceptionWithStatus;
 use app\models\LoginForm;
 use app\models\MainView;
-use app\models\utils\CashHandler;
 use app\models\utils\Fix;
 use Exception;
 use Yii;
@@ -73,6 +73,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         // на главной странице будет отображаться информация о всех зарегистрированных участках.
+        // проверю оплату членских взносов для участков
+        DataMembershipHandler::checkCurrentFilling();
         $model = new MainView();
         $this->layout = 'float';
         return $this->render('index', ['model' => $model]);
