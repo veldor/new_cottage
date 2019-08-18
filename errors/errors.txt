@@ -7071,3 +7071,700 @@ in sting 115
 
 
 
+Surprise 1565873571
+url /cottage/show/4
+message The table does not exist: cottages
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php
+in sting 438
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#4 Z:\sites\new_cottage\models\database\FinesHandler.php(148): yii\db\BaseActiveRecord::findOne(Array)
+#5 Z:\sites\new_cottage\controllers\CottageController.php(52): app\models\database\FinesHandler::check('4')
+#6 [internal function]: app\controllers\CottageController->actionShow('4')
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('show', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('cottage/show', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+get is 
+	 cottageNumber => 4
+
+
+Surprise 1565873625
+url /tariff/check/membership
+message Getting unknown property: app\models\database\TariffMembershipHandler::is_broadcasted
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('is_broadcasted')
+#1 Z:\sites\new_cottage\models\database\TariffMembershipHandler.php(39): yii\db\BaseActiveRecord->__get('is_broadcasted')
+#2 Z:\sites\new_cottage\controllers\TariffsController.php(142): app\models\database\TariffMembershipHandler::check()
+#3 [internal function]: app\controllers\TariffsController->actionCheck('membership')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('check', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('tariffs/check', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+get is 
+	 type => membership
+
+
+Surprise 1565873644
+url /tariff/check/membership
+message Getting unknown property: app\models\database\TariffMembershipHandler::is_broadcasted
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('is_broadcasted')
+#1 Z:\sites\new_cottage\models\database\TariffMembershipHandler.php(39): yii\db\BaseActiveRecord->__get('is_broadcasted')
+#2 Z:\sites\new_cottage\controllers\TariffsController.php(142): app\models\database\TariffMembershipHandler::check()
+#3 [internal function]: app\controllers\TariffsController->actionCheck('membership')
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('check', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('tariffs/check', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+get is 
+	 type => membership
+
+
+Surprise 1565874112
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565874452
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565877086
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565877111
+url /search/search
+message Страница не найдена.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php
+in sting 115
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#2 {main}
+
+
+
+Surprise 1565877807
+url /search
+message Unable to find 'app\assets\SearchAsset' in file: Z:\sites\new_cottage/assets/SearchAsset.php. Namespace missing?
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\BaseYii.php
+in sting 296
+#0 [internal function]: yii\BaseYii::autoload('app\\assets\\Sear...')
+#1 Z:\sites\new_cottage\views\search\search.php(28): spl_autoload_call('app\\assets\\Sear...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\SearchController))
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('search', Array, Object(app\controllers\SearchController))
+#6 Z:\sites\new_cottage\controllers\SearchController.php(46): yii\base\Controller->render('search', Array)
+#7 [internal function]: app\controllers\SearchController->actionIndex()
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+
+
+
+Surprise 1565880605
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::billId
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('billId')
+#1 Z:\sites\new_cottage\models\Search.php(42): yii\db\BaseActiveRecord->__get('billId')
+#2 Z:\sites\new_cottage\models\Search.php(102): app\models\Search::handleTransactions(Array)
+#3 Z:\sites\new_cottage\models\Search.php(91): app\models\Search->getTransactions(Array)
+#4 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#5 [internal function]: app\controllers\SearchController->actionIndex()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#12 {main}
+post is 
+	 _csrf => uzHScT1eJ3skgnxCRpohQDYtmf9kNH6uDoaHQTyqBQvIQJEBdTV3FmD6Cwwpz2UTT0nOtQdYD_s67sMHCv5RXg==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => routine
+
+
+Surprise 1565880708
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::cottageNumber
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('cottageNumber')
+#1 Z:\sites\new_cottage\models\Search.php(44): yii\db\BaseActiveRecord->__get('cottageNumber')
+#2 Z:\sites\new_cottage\models\Search.php(104): app\models\Search::handleTransactions(Array)
+#3 Z:\sites\new_cottage\models\Search.php(93): app\models\Search->getTransactions(Array)
+#4 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#5 [internal function]: app\controllers\SearchController->actionIndex()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#12 {main}
+post is 
+	 _csrf => uzHScT1eJ3skgnxCRpohQDYtmf9kNH6uDoaHQTyqBQvIQJEBdTV3FmD6Cwwpz2UTT0nOtQdYD_s67sMHCv5RXg==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => routine
+
+
+Surprise 1565880753
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::cottageNumber
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('cottageNumber')
+#1 Z:\sites\new_cottage\models\Search.php(44): yii\db\BaseActiveRecord->__get('cottageNumber')
+#2 Z:\sites\new_cottage\models\Search.php(104): app\models\Search::handleTransactions(Array)
+#3 Z:\sites\new_cottage\models\Search.php(93): app\models\Search->getTransactions(Array)
+#4 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#5 [internal function]: app\controllers\SearchController->actionIndex()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#12 {main}
+post is 
+	 _csrf => uzHScT1eJ3skgnxCRpohQDYtmf9kNH6uDoaHQTyqBQvIQJEBdTV3FmD6Cwwpz2UTT0nOtQdYD_s67sMHCv5RXg==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => routine
+
+
+Surprise 1565881952
+url /search
+message A non well formed numeric value encountered
+code 8
+in file Z:\sites\new_cottage\models\utils\CashHandler.php
+in sting 9
+#0 Z:\sites\new_cottage\models\utils\CashHandler.php(9): yii\base\ErrorHandler->handleError(8, 'A non well form...', 'Z:\\sites\\new_co...', 9, Array)
+#1 Z:\sites\new_cottage\views\search\search.php(77): app\models\utils\CashHandler::toRubles('1464&nbsp;\xD1\x80\xD1\x83\xD0...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(348): require('Z:\\sites\\new_co...')
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('Z:\\sites\\new_co...', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('Z:\\sites\\new_co...', Array, Object(app\controllers\SearchController))
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('search', Array, Object(app\controllers\SearchController))
+#6 Z:\sites\new_cottage\controllers\SearchController.php(69): yii\base\Controller->render('search', Array)
+#7 [internal function]: app\controllers\SearchController->actionIndex()
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+post is 
+	 _csrf => 9uT30Bg4iT6Os2UgQEzcPK-AzvFj2LzlE4VokABcaguFlbSgUFPZU8rLEm4vGZhv1uSZuwC0zbAn7SzWNgg-Xg==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => summary
+
+
+Surprise 1565884671
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::transactionSumm
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('transactionSumm')
+#1 Z:\sites\new_cottage\models\Search.php(221): yii\db\BaseActiveRecord->__get('transactionSumm')
+#2 Z:\sites\new_cottage\models\Search.php(99): app\models\Search->getReport(Array)
+#3 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#4 [internal function]: app\controllers\SearchController->actionIndex()
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#11 {main}
+post is 
+	 _csrf => -Q8ci7Ugb3RUpr6ebp-gd6OQawIpSaVqYb9gFyqpBQqKfl_7_Us_GRDeydAByuQk2vQ8SEol1D9V1yRRHP1RXw==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => report
+
+
+Surprise 1565884696
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::billId
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('billId')
+#1 Z:\sites\new_cottage\models\Search.php(332): yii\db\BaseActiveRecord->__get('billId')
+#2 Z:\sites\new_cottage\models\Search.php(99): app\models\Search->getReport(Array)
+#3 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#4 [internal function]: app\controllers\SearchController->actionIndex()
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#11 {main}
+post is 
+	 _csrf => -Q8ci7Ugb3RUpr6ebp-gd6OQawIpSaVqYb9gFyqpBQqKfl_7_Us_GRDeydAByuQk2vQ8SEol1D9V1yRRHP1RXw==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => report
+
+
+Surprise 1565884729
+url /search
+message Getting unknown property: app\models\database\TransactionsHandler::cottageNumber
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Component.php
+in sting 154
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('cottageNumber')
+#1 Z:\sites\new_cottage\models\Search.php(332): yii\db\BaseActiveRecord->__get('cottageNumber')
+#2 Z:\sites\new_cottage\models\Search.php(99): app\models\Search->getReport(Array)
+#3 Z:\sites\new_cottage\controllers\SearchController.php(68): app\models\Search->doSearch()
+#4 [internal function]: app\controllers\SearchController->actionIndex()
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('search', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#11 {main}
+post is 
+	 _csrf => -Q8ci7Ugb3RUpr6ebp-gd6OQawIpSaVqYb9gFyqpBQqKfl_7_Us_GRDeydAByuQk2vQ8SEol1D9V1yRRHP1RXw==
+	 Search => 
+	 startDate => 2019-08-01
+	 finishDate => 2019-08-31
+	 searchType => report
+
+
+Surprise 1566106282
+url /management/db-migrate
+message Не удалось загрузить структуру документа.
+code 3
+in file Z:\sites\new_cottage\models\utils\DomHandler.php
+in sting 47
+#0 Z:\sites\new_cottage\models\utils\DomHandler.php(30): app\models\utils\DomHandler::getDom('<?xml version="...')
+#1 Z:\sites\new_cottage\models\ManagementHandler.php(113): app\models\utils\DomHandler->__construct('<?xml version="...')
+#2 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#3 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+
+
+
+Surprise 1566106294
+url /management/db-migrate
+message Не удалось загрузить структуру документа.
+code 3
+in file Z:\sites\new_cottage\models\utils\DomHandler.php
+in sting 47
+#0 Z:\sites\new_cottage\models\utils\DomHandler.php(30): app\models\utils\DomHandler::getDom('<?xml version="...')
+#1 Z:\sites\new_cottage\models\ManagementHandler.php(113): app\models\utils\DomHandler->__construct('<?xml version="...')
+#2 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#3 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+
+
+
+Surprise 1566107243
+url /management/db-migrate
+message SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`cottages`.`bills`, CONSTRAINT `foreign_bill_cottage_id` FOREIGN KEY (`cottage_number`) REFERENCES `cottages`.`cottages` (`id`))
+The SQL being executed was: TRUNCATE TABLE `cottages`
+code 42000
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'TRUNCATE TABLE ...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('TRUNCATE TABLE ...')
+#2 Z:\sites\new_cottage\models\ManagementHandler.php(133): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\models\ManagementHandler.php(55): app\models\ManagementHandler::truncateDb('cottages')
+#4 Z:\sites\new_cottage\models\ManagementHandler.php(114): app\models\ManagementHandler::eraseDb()
+#5 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#6 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#13 {main}
+
+
+
+Surprise 1566107357
+url /management/db-migrate
+message There is no sequence associated with table 'bank_invoices'.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\mysql\QueryBuilder.php
+in sting 196
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(943): yii\db\mysql\QueryBuilder->resetSequence('bank_invoices', NULL)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\QueryBuilder.php(1056): yii\db\Command->resetSequence('bank_invoices', NULL)
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(961): yii\db\QueryBuilder->executeResetSequence('bank_invoices', NULL)
+#3 Z:\sites\new_cottage\models\ManagementHandler.php(134): yii\db\Command->executeResetSequence('bank_invoices')
+#4 Z:\sites\new_cottage\models\ManagementHandler.php(54): app\models\ManagementHandler::truncateDb('bank_invoices')
+#5 Z:\sites\new_cottage\models\ManagementHandler.php(115): app\models\ManagementHandler::eraseDb()
+#6 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#7 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#14 {main}
+
+
+
+Surprise 1566107383
+url /management/db-migrate
+message There is no sequence associated with table 'bank_invoices'.
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\mysql\QueryBuilder.php
+in sting 196
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(943): yii\db\mysql\QueryBuilder->resetSequence('bank_invoices', NULL)
+#1 Z:\sites\new_cottage\models\ManagementHandler.php(134): yii\db\Command->resetSequence('bank_invoices')
+#2 Z:\sites\new_cottage\models\ManagementHandler.php(54): app\models\ManagementHandler::truncateDb('bank_invoices')
+#3 Z:\sites\new_cottage\models\ManagementHandler.php(115): app\models\ManagementHandler::eraseDb()
+#4 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#5 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#12 {main}
+
+
+
+Surprise 1566107508
+url /management/db-migrate
+message Не удалось загрузить структуру документа.
+code 3
+in file Z:\sites\new_cottage\models\utils\DomHandler.php
+in sting 47
+#0 Z:\sites\new_cottage\models\utils\DomHandler.php(30): app\models\utils\DomHandler::getDom('<?xml version="...')
+#1 Z:\sites\new_cottage\models\ManagementHandler.php(116): app\models\utils\DomHandler->__construct('<?xml version="...')
+#2 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#3 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+
+
+
+Surprise 1566107772
+url /management/db-migrate
+message Не удалось загрузить структуру документа.
+code 3
+in file Z:\sites\new_cottage\models\utils\DomHandler.php
+in sting 47
+#0 Z:\sites\new_cottage\models\utils\DomHandler.php(30): app\models\utils\DomHandler::getDom('<?xml version="...')
+#1 Z:\sites\new_cottage\models\ManagementHandler.php(115): app\models\utils\DomHandler->__construct('<?xml version="...')
+#2 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#3 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#10 {main}
+
+
+
+Surprise 1566110618
+url /management/db-migrate
+message SQLSTATE[HY000]: General error: 1364 Field 'square' doesn't have a default value
+The SQL being executed was: INSERT INTO `cottages` (`cottage_number`, `deposit`) VALUES ('1', '0')
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `co...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('INSERT INTO `co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php(432): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(600): yii\db\Schema->insert('cottages', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(566): yii\db\ActiveRecord->insertInternal(NULL)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(678): yii\db\ActiveRecord->insert(true, NULL)
+#6 Z:\sites\new_cottage\models\ManagementHandler.php(125): yii\db\BaseActiveRecord->save()
+#7 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#8 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#15 {main}
+
+
+
+Surprise 1566112823
+url /management/db-migrate
+message SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'is_cottage_register_data' cannot be null
+The SQL being executed was: INSERT INTO `cottages` (`cottage_number`, `deposit`, `square`, `is_have_property_rights`, `is_cottage_register_data`, `register_data`, `property_data`) VALUES ('1', '0', 793, 1, NULL, '', '')
+code 23000
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `co...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('INSERT INTO `co...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php(432): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(600): yii\db\Schema->insert('cottages', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(566): yii\db\ActiveRecord->insertInternal(NULL)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(678): yii\db\ActiveRecord->insert(true, NULL)
+#6 Z:\sites\new_cottage\models\ManagementHandler.php(130): yii\db\BaseActiveRecord->save()
+#7 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#8 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#15 {main}
+
+
+
+Surprise 1566116537
+url /management/db-migrate
+message Undefined property: DOMElement::$quarter
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 129
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(129): yii\base\ErrorHandler->handleError(8, 'Undefined prope...', 'Z:\\sites\\new_co...', 129, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+
+Surprise 1566116568
+url /management/db-migrate
+message Undefined property: DOMElement::$year
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 142
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(142): yii\base\ErrorHandler->handleError(8, 'Undefined prope...', 'Z:\\sites\\new_co...', 142, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+
+Surprise 1566116581
+url /management/db-migrate
+message SQLSTATE[HY000]: General error: 1364 Field 'pay_description' doesn't have a default value
+The SQL being executed was: INSERT INTO `tariffs_target` (`year`, `pay_for_meter`, `pay_for_cottage`, `search_timestamp`, `pay_up_date`) VALUES ('2016', '0', '100000', '1451638800', '1470042000')
+code 0
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php
+in sting 674
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `ta...')
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(1091): yii\db\Command->internalExecute('INSERT INTO `ta...')
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php(432): yii\db\Command->execute()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(600): yii\db\Schema->insert('tariffs_target', Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(566): yii\db\ActiveRecord->insertInternal(NULL)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(678): yii\db\ActiveRecord->insert(true, NULL)
+#6 Z:\sites\new_cottage\models\ManagementHandler.php(144): yii\db\BaseActiveRecord->save()
+#7 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#8 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#10 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#12 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#15 {main}
+
+
+
+Surprise 1566118629
+url /management/db-migrate
+message Undefined index: cottageHaveRights
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 245
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(245): yii\base\ErrorHandler->handleError(8, 'Undefined index...', 'Z:\\sites\\new_co...', 245, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+
+Surprise 1566118663
+url /management/db-migrate
+message Object of class app\models\database\CottagesHandler could not be converted to int
+code 8
+in file Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ColumnSchema.php
+in sting 159
+#0 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ColumnSchema.php(159): yii\base\ErrorHandler->handleError(8, 'Object of class...', 'Z:\\sites\\new_co...', 159, Array)
+#1 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\mysql\ColumnSchema.php(49): yii\db\ColumnSchema->typecast(Object(app\models\database\CottagesHandler))
+#2 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\QueryBuilder.php(375): yii\db\mysql\ColumnSchema->dbTypecast(Object(app\models\database\CottagesHandler))
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\mysql\QueryBuilder.php(256): yii\db\QueryBuilder->prepareInsertValues('cottages', Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\QueryBuilder.php(345): yii\db\mysql\QueryBuilder->prepareInsertValues('cottages', Array, Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Command.php(470): yii\db\QueryBuilder->insert('cottages', Array, Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\Schema.php(431): yii\db\Command->insert('cottages', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(600): yii\db\Schema->insert('cottages', Array)
+#8 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\ActiveRecord.php(566): yii\db\ActiveRecord->insertInternal(NULL)
+#9 Z:\sites\new_cottage\vendor\yiisoft\yii2\db\BaseActiveRecord.php(678): yii\db\ActiveRecord->insert(true, NULL)
+#10 Z:\sites\new_cottage\models\ManagementHandler.php(247): yii\db\BaseActiveRecord->save()
+#11 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#12 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#13 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#14 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#15 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#16 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#17 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#19 {main}
+
+
+
+Surprise 1566118683
+url /management/db-migrate
+message Undefined index: cottageOwnerDescription
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 255
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(255): yii\base\ErrorHandler->handleError(8, 'Undefined index...', 'Z:\\sites\\new_co...', 255, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+
+Surprise 1566118724
+url /management/db-migrate
+message Undefined index: cottageOwnerDescription
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 255
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(255): yii\base\ErrorHandler->handleError(8, 'Undefined index...', 'Z:\\sites\\new_co...', 255, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(77): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+
+Surprise 1566124932
+url /management/db-migrate
+message Undefined index: cottage_number
+code 8
+in file Z:\sites\new_cottage\models\ManagementHandler.php
+in sting 370
+#0 Z:\sites\new_cottage\models\ManagementHandler.php(370): yii\base\ErrorHandler->handleError(8, 'Undefined index...', 'Z:\\sites\\new_co...', 370, Array)
+#1 Z:\sites\new_cottage\controllers\ManagementController.php(78): app\models\ManagementHandler::migrate()
+#2 [internal function]: app\controllers\ManagementController->actionDbMigrate()
+#3 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('db-migrate', Array)
+#6 Z:\sites\new_cottage\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('management/db-m...', Array)
+#7 Z:\sites\new_cottage\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 Z:\sites\new_cottage\public_html\index.php(17): yii\base\Application->run()
+#9 {main}
+
+
+

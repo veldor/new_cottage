@@ -14,6 +14,7 @@ nbproject
 
 #log_files
 /logs
+/runtime
 
 #infoice
 /public_html/invoice.pdf

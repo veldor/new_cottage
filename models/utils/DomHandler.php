@@ -6,7 +6,6 @@ namespace app\models\utils;
 
 use app\models\exceptions\ExceptionWithStatus;
 use DOMDocument;
-use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use Exception;
@@ -86,7 +85,7 @@ class DomHandler extends Model
         $attributes = $domElement->attributes;
         $answer = [];
         foreach ($attributes as $attribute){
-            $answer[$attribute->nodeName] = $attribute->nodeValue;
+            $answer[$attribute->nodeName] = urldecode($attribute->nodeValue);
         }
         return $answer;
     }

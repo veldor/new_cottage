@@ -27,7 +27,7 @@ class ManagementController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'db-erase', 'db-fill'],
+                        'actions' => ['index', 'db-erase', 'db-fill', 'db-migrate'],
                         'roles' => ['manager'],
                     ],
                 ],
@@ -63,6 +63,21 @@ class ManagementController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             ManagementHandler::fillDb();
             return ['status' => 1, 'message' => 'Заглушки для участков созданы'];
+        }
+        throw new NotFoundHttpException('Страница не найдена');
+    }
+
+    /**
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     */
+    public function actionDbMigrate()
+    {
+        if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            ManagementHandler::migrate();
+            return ['status' => 1, 'message' => 'Старая база перенесена'];
         }
         throw new NotFoundHttpException('Страница не найдена');
     }
